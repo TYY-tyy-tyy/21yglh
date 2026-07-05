@@ -263,9 +263,7 @@ void main(void)
 			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
-			dma_flip_enable = 1;
-t		buf_locked = 0;
-			processing_busy = 0;
+			buf_locked = 0;
 			mt9v03x_finish_flag = 0;
 		}
 	}
