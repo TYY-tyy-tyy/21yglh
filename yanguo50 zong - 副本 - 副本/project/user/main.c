@@ -231,8 +231,6 @@ void main(void)
 		/* 图锟斤拷锟斤拷 */
 		if(mt9v03x_finish_flag)
 		{
-			// 关中断保护临界区：选缓冲区并锁定，防止ISR翻转DMA目标覆盖正在处理的数据
-			EA = 0;
 			{
 				uint8 done_snapshot = dma_done_sel;  // 快照DMA完成的缓冲区
 				if(done_snapshot == 0)
@@ -246,9 +244,9 @@ void main(void)
 					buf_locked = 2;  // 锁定buf1，ISR强制DMA写buf0
 				}
 			}
-			EA = 1;
 			// 现在ISR无论触发多少次，都不会碰被锁定的缓冲区
-	//			LowerCameraExposure();
+			
+//			LowerCameraExposure();
 			get_reference_point();      //获取图像和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //锟揭边斤拷锟斤拷锟斤拷
