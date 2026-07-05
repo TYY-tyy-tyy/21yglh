@@ -18,7 +18,7 @@
 #define REFERENCE_CONTRAST     5            //参考对比度
 
 /* 本图像的参考点 */
-extern uint8 reference_point;
+extern uint8 reference_point[3];
 /* 动态白点的最大值、最小值 */
 extern uint8 white_max_point;
 extern uint8 white_min_point;

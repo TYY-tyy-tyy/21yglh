@@ -7,20 +7,8 @@
 PID pid;
 
 /* 电机差速的KP */
-float KP_x_Increase;
-float KP_x_Decrease;
-
-/* 基础PID值，用于调参时的初值 */
-float Stop_p = 20;
-float T_p = 11;//11
-float kp_y = 0.9;
-float kp_x_up = 2;
-float kp_x_down = 16;
-
-/* 基础PID值，用于调参时的初值 */
-float S_p = 50;
-float S_i = 0.3;
-float T_GKD = 0.04;
+int16 KP_x_Increase;
+int16 KP_x_Decrease;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介  PID参数初始化
@@ -83,17 +71,14 @@ void PID_Init(void)
 }
 
 //-------------------------------------------------------------------------------------------------------------------
-// 函数简介   速度环PI--位置式
+// 函数简介   速度环--位置式
 // 参数说明
 // 返回参数
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-int16 PID_Speed_Loc_L(int16 Speed_target, int Speed_current)
+int16 PID_Speed_Loc_L(int16 Speed_target, int16 Speed_current)
 {
-    /* 一阶滤波系数(工程经验) */
-//    float a = 0.3;
-
     /* 计算速度误差 */
     pid.Speed_current_error_L = Speed_target - Speed_current;
 
@@ -103,16 +88,6 @@ int16 PID_Speed_Loc_L(int16 Speed_target, int Speed_current)
     /* 误差运算 */
     pid.Speed_Out_L = (pid.Speed_KP_L * pid.Speed_current_error_L) + (pid.Speed_KI_L * pid.Speed_All_Error_L);
 
-    /* 速度环一阶低通滤波 */
-//    pid.Speed_Out_L = (pid.Speed_Out_L * a) + ((1 - a) * pid.Speed_Last_Out_L);
-
-     /* 更新“上次误差”用于滤波 */
-//    pid.Speed_Last_Out_L = pid.Speed_Out_L;
-
-    /* 积分限幅 */
-    if(pid.Speed_All_Error_L > Speed_L_imax)   pid.Speed_All_Error_L = Speed_L_imax;
-    else if(pid.Speed_All_Error_L < -Speed_L_imax) pid.Speed_All_Error_L = -Speed_L_imax;
-
     /* 返回结果 */
     return pid.Speed_Out_L;
 
@@ -120,9 +95,6 @@ int16 PID_Speed_Loc_L(int16 Speed_target, int Speed_current)
 
 int16 PID_Speed_Loc_R(int16 Speed_target, int Speed_current)
 {
-    /* 一阶滤波系数(工程经验) */
-//    float a = 0.3;
-
     /* 计算速度误差 */
     pid.Speed_current_error_R = Speed_target - Speed_current;
 
@@ -132,26 +104,13 @@ int16 PID_Speed_Loc_R(int16 Speed_target, int Speed_current)
     /* 误差运算 */
     pid.Speed_Out_R = (pid.Speed_KP_R * pid.Speed_current_error_R) + (pid.Speed_KI_R * pid.Speed_All_Error_R);
 
-    /* 速度环一阶低通滤波 */
-//    pid.Speed_Out_R = (pid.Speed_Out_R * a) + ((1 - a) * pid.Speed_Last_Out_R);
-
-     /* 更新“上次误差”用于滤波 */
-//    pid.Speed_Last_Out_R = pid.Speed_Out_R;
-
-    /* 积分限幅 */
-    if(pid.Speed_All_Error_R > Speed_R_imax)   pid.Speed_All_Error_R = Speed_R_imax;
-    else if(pid.Speed_All_Error_R < -Speed_R_imax) pid.Speed_All_Error_R = -Speed_R_imax;
-
     /* 返回结果 */
     return pid.Speed_Out_R;
-
 }
 
-int16 PID_Speed_Loc_Stop(int16 Speed_target, int Speed_current)
-{
-    /* 一阶滤波系数(工程经验) */
-//    float a = 0.3;
 
+int16 PID_Speed_Loc_Stop(int16 Speed_target, int16 Speed_current)
+{
     /* 计算速度误差 */
     pid.Speed_current_error_Stop = Speed_target - Speed_current;
 
@@ -160,12 +119,6 @@ int16 PID_Speed_Loc_Stop(int16 Speed_target, int Speed_current)
 
     /* 误差运算 */
     pid.Speed_Out_Stop = (pid.Speed_KP_Stop * pid.Speed_current_error_Stop) + (pid.Speed_KI_Stop * pid.Speed_All_Error_Stop);
-
-    /* 速度环一阶低通滤波 */
-//    pid.Speed_Out_Stop = (pid.Speed_Out_Stop * a) + ((1 - a) * pid.Speed_Last_Out_Stop);
-
-     /* 更新“上次误差”用于滤波 */
-//    pid.Speed_Last_Out_Stop = pid.Speed_Out_Stop;
 
     /* 积分限幅 */
     if(pid.Speed_All_Error_Stop > Speed_L_imax)   pid.Speed_All_Error_Stop = Speed_L_imax;
@@ -177,7 +130,7 @@ int16 PID_Speed_Loc_Stop(int16 Speed_target, int Speed_current)
 }
 
 //-------------------------------------------------------------------------------------------------------------------
-// 函数简介   速度环PI--增量式
+// 函数简介   速度环--增量式
 // 参数说明
 // 返回参数
 // 使用示例
@@ -185,17 +138,11 @@ int16 PID_Speed_Loc_Stop(int16 Speed_target, int Speed_current)
 //------------------------------------------------------------------------------------------------------------------
 int16 PID_Speed_Inc_L(int16 Speed_target, int16 Speed_current)
 {
-    /* 一阶滤波系数(工程经验) */
-    float a = 0.3;
-
     /* 计算速度误差 */
     pid.Speed_current_error_L = Speed_target - Speed_current;//110 0
 
     /* 误差运算 */
     pid.Speed_Out_L = (pid.Speed_KP_L * (pid.Speed_current_error_L - pid.Speed_Last_error_L)) + (pid.Speed_KI_L * pid.Speed_current_error_L);
-
-    /* 速度环一阶低通滤波 */
-    pid.Speed_Out_L = (pid.Speed_Out_L * a) + ((1 - a) * pid.Speed_Last_Out_L);
 
     /* 更新“上次误差”用于滤波 */
     pid.Speed_Last_Out_L = pid.Speed_Out_L;
@@ -203,40 +150,17 @@ int16 PID_Speed_Inc_L(int16 Speed_target, int16 Speed_current)
     /* 更新上次误差 */
     pid.Speed_Last_error_L = pid.Speed_current_error_L;
 
-    /* 限幅 */
-//    if(pid.Speed_Out > 2000)   pid.Speed_Out = 2000;
-//    else if(pid.Speed_Out <= 0) pid.Speed_Out = 0;
-//    if(pid.Speed_Out <= 0) pid.Speed_Out = 0;
-
     /* 返回结果 */
     return pid.Speed_Out_L;
-
 }
 
 int16 PID_Speed_Inc_R(int16 Speed_target, int16 Speed_current)
 {
-    /* 一阶滤波系数(工程经验) */
-    float a = 0.3;
-
     /* 计算速度误差 */
     pid.Speed_current_error_R = Speed_target - Speed_current;//110 0
 
     /* 误差运算 */
     pid.Speed_Out_R = (pid.Speed_KP_R * (pid.Speed_current_error_R - pid.Speed_Last_error_R)) + (pid.Speed_KI_R * pid.Speed_current_error_R);
-
-    /* 速度环一阶低通滤波 */
-    pid.Speed_Out_R = (pid.Speed_Out_R * a) + ((1 - a) * pid.Speed_Last_Out_R);
-
-    /* 更新“上次误差”用于滤波 */
-    pid.Speed_Last_Out_R = pid.Speed_Out_R;
-
-    /* 更新上次误差 */
-    pid.Speed_Last_error_R = pid.Speed_current_error_R;
-
-    /* 限幅 */
-//    if(pid.Speed_Out > 2000)   pid.Speed_Out = 2000;
-//    else if(pid.Speed_Out <= 0) pid.Speed_Out = 0;
-//    if(pid.Speed_Out <= 0) pid.Speed_Out = 0;
 
     /* 返回结果 */
     return pid.Speed_Out_R;
@@ -250,7 +174,7 @@ int16 PID_Speed_Inc_R(int16 Speed_target, int16 Speed_current)
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-float PID_Turn_Loc(float Mid_Error)
+int16 PID_Turn_Loc(int16 Mid_Error)
 {
     /* 计算转向误差 */
     pid.Turn_current_error = (120 / White_Column_MID + 1) * Mid_Error;
@@ -260,10 +184,6 @@ float PID_Turn_Loc(float Mid_Error)
 
     /* 记下上次误差值 */
     pid.Turn_last_error = pid.Turn_current_error;
-
-    /* 限幅 */
-//    if(pid.Turn_Out > 600)   pid.Turn_Out = 600;
-//    else if(pid.Turn_Out < -600) pid.Turn_Out = -600;
 
     /* 返回结果 */
     return pid.Turn_Out;
@@ -290,10 +210,6 @@ int16 Angle_PID(int16 Angle_target, int Angle_current)
 
     /* 误差运算 */
     pid.Angle_Out = (pid.Angle_KP * pid.Angle_current_error) + (pid.Angle_KI * pid.Angle_All_Error);
-
-
-    /* 限幅 */
-
 
     /* 返回结果 */
     return pid.Angle_Out;
@@ -337,24 +253,3 @@ void PID_DecisionMaking(void)
         /*************/
     }
 }
-
-//-------------------------------------------------------------------------------------------------------------------
-// 函数简介   按键调节
-// 参数说明
-// 返回参数
-// 使用示例
-// 备注信息
-//------------------------------------------------------------------------------------------------------------------
-//void PID_Setting(void)
-//{
-//     /* 转向环 */
-//    pid.Turn_KP = T_p;//320
-//    pid.Turn_GKD = T_GKD;//0
-//	
-//    /* 差速的KP */
-//    KP_x_Increase = kp_x_up;     //*
-//    KP_x_Decrease = kp_x_down;    //*
-
-//    pid.Speed_KP_Stop = Stop_p;  //*
-//	 pid.Turn_KD = 0;//0
-//}

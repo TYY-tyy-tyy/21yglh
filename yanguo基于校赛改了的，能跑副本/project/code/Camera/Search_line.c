@@ -1,7 +1,7 @@
 #include "Search_line.h"
 
 /* 本图像的参考点的灰度值 */
-uint8 reference_point = 0;
+uint8 reference_point[3] = {0};
 /* 参考列的列数和每一行的数组 */
 //uint8 reference_col = 0;
 uint8 reference_col_line[MT9V03X_H] = {0};
@@ -26,7 +26,7 @@ void get_reference_point(void)
 	int H;
 	int W;
     uint16 reference_point_Num = 0;     //统计点的总数量
-    uint32 reference_point_Sum = 0;     //统计点的合
+    uint16 reference_point_Sum[2] = {0};     //统计点的合
     //计算总数量
     reference_point_Num = REFRENCE_ROW * 54;
     //60~56
@@ -35,14 +35,21 @@ void get_reference_point(void)
         //20~74
         for(W = 40; W < 148; W+=2)
         {
-            reference_point_Sum +=  image_copy_out[H][W];
+            reference_point_Sum[0] +=  image_copy_out[H][W];
+			if(reference_point_Sum[0] > 10000)
+			{
+				reference_point_Sum[0] = reference_point_Sum[0] - 10000;
+				reference_point_Sum[1] += 1;
+			}
         }
     }
     //求平均值
-    reference_point = (uint8) (reference_point_Sum / reference_point_Num);
+    reference_point[0] = (uint8) (reference_point_Sum[0] / reference_point_Num);
+	reference_point[1] = (uint8) (reference_point_Sum[1]*1000 / reference_point_Num);
+	reference_point[2] = reference_point[0] + reference_point[1];
     //限幅
-    white_max_point = (uint8)func_limit_ab((uint16)reference_point * WHITEMAXMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 130%
-    white_min_point = (uint8)func_limit_ab((uint16)reference_point * WHITEMINMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 70%
+    white_max_point = (uint8)func_limit_ab((uint16)reference_point[2] * WHITEMAXMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 130%
+    white_min_point = (uint8)func_limit_ab((uint16)reference_point[2] * WHITEMINMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 70%
 
 }
 
