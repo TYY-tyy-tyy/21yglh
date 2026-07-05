@@ -231,24 +231,23 @@ void main(void)
 		/* 图锟斤拷锟斤拷 */
 		if(mt9v03x_finish_flag)
 		{
-			dma_flip_enable = 1;
-			processing_busy = 1;
-			qy_time = 0;
-//			printf("%d\n",qy_time);
-			// ============ 双缓冲DMA：指针直接指向安全缓冲区，零拷贝 ============
+			// 关中断保护临界区：选缓冲区并锁定，防止ISR翻转DMA目标覆盖正在处理的数据
+			EA = 0;
 			{
-				uint8 done_snapshot = dma_done_sel;  // 快照，防止ISR在判断期间修改
+				uint8 done_snapshot = dma_done_sel;  // 快照DMA完成的缓冲区
 				if(done_snapshot == 0)
 				{
-					// mt9v03x_image刚被DMA写完，DMA现在在写image_dma_buf2
 					image_copy_out = (image_copy_out_ptr_t)mt9v03x_image;
+					buf_locked = 1;  // 锁定buf0，ISR强制DMA写buf1
 				}
 				else
 				{
-					// image_dma_buf2刚被DMA写完，DMA现在在写mt9v03x_image
 					image_copy_out = (image_copy_out_ptr_t)image_dma_buf2;
+					buf_locked = 2;  // 锁定buf1，ISR强制DMA写buf0
 				}
 			}
+			EA = 1;
+			// 现在ISR无论触发多少次，都不会碰被锁定的缓冲区
 	//			LowerCameraExposure();
 			get_reference_point();      //获取图像和参考点
 			search_reference_col();
@@ -257,13 +256,15 @@ void main(void)
 			{
 				Lost_Line_Protect(80);      //锟斤拷锟竭憋拷锟斤拷
 			}
-			memcpy(image_copy[0], image_copy_out[0], MT9V03X_IMAGE_SIZE);
+//			memcpy(image_copy[0], image_copy_out[0], MT9V03X_IMAGE_SIZE);
 			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 			if(COM_QY == 0)
 			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
+			dma_flip_enable = 1;
+t		buf_locked = 0;
 			processing_busy = 0;
 			mt9v03x_finish_flag = 0;
 		}
