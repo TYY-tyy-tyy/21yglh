@@ -39,6 +39,7 @@
 extern volatile uint8 dma_target_sel;
 extern volatile uint8 dma_done_sel;
 extern uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];
+extern volatile uint8 processing_busy;
 // ==================== Ë«»º³åDMA·½°¸½áÊø ====================
 
 
@@ -421,6 +422,11 @@ void TM17_TM18_IRQHandler() interrupt TMR17_TMR18_VECTOR
 void INT1_IRQHandler() interrupt INT1_VECTOR
 {
 //    if(mt9v03x_finish_flag == 1)
+//    {
+//        return;
+//    }
+
+//    if(processing_busy == 1)
 //    {
 //        return;
 //    }

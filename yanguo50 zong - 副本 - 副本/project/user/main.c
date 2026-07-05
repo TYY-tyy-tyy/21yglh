@@ -58,6 +58,7 @@ uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];
 volatile uint8 dma_target_sel = 0;
 // dma_done_sel: DMA完成ISR中记录刚完成的缓冲 (0=mt9v03x_image, 1=image_dma_buf2)
 volatile uint8 dma_done_sel = 0;
+	volatile uint8 processing_busy = 0;
 int count1 = 0;
 // 锟斤拷锟斤拷1
 extern int16  TargetSpeed_1 ;
@@ -230,6 +231,7 @@ void main(void)
 		/* 图锟斤拷锟斤拷 */
 		if(mt9v03x_finish_flag)
 		{
+			processing_busy = 1;
 			qy_time = 0;
 //			printf("%d\n",qy_time);
 			// ============ 双缓冲DMA：指针直接指向安全缓冲区，零拷贝 ============
@@ -261,6 +263,7 @@ void main(void)
 			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
+			processing_busy = 0;
 			mt9v03x_finish_flag = 0;
 		}
 	}

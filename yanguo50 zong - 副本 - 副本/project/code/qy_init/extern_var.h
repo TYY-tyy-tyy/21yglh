@@ -59,6 +59,7 @@ extern image_copy_out_ptr_t image_copy_out;                  // Ö¸Õë£¬Ö¸ÏòDMAÍê³
 extern uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];   // µÚ¶şDMA»º³åÇø
 extern volatile uint8 dma_target_sel;                        // ÏÂÒ»Ö¡DMAÄ¿±êÑ¡Ôñ
 extern volatile uint8 dma_done_sel;                          // ¸ÕÍê³ÉÖ¡µÄÑ¡Ôñ
+extern volatile uint8 processing_busy;                   // ´¦ÀíÃ¦±êÖ¾£¬ISR¾İ´ËÌø¹ıVSYNC
 // ==================== Ë«»º³åDMA·½°¸½áÊø ====================
 
 void Interrupt(void);
