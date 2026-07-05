@@ -227,6 +227,7 @@ void main(void)
 		/* 图像处理 */
 		if(mt9v03x_finish_flag)
 		{
+			printf("%d\n",qy_time);
 			qy_time = 0;
 			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
@@ -239,13 +240,13 @@ void main(void)
 				Black_counts_weight(80);      //丢线保护
 			}
 //			seekfree_assistant_camera_send();
-			mt9v03x_finish_flag = 0;
-			
 			printf("%d\n",qy_time);
 			if(COM_QY == 0)
 			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
+			printf("%d\n",qy_time);
+			mt9v03x_finish_flag = 0;
 		}
 	}
 }
