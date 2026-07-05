@@ -40,7 +40,7 @@ extern volatile uint8 dma_target_sel;
 extern volatile uint8 dma_done_sel;
 extern uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];
 extern volatile uint8 processing_busy;
-	volatile uint8 buf_locked = 0;                   // 缓冲区锁定：0=无锁定, 1=buf0被锁强制写buf1, 2=buf1被锁强制写buf0
+volatile uint8 buf_locked = 0;                   // 缓冲区锁定：0=无锁定, 1=buf0被锁强制写buf1, 2=buf1被锁强制写buf0
 // ==================== 双缓冲DMA方案结束 ====================
 
 

@@ -235,13 +235,13 @@ void main(void)
 				uint8 done_snapshot = dma_done_sel;  // 快照DMA完成的缓冲区
 				if(done_snapshot == 0)
 				{
-					image_copy_out = (image_copy_out_ptr_t)mt9v03x_image;
 					buf_locked = 1;  // 锁定buf0，ISR强制DMA写buf1
+					image_copy_out = (image_copy_out_ptr_t)mt9v03x_image;
 				}
 				else
 				{
-					image_copy_out = (image_copy_out_ptr_t)image_dma_buf2;
 					buf_locked = 2;  // 锁定buf1，ISR强制DMA写buf0
+					image_copy_out = (image_copy_out_ptr_t)image_dma_buf2;
 				}
 			}
 			// 现在ISR无论触发多少次，都不会碰被锁定的缓冲区
