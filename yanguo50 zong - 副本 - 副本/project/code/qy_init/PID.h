@@ -66,8 +66,8 @@ extern float KP_y;
 extern float KP_y_Ring;
 
 /* 电机差速的KP */
-extern float KP_x_Increase;
-extern float KP_x_Decrease;
+extern int16 KP_x_Increase;
+extern int16 KP_x_Decrease;
 
 /* 基础PID值，用于调参时的初值 */
 extern float T_p;
@@ -82,12 +82,12 @@ extern float S_i;
 extern float T_GKD;
 
 void PID_Init(void);
-int16 PID_Speed_Loc_L(int16 Speed_target, int Speed_current);
-int16 PID_Speed_Loc_R(int16 Speed_target, int Speed_current);
-int16 PID_Speed_Loc_Stop(int16 Speed_target, int Speed_current);
+int16 PID_Speed_Loc_L(int16 Speed_target, int16 Speed_current);
+int16 PID_Speed_Loc_R(int16 Speed_target, int16 Speed_current);
+int16 PID_Speed_Loc_Stop(int16 Speed_target, int16 Speed_current);
 int16 PID_Speed_Inc_L(int16 Speed_target, int16 Speed_current);
 int16 PID_Speed_Inc_R(int16 Speed_target, int16 Speed_current);
-float PID_Turn_Loc(float Mid_Error);
+int16 PID_Turn_Loc(int16 Mid_Error);
 int16 Angle_PID(int16 Angle_target, int Angle_current);
 void PID_Setting(void);
 void PID_DecisionMaking(void);

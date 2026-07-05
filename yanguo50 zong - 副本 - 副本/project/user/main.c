@@ -254,7 +254,7 @@ void main(void)
 			Find_Boundry_LongWhiteCol(); //�ұ߽�����
 			if(count1 > 2000)
 			{
-				Black_counts_weight(80);      //���߱���
+				Lost_Line_Protect(80);      //���߱���
 			}
 			memcpy(image_copy[0], image_copy_out[0], MT9V03X_IMAGE_SIZE);
 			seekfree_assistant_camera_send();
