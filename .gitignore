@@ -1,0 +1,41 @@
+# Keil MDK build artifacts
+*.uvguix.*
+*.uvgui.*
+*.uvopt
+*.scvd
+*.lst
+*.m51
+*.obj
+*.hex
+*.bin
+*.axf
+*.elf
+*.o
+*.d
+*.crf
+*.lnp
+*.plg
+*.iex
+*.tmp
+*.bak
+*.dep
+JLink*
+*.JLink*
+
+# Build output directories
+build/
+output/
+out/
+Listings/
+Objects/
+DebugConfig/
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
