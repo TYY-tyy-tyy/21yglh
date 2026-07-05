@@ -231,18 +231,26 @@ void main(void)
 		/* 图锟斤拷锟斤拷 */
 		if(mt9v03x_finish_flag)
 		{
+			printf("%d\n",qy_time);
+			qy_time = 0;
+			printf("%d\n",qy_time);
+			if(COM_QY == 1)
 			{
 				uint8 done_snapshot = dma_done_sel;  // 快照DMA完成的缓冲区
 				if(done_snapshot == 0)
 				{
-					buf_locked = 1;  // 锁定buf0，ISR强制DMA写buf1
 					image_copy_out = (image_copy_out_ptr_t)mt9v03x_image;
+					buf_locked = 1;  // 锁定buf0，ISR强制DMA写buf1
 				}
 				else
 				{
-					buf_locked = 2;  // 锁定buf1，ISR强制DMA写buf0
 					image_copy_out = (image_copy_out_ptr_t)image_dma_buf2;
+					buf_locked = 2;  // 锁定buf1，ISR强制DMA写buf0
 				}
+			}
+			else if(COM_QY == 1)
+			{
+				image_copy_out = (image_copy_out_ptr_t)mt9v03x_image;
 			}
 			// 现在ISR无论触发多少次，都不会碰被锁定的缓冲区
 			
@@ -255,13 +263,18 @@ void main(void)
 				Lost_Line_Protect(80);      //锟斤拷锟竭憋拷锟斤拷
 			}
 //			memcpy(image_copy[0], image_copy_out[0], MT9V03X_IMAGE_SIZE);
-			seekfree_assistant_camera_send();
-//			printf("%d\n",qy_time);
-			if(COM_QY == 0)
-			{
+//			seekfree_assistant_camera_send();
+			printf("%d\n",qy_time);
+//			if(COM_QY == 0)
+//			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
+//			}
+			printf("%d\n",qy_time);
+			printf("%d,%d\n",Image_error,White_Column_MID);
+			if(COM_QY == 1)
+			{
+				buf_locked = 0;
 			}
-			buf_locked = 0;
 			mt9v03x_finish_flag = 0;
 		}
 	}

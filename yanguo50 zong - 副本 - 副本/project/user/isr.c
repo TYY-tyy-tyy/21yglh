@@ -36,6 +36,7 @@
 #include "zf_common_headfile.h"
 
 // ==================== 双缓冲DMA方案（新增） ====================
+extern uint8 COM_QY;
 extern volatile uint8 dma_target_sel;
 extern volatile uint8 dma_done_sel;
 extern uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];
@@ -435,18 +436,24 @@ void INT1_IRQHandler() interrupt INT1_VECTOR
     // ==================== 双缓冲DMA方案（缓冲区锁定） ====================
     // 根据锁定状态强制选择DMA目标：锁buf0→强制写buf1，锁buf1→强制写buf0，无锁定→正常乒乓
     // 即使连续多次VSYNC，被锁定的缓冲区永远不会被DMA覆盖
-    if(buf_locked == 1)
-        { dma_target_sel = 1; }       // buf0被主循环锁定，强制DMA写buf1
-    else if(buf_locked == 2)
-        { dma_target_sel = 0; }       // buf1被主循环锁定，强制DMA写buf0
-    else
-        { dma_target_sel = !dma_target_sel; }  // 无锁定，正常乒乓
+	if(COM_QY == 1)
+	{
+//		if(buf_locked == 1)
+//			{ dma_target_sel = 1; }       // buf0被主循环锁定，强制DMA写buf1
+//		else if(buf_locked == 2)
+//			{ dma_target_sel = 0; }       // buf1被主循环锁定，强制DMA写buf0
+//		else
+//		{ 
+			dma_target_sel = !dma_target_sel; 
+//		}  // 无锁定，正常乒乓
+	}
 
     // 必须调用库函数复位FIFO、使能DMA（FIFO时序要求，不可跳过）
     mt9v03x_vsync_handler();
 
     // 根据dma_target_sel写入DMA地址寄存器
-    {
+	if(COM_QY == 1)
+	{
         unsigned long addr;
         uint16 dma_addr;
 

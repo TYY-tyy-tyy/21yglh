@@ -51,7 +51,7 @@ void All_Init(void)
 		// ==================== Ë«»º³åDMA·½°¸£º³õÊ¼»¯image_copy_outÖ¸Õë ====================
 	image_copy_out = (image_copy_out_ptr_t)mt9v03x_image; // ³õÊ¼Ö¸Ïò¿â»º³åÇø
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
-	seekfree_assistant_camera_information_config(SEEKFREE_ASSISTANT_MT9V03X, image_copy_out[0], MT9V03X_W, MT9V03X_H);
+	seekfree_assistant_camera_information_config(SEEKFREE_ASSISTANT_MT9V03X, image_copy[0], MT9V03X_W, MT9V03X_H);
 	 
     /* ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½Ê¼ï¿½ï¿½ */
     //ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½Ê¼ï¿½ï¿½
