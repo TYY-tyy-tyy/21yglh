@@ -8,8 +8,8 @@
 #define SEARCH_IMAGE_H      Image_H        //搜线的高度
 #define BLACKPOINT          50             //必是黑点值
 #define WHITEPOINT          220             //必是黑点值
-#define WHITEMAXMUL         12             //参考点的最大白点百分比
-#define WHITEMINMUL         8              //参考点的最小白点百分比
+#define WHITEMAXMUL         125             //参考点的最大白点百分比
+#define WHITEMINMUL         75              //参考点的最小白点百分比
 
 #define REFRENCE_ROW        10              //参考点统计行数
 #define SEARCH_RANGE        10             //搜线半径

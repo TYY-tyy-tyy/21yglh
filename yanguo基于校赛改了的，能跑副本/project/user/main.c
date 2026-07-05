@@ -230,7 +230,9 @@ void main(void)
 			printf("%d\n",qy_time);
 			qy_time = 0;
 			printf("%d\n",qy_time);
+			
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
+//			Get_Use_Image();
 //			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();

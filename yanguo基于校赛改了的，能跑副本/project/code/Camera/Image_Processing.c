@@ -22,11 +22,11 @@ void Get_Use_Image(void)
 {
     short i = 0, j = 0, row = 0, line = 0;
 
-    for (i = 0; i < MT9V03X_H; i += 3)          //50£¬
+    for (i = 0; i < MT9V03X_H; i ++)          //50£¬
     {
-        for (j = 0; j <= MT9V03X_W; j += 3)     //94£¬
+        for (j = 0; j < MT9V03X_W; j ++)     //94£¬
         {
-            Image_Use[row][line] = mt9v03x_image[i][j];
+            image_copy_out[row][line] = mt9v03x_image[i][j];
             line++;
         }
         line = 0;

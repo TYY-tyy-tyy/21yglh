@@ -41,8 +41,8 @@ void get_reference_point(void)
     //求平均值
     reference_point = (uint8) (reference_point_Sum / reference_point_Num);
     //限幅
-    white_max_point = (uint8)func_limit_ab((int32)reference_point * WHITEMAXMUL / 10, BLACKPOINT, WHITEPOINT); //平均值 * 130%
-    white_min_point = (uint8)func_limit_ab((int32)reference_point * WHITEMINMUL / 10, BLACKPOINT, WHITEPOINT); //平均值 * 70%
+    white_max_point = (uint8)func_limit_ab((uint16)reference_point * WHITEMAXMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 130%
+    white_min_point = (uint8)func_limit_ab((uint16)reference_point * WHITEMINMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 70%
 
 }
 

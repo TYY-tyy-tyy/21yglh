@@ -1,7 +1,7 @@
 #ifndef __IMAGE_PROCESSING_H_
 #define __IMAGE_PROCESSING_H_
 
-#include "zf_common_headfile.h"
+#include "qy_headfile.h"
 
 /* ∆ÿπ‚…Ë÷√ */
 extern uint16 exp_time;
