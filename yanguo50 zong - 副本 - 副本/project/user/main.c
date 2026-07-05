@@ -231,6 +231,7 @@ void main(void)
 		/* ͼ���� */
 		if(mt9v03x_finish_flag)
 		{
+			dma_flip_enable = 1;
 			processing_busy = 1;
 			qy_time = 0;
 //			printf("%d\n",qy_time);
