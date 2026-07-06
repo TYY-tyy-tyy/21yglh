@@ -1,18 +1,10 @@
 #include "Interrupt_Control.h"
-
-#define Left_Out_Max  7000
-#define Right_Out_Max 7000
-
-#define Start_time    200
-#define ACKERMAN_COEFF  0.375f  
+ 
 /* 转向环 */
 int16 Turn_PWM = 0;                   //最终转向的PWM
 
 /* 停车标志位 */
 uint8 Stop_Car_flag = 0;
-
-/* 转向环 */
-#define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
 
 int16 Turn_Out = 0;                 //转向环输出
 int16 Turn_Out_MAX = 0;             //最大转向输出
@@ -43,10 +35,10 @@ int16  Turn_GKD_1   = 0.005;
 int16  TargetSpeed_2 = 250;
 int16  Turn_KP_2    = 12.5;
 int16  Turn_GKD_2   = 0.005;
-int16 t;
+float t;
 int16 L = 20;
 int16 K = 15;
-int16 diff;
+float diff;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明
@@ -104,14 +96,14 @@ void Interrupt_CCU60_CH0(void)
 	if(Turn_PWM >= SERVO_MOTOR_L_MAX) Turn_PWM = SERVO_MOTOR_L_MAX;
 	else if(Turn_PWM <= SERVO_MOTOR_R_MAX) Turn_PWM = SERVO_MOTOR_R_MAX;
 	t = tan((Turn_PWM - 4550) * 0.001176f);
-
     diff = ACKERMAN_COEFF * t;
+	
 	/* 速度环串转向环 -------------------------------------------------- */
 	/* 左右轮闭环输出  */
 	if(COM_QY == 1)
 	{
-		Speed_Left_Out  = PID_Speed_Loc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
-        Speed_Right_Out = PID_Speed_Loc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
+		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
+        Speed_Right_Out = PID_Speed_Inc_L(nowtargetSpeed * (1.0f + diff), Encoder_Right);
     }
     else
     {

@@ -135,7 +135,7 @@ void Count_Length(void)
     if(Enc_value >= EncLength)
     {
         Enc_value = 0;
-        Track_length[0] += 0.1;
+        Track_length[0] += 1;
 		if(Track_length[0] > 10000)
 		{
 			Track_length[1] ++;

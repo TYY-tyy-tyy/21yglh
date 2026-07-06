@@ -38,9 +38,9 @@ void gyroscope_get_gyro(void)
 	gyro_x[0] = (9*(imu963ra_gyro_x)+1*gyro_x[1])/10;
 	gyro_x[1] = gyro_x[0];
 	
-	next_gyro_z = imu963ra_gyro_transition(gyro_z[0])*10;
+	next_gyro_z = imu963ra_gyro_transition(gyro_z[0]);
 	avl_gyro_z = next_gyro_z - null_drift_z;
-	next_gyro_x = imu963ra_gyro_transition(gyro_x[0])*10;
+	next_gyro_x = imu963ra_gyro_transition(gyro_x[0]);
 	avl_gyro_x = next_gyro_x - null_drift_x;
 	
 	angle_get();
@@ -48,8 +48,8 @@ void gyroscope_get_gyro(void)
 
 void angle_get(void)
 {
-	angle_ringR+=avl_gyro_z/10/200;
-	angle_pitch+=avl_gyro_x/10/200;
+	angle_ringR+=avl_gyro_z/200;
+	angle_pitch+=avl_gyro_x/200;
 }
 
 void angle_clear(void)
@@ -74,8 +74,8 @@ int8 null_drift_calculate(void)
 	if(cnt_null>=200)
 	{
 		ret = 1;
-		null_drift_x = temp_x/200*10;
-		null_drift_z = temp_z/200*10;
+		null_drift_x = temp_x/200;
+		null_drift_z = temp_z/200;
 		angle_clear();
 	}
 	

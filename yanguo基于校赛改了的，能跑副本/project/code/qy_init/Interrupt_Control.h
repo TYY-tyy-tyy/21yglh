@@ -3,6 +3,15 @@
 
 #include "qy_headfile.h"
 
+#define Left_Out_Max  7000
+#define Right_Out_Max 7000
+
+#define Start_time    200
+#define ACKERMAN_COEFF  0.375f 
+
+/* 转向环 */
+#define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
+
 /* 速度模式 */
 extern uint8 Speed_Mode;     //速度模式--1为线性，2为匀速
 
