@@ -46,19 +46,19 @@ void Lost_connection_left(int16 start, int16 end)
 		if((Right_Line[i] - Left_Line[i]) >= Road_Width_Table[i]*12/10)
 		{
 			//左在设定范围外，右边在设定范围内
-			if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Left_Coordinates[i] && Right_Line [i] <= Right_Coordinates*12/10)
+			if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Left_Coordinates[i] && Right_Line [i] <= Right_Coordinates[i]*12/10)
 			{
 				Left_Line[i] = Right_Line[i] - Road_Width_Table[i];
 				image_copy_out[i][Left_Line[i]] = 0;
 			}
 			//右在设定范围外，左边在设定范围内
-			else if(Left_Line [i] >= Left_Coordinates[i]*8/10 && Left_Line [i] <= Right_Coordinates[i] && Right_Line [i] >= Right_Coordinates*12/10)
+			else if(Left_Line [i] >= Left_Coordinates[i]*8/10 && Left_Line [i] <= Right_Coordinates[i] && Right_Line [i] >= Right_Coordinates[i]*12/10)
 			{
 				Right_Line[i] = Left_Line[i] + Road_Width_Table[i];
 				image_copy_out[i][Right_Line[i]] = 0;
 			}
 			//两边都在设定范围外
-			else if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Right_Coordinates*12/10)
+			else if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Right_Coordinates[i]*12/10)
 			{
 				//两边丢线数量没有到达阈值
 				if(Left_Lost_Line_count <= 20 && Right_Lost_Line_count <= 20)

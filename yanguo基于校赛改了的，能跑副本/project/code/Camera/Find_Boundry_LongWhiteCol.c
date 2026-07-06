@@ -64,7 +64,7 @@ void Find_Boundry_LongWhiteCol(void)
 				gray_point_3 = image_copy_out[i][j+4];
 				gray_point_4 = image_copy_out[i][j+6];
 //				image_copy_out[i][j] = 255;
-				if(j == MT9V03X_W - 9)
+				if(j == MT9V03X_W - 8)
 				{
 					right_border = j;
 					Right_Lost_Line_count++;  //右丢线数
@@ -115,7 +115,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_3 = image_copy_out[i][j+4];
 					gray_point_4 = image_copy_out[i][j+6];
 //					image_copy_out[i][j] = 255;
-					if(j == MT9V03X_W - 9)
+					if(j == MT9V03X_W - 8)
 					{
 						right_border = j;
 						Right_Lost_Line_count++;  //右丢线数
@@ -159,7 +159,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_3 = image_copy_out[i][j+4];
 					gray_point_4 = image_copy_out[i][j+6];
 //					image_copy_out[i][j] = 255;
-					if(j == MT9V03X_W - 9)
+					if(j == MT9V03X_W - 8)
 					{
 						right_border = j;
 						Right_Lost_Line_count++;  //右丢线数
