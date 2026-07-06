@@ -938,26 +938,6 @@
               <FilePath>..\code\Camera\Function.h</FilePath>
             </File>
             <File>
-              <FileName>Image_Processing.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\Camera\Image_Processing.c</FilePath>
-            </File>
-            <File>
-              <FileName>Image_Processing.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\Camera\Image_Processing.h</FilePath>
-            </File>
-            <File>
-              <FileName>Eight_fields.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\Camera\Eight_fields.c</FilePath>
-            </File>
-            <File>
-              <FileName>Eight_fields.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\Camera\Eight_fields.h</FilePath>
-            </File>
-            <File>
               <FileName>Search_line.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\code\Camera\Search_line.c</FilePath>

@@ -56,6 +56,7 @@ extern int my_Speed;
 // ==================== 双缓冲DMA方案（新增） ====================
 extern uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 extern image_copy_out_ptr_t image_copy_out;                  // 指针，指向DMA完成的安全缓冲区
+extern uint8 far image_dma_buf3[MT9V03X_H][MT9V03X_W];
 extern uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];   // 第二DMA缓冲区
 extern volatile uint8 dma_target_sel;                        // 下一帧DMA目标选择
 extern volatile uint8 dma_done_sel;                          // 刚完成帧的选择

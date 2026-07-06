@@ -146,7 +146,7 @@ int16 PID_Speed_Inc_R(int16 Speed_target, int16 Speed_current)
     pid.Speed_current_error_R = Speed_target - Speed_current;//110 0
 
     /* 误差运算 */
-    pid.Speed_Out_R = (pid.Speed_KP_R * (pid.Speed_current_error_R - pid.Speed_Last_error_R) / 10) + (pid.Speed_KI_R * pid.Speed_current_error_R / 10)
+    pid.Speed_Out_R += (pid.Speed_KP_R * (pid.Speed_current_error_R - pid.Speed_Last_error_R) / 10) + (pid.Speed_KI_R * pid.Speed_current_error_R / 10)
 		+ (pid.Speed_KD_R * (pid.Speed_current_error_R - 2 * pid.Speed_Last_error_R + pid.Speed_Prev_error_R) / 10);
 
 	/* 更新上次误差 */

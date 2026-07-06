@@ -21,7 +21,6 @@ void Patch_line_Left(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     {
         //x = (y - b) / k
         Left_Line[j] = (float)((float)j - (float)b) / (float)K; //Left_Line[j]是得到的列坐标
-        Image_Use[j][Left_Line[j]] = 0;
     }
 }
 
@@ -45,7 +44,6 @@ void Patch_line_Right(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     for(j = zuobiao_top[1]; j < zuobiao_botton[1]; j ++)
     {
         Right_Line[j] = (float)((float)j - (float)b) / (float)K;
-        Image_Use[j][Right_Line[j]] = 0;
     }
 }
 
@@ -73,7 +71,6 @@ void Add_mid_left(int start, int end)
         //左边界等于右边界加上赛道宽度
         Left_Line[H] = Right_Line[H] - 60;
         if(Left_Line[H] > 40) Left_Line[H] = 0;
-        Image_Use[H][Left_Line[H]] = 0;
     }
 }
 

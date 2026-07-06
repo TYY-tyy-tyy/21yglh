@@ -53,6 +53,7 @@ uint16 qy_time = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 image_copy_out_ptr_t image_copy_out;
 // 第二DMA缓冲区：DMA交替写入mt9v03x_image和此处
+uint8 far image_dma_buf3[MT9V03X_H][MT9V03X_W];
 uint8 xdata image_dma_buf2[MT9V03X_H][MT9V03X_W];
 // dma_target_sel: VSYNC ISR中翻转，指示下一帧DMA写哪个缓冲 (0=mt9v03x_image, 1=image_dma_buf2)
 volatile uint8 dma_target_sel = 0;

@@ -48,8 +48,8 @@ float diff;
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
-//	Test_Speed();
-//	return;
+	Test_Speed();
+	return;
 	nowtargetSpeed = my_Speed;
 	/* 时间变量自增 */
 	if(time <= 15000) 
@@ -103,7 +103,7 @@ void Interrupt_CCU60_CH0(void)
 	if(COM_QY == 1)
 	{
 		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
-        Speed_Right_Out = PID_Speed_Inc_L(nowtargetSpeed * (1.0f + diff), Encoder_Right);
+        Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
     }
     else
     {

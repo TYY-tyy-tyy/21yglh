@@ -23,8 +23,8 @@ void Test_Speed(void)
 	
 	if(COM_QY == 1)
 	{
-		Speed_Left_Out = PID_Speed_Loc_L(nowtargetSpeed,Encoder_Left);
-		Speed_Right_Out = PID_Speed_Loc_R(nowtargetSpeed,Encoder_Right);
+		Speed_Left_Out = PID_Speed_Inc_L(nowtargetSpeed,Encoder_Left);
+		Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed,Encoder_Right);
 	}
 	else
 	{

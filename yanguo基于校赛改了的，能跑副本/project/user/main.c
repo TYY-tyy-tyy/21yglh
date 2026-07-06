@@ -41,6 +41,7 @@ uint8 COM_QY = 0;
 int16 my_Speed = 0;
 
 uint16 qy_time = 0;
+uint16 qy_time1 = 0;
 uint8 time_flag = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
@@ -55,9 +56,9 @@ void main(void)
 	/* 所有功能初始化 */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 15;//正常值：6.8；一次超调值：13
-	pid.Speed_KI_L = pid.Speed_KI_R = 3.2;//正常值：1.9；一次超调值：3.2
-	pid.Turn_KP =9;
+	pid.Speed_KP_L = pid.Speed_KP_R = 0;//正常值：6.8；一次超调值：13
+	pid.Speed_KI_L = pid.Speed_KI_R = 0;//正常值：1.9；一次超调值：3.2
+	pid.Turn_KP =90;
 //	pid.Turn_KP1 =0;
 	pid.Turn_KD =0;
 //	pid.Turn_GKD =0.005;
@@ -65,7 +66,7 @@ void main(void)
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
-//		printf("%d,%d,%d,%d,%f,%f\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		tft180_show_int16(Image_W,0,COM_QY);
 		if(COM_QY == 0)
@@ -78,9 +79,9 @@ void main(void)
 			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
 			tft180_show_int16(MT9V03X_W / 2,96,r_con);
 			tft180_show_int16(MT9V03X_W / 2,112,l_con);
-			tft180_show_float(0,MT9V03X_H / 2,pid.Turn_KP,3,2);
-			tft180_show_float(0,MT9V03X_H / 2 + 16,pid.Turn_KD,3,2);
-			tft180_show_float(0,MT9V03X_H / 2 + 32,nowtargetSpeed,3,2);
+			tft180_show_int16(0,MT9V03X_H / 2,pid.Turn_KP);
+			tft180_show_int16(0,MT9V03X_H / 2 + 16,pid.Turn_KD);
+			tft180_show_int16(0,MT9V03X_H / 2 + 32,nowtargetSpeed);
 		}
 		if(Get_Key_3())
 		{
@@ -107,24 +108,25 @@ void main(void)
 		}
 		if(Get_Key_5())
 		{
-			pid.Turn_KP += 0.5;
-	//		pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 0.1;
+//			pid.Turn_KP += 5;
+			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_1())
 		{
-			pid.Turn_KD += 0.5;
-	//		pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 0.1;
+//			pid.Turn_KD += 5;
+			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
 		}
 	
 		/* 图像处理 */
 		if(mt9v03x_finish_flag)
 		{
 			time_flag = 1;
-			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time);
 			qy_time = 0;
-			printf("%d\n",qy_time);
-			
+			qy_time1 = 0;
+//			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
+			mt9v03x_finish_flag = 0;
 //			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
@@ -134,14 +136,15 @@ void main(void)
 				Black_counts_weight(80);      //丢线保护
 			}
 //			seekfree_assistant_camera_send();
-			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time1);
 			if(COM_QY == 0)
 			{
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
-			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time);
+//			printf("%d,%d\n",Image_error,White_Column_MID);
 			time_flag = 0;
-			mt9v03x_finish_flag = 0;
 		}
 	}
 }
@@ -168,8 +171,12 @@ void Interrupt(void)
 
 void QQYY(void)
 {
-	if(time_flag)
+	if(mt9v03x_finish_flag)
 	{
 		qy_time ++;
+	}
+	if(time_flag)
+	{
+		qy_time1 ++;
 	}
 }
