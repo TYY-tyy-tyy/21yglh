@@ -43,7 +43,7 @@ int16 Left_Encoder_Get(void)
     Left_Encoder_Get = encoder_get_count(LEFT_ENCODER_QUADDEC);
     encoder_clear_count(LEFT_ENCODER_QUADDEC);
 
-    Left_Encoder_Get = kalmanFilter(&Speed_Left_KFP,Left_Encoder_Get);
+//    Left_Encoder_Get = kalmanFilter(&Speed_Left_KFP,Left_Encoder_Get);
 
     return Left_Encoder_Get;
 }
@@ -61,7 +61,7 @@ int16 Right_Encoder_Get(void)
     Right_Encoder_Get = -encoder_get_count(RIGHT_ENCODER_QUADDEC);
     encoder_clear_count(RIGHT_ENCODER_QUADDEC);
 
-    Right_Encoder_Get = kalmanFilter(&Speed_Right_KFP,Right_Encoder_Get);
+//    Right_Encoder_Get = kalmanFilter(&Speed_Right_KFP,Right_Encoder_Get);
 
     return Right_Encoder_Get;
 }
@@ -117,13 +117,13 @@ float kalmanFilter(KFP *kfp,float input)
 // 备注信息     单位m
 //------------------------------------------------------------------------------------------------------------------
 /* 赛道长度 */
-float Track_length = 0;
+int16 Track_length[2] = {0};
 
 /* 当前积分值 */
-int Enc_value = 0;
+int16 Enc_value = 0;
 
 /* 统计n个一米的值 */
-int Enc_n = 0;
+int16 Enc_n = 0;
 
 /* 当前编码器一米的积分 */
 #define     EncLength       950
@@ -135,8 +135,12 @@ void Count_Length(void)
     if(Enc_value >= EncLength)
     {
         Enc_value = 0;
-        Track_length += 0.1;
-
+        Track_length[0] += 0.1;
+		if(Track_length[0] > 10000)
+		{
+			Track_length[1] ++;
+			Track_length[0] = Track_length[0] -10000;
+		}
     }
 }
 

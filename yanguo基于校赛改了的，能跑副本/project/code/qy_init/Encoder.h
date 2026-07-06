@@ -34,13 +34,13 @@ extern int16 Encoder_Average;
 extern int16 Encoder_jifen_flag;
 
 /* 当前积分值 */
-extern int Enc_value;
+extern int16 Enc_value;
 
 /* 统计n个一米的值 */
-extern int Enc_n;
+extern int16 Enc_n;
 
 /* 赛道长度 */
-extern float Track_length;
+extern int16 Track_length[2];
 
 void Encoder_Init(void);
 int16 Left_Encoder_Get(void);

@@ -86,15 +86,10 @@ void Stop_Car(void)
     }
     else if(Stop_Car_flag == 2)
     {
-
         /* 目标速度给0 */
         nowtargetSpeed = 0;
 
         /* 让车摆正误差给0 */
         Turn_Out = 0;
-//		pwm_set_duty(Servo_PWM,SERVO_MOTOR_Mid);
-        /* 左右轮闭环输出  */
-        Speed_Left_Out = PID_Speed_Loc_Stop(nowtargetSpeed,Encoder_Left);
-        Speed_Right_Out = PID_Speed_Loc_Stop(nowtargetSpeed,Encoder_Right);
     }
 }
