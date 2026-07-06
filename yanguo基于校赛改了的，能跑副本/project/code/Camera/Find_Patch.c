@@ -28,9 +28,9 @@ int Lost_Right_lost_nums = 0;
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-void Lost_connection_left(int start, int end)
+void Lost_connection_left(int16 start, int16 end)
 {
-	int i, t;
+	int16 i, t;
 	Lost_Left_lost_nums = 0;
 	Lost_Right_lost_nums = 0;
     //自动调整位置
@@ -43,40 +43,43 @@ void Lost_connection_left(int start, int end)
 	for (i = start; i >= end; i-=2)
     {
         //只找第一个符合条件的点
-		if((Right_Line[i] - Left_Line[i]) >= Road_Width_Table[i]*1.25)
+		if((Right_Line[i] - Left_Line[i]) >= Road_Width_Table[i]*12/10)
 		{
-			if(Left_Line [i] <= 12)
+			//左在设定范围外，右边在设定范围内
+			if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Left_Coordinates[i] && Right_Line [i] <= Right_Coordinates*12/10)
 			{
-				Lost_Left_lost_nums++;
+				Left_Line[i] = Right_Line[i] - Road_Width_Table[i];
+				image_copy_out[i][Left_Line[i]] = 0;
 			}
-			else if(94 - Left_Line[i] > (Right_Line[i] - 94) *1.25)
+			//右在设定范围外，左边在设定范围内
+			else if(Left_Line [i] >= Left_Coordinates[i]*8/10 && Left_Line [i] <= Right_Coordinates[i] && Right_Line [i] >= Right_Coordinates*12/10)
 			{
-				Lost_Left_lost_nums++;
+				Right_Line[i] = Left_Line[i] + Road_Width_Table[i];
+				image_copy_out[i][Right_Line[i]] = 0;
 			}
-			
-			if(Right_Line [i] >= MT9V03X_W - 12)
+			//两边都在设定范围外
+			else if(Left_Line [i] <= Left_Coordinates[i]*8/10 && Right_Line [i] >= Right_Coordinates*12/10)
 			{
-				Lost_Right_lost_nums++;
-			}
-			else if(Right_Line[i] - 94 > (94 - Left_Line[i]) * 1.25)
-			{
-				Lost_Right_lost_nums++;
-			}
-//			else
-//			{
-//				Lost_Left_lost_nums++;
-//				Lost_Right_lost_nums++;
-//			}
-		}
-		else
-		{
-			if(Left_Line [i] <= 12)
-			{
-				Lost_Left_lost_nums++;
-			}
-			else if(Right_Line [i] >= MT9V03X_W - 12)
-			{
-				Lost_Right_lost_nums++;
+				//两边丢线数量没有到达阈值
+				if(Left_Lost_Line_count <= 20 && Right_Lost_Line_count <= 20)
+				{
+					Left_Line  [i] = Left_Coordinates[i];
+					Right_Line [i] = Right_Coordinates[i];
+					image_copy_out[i][Left_Line[i]] = 0;
+					image_copy_out[i][Right_Line[i]] = 0;
+				}
+				//一边丢线数量到达阈值，且左边的多
+				else if(Left_Lost_Line_count >= 20 && Left_Lost_Line_count >= Right_Lost_Line_count)
+				{
+					Right_Line[i] = Left_Line[i] + Road_Width_Table[i];
+					image_copy_out[i][Right_Line[i]] = 0;
+				}
+				//一边丢线数量到达阈值，且右边的多
+				else if(Right_Lost_Line_count >= 20 && Right_Lost_Line_count >= Left_Lost_Line_count)
+				{
+					Left_Line[i] = Right_Line[i] - Road_Width_Table[i];
+					image_copy_out[i][Left_Line[i]] = 0;
+				}
 			}
 		}
     }
