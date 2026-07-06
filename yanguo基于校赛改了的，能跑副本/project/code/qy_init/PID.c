@@ -180,7 +180,8 @@ int16 PID_Turn_Loc(int16 Mid_Error)
     pid.Turn_current_error = (120 / White_Column_MID + 1) * Mid_Error;
 
     /* 误差运算得出打角 */
-    pid.Turn_Out = (pid.Turn_KP * pid.Turn_current_error)+((pid.Turn_current_error *abs(pid.Turn_current_error))*pid.Turn_KP1 ) + (pid.Turn_current_error - pid.Turn_last_error) * pid.Turn_KD + (imu963ra_gyro_z * pid.Turn_GKD);
+    pid.Turn_Out = (pid.Turn_KP * pid.Turn_current_error)+((pid.Turn_current_error *abs(pid.Turn_current_error))*pid.Turn_KP1 )
+	+ (pid.Turn_current_error - pid.Turn_last_error) * pid.Turn_KD + (imu963ra_gyro_z * pid.Turn_GKD);
 
     /* 记下上次误差值 */
     pid.Turn_last_error = pid.Turn_current_error;

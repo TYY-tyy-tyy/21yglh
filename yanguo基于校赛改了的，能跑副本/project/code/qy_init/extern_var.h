@@ -50,7 +50,7 @@ extern uint8 COM_QY;
 extern int my_Speed;
 
 extern uint8 far image_copy[MT9V03X_H][MT9V03X_W];
-extern uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
+extern uint8 xdata image_copy_out[MT9V03X_H][MT9V03X_W];
 
 void Interrupt(void);
 void QQYY(void);

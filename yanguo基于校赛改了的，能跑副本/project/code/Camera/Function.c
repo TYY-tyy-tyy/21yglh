@@ -109,7 +109,7 @@ uint8 find_extreme_Value(uint8* arr, uint8 start, uint8 end, int mode)
 	// 查找最小值
 	if (mode == 0)
 	{
-		extremeValue = Image_H;
+		extremeValue = MT9V03X_H;
 		for (i = start + 1; i < end; i ++)
 		{
 			if (arr[i] < extremeValue)

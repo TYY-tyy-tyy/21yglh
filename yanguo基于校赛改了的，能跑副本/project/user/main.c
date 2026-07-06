@@ -54,7 +54,7 @@ extern int16 TargetSpeed;
 extern uint16 time;
 uint16 qy_time = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
-uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
+uint8 xdata image_copy_out[MT9V03X_H][MT9V03X_W];
 int count1 = 0;
 // ·½°¸1
 extern int16  TargetSpeed_1 ;
