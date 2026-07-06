@@ -41,8 +41,9 @@ uint8 COM_QY = 0;
 int16 my_Speed = 0;
 
 uint16 qy_time = 0;
+uint8 time_flag = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
-uint8 xdata image_copy_out[MT9V03X_H][MT9V03X_W];
+uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
 int count1 = 0;
 
 void main(void)
@@ -118,6 +119,7 @@ void main(void)
 		/* Í¼Ïñ´¦Àí */
 		if(mt9v03x_finish_flag)
 		{
+			time_flag = 1;
 			printf("%d\n",qy_time);
 			qy_time = 0;
 			printf("%d\n",qy_time);
@@ -138,6 +140,7 @@ void main(void)
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
 			printf("%d\n",qy_time);
+			time_flag = 0;
 			mt9v03x_finish_flag = 0;
 		}
 	}
@@ -165,7 +168,7 @@ void Interrupt(void)
 
 void QQYY(void)
 {
-	if(mt9v03x_finish_flag)
+	if(time_flag)
 	{
 		qy_time ++;
 	}
