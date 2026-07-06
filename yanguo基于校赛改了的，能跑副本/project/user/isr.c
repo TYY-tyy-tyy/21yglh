@@ -414,10 +414,10 @@ void TM17_TM18_IRQHandler() interrupt TMR17_TMR18_VECTOR
 
 void INT1_IRQHandler() interrupt INT1_VECTOR
 {
-    if(mt9v03x_finish_flag == 1)
-    {
-        return;
-    }
+//    if(mt9v03x_finish_flag == 1)
+//    {
+//        return;
+//    }
     mt9v03x_vsync_handler();
 }
 

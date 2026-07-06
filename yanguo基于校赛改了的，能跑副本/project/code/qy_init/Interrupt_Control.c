@@ -48,8 +48,8 @@ float diff;
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
-	Test_Speed();
-	return;
+//	Test_Speed();
+//	return;
 	nowtargetSpeed = my_Speed;
 	/* 时间变量自增 */
 	if(time <= 15000) 

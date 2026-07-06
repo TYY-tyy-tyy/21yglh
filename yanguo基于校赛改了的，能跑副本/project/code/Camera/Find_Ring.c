@@ -64,7 +64,8 @@ void Find_Left_Ring(void)
 	/* 判断是否为圆环 */
 	if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
 	{
-		if((Right_dowm_Patch == 0) && (Left_dowm_Patch >= 40 && (Left_Lost_Line_count <= 30) && (Right_Lost_Line_count <= 5) )
+		if((Right_dowm_Patch == 0) && (Left_dowm_Patch >= 40
+			&& (Left_Lost_Line_count >= 20) && (Right_Lost_Line_count <= 5) )
 			&& (White_Column_MID >= 90) && ring_preMeet_flag == 1)
 		{
 			//若是，则进入圆环标志位1
@@ -224,7 +225,8 @@ void Find_Right_Ring(void)
 	/* 判断是否为圆环 */
 	if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
 	{
-		if((Right_dowm_Patch >= 40) && (Left_dowm_Patch == 0) && (Right_Lost_Line_count <= 23) && (Left_Lost_Line_count <= 5)
+		if((Right_dowm_Patch >= 40) && (Left_dowm_Patch == 0)
+			&& (Right_Lost_Line_count >= 20) && (Left_Lost_Line_count <= 5)
 			&& (White_Column_MID >= 90) && ring_preMeet_flag == 1)
 		{
 //			COM_QY = 0;
@@ -367,8 +369,8 @@ uint8 r_con,l_con;
 //------------------------------------------------------------------------------------------------------------------
 void Find_Ring(void)
 {
-	if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
-	{
+//	if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
+//	{
 		r_con=Right_ContinueLine();
 		l_con=Left_ContinueLine();
 
@@ -390,10 +392,11 @@ void Find_Ring(void)
 		
 		//避免十字误判圆环
 		Left_dowm_Patch = Find_left_dowm_point(110,50);
-		Right_dowm_Patch = Find_Right_dowm_point(110,50);//58 20
-//		Left_up_Patch = Find_left_up_point(reference_col_farthest,reference_col_farthest+40);
-//		Right_up_Patch = Find_Right_up_point(reference_col_farthest,reference_col_farthest+40);
-	}
+		Right_dowm_Patch = Find_Right_dowm_point(110,50);
+		//统计局部的丢线数量
+//        Left_local_LostNums = Count_Left_Lost(100,30);
+//        Right_local_LostNums = Count_Right_Lost(100,30);
+//	}
 	Find_Right_Ring();
 	Find_Left_Ring();
 }
