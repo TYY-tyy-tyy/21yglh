@@ -14,15 +14,15 @@
 #define PI                  ( 3.1415926535898 )
 
 //角度获取
-extern float gyro_z[2], next_gyro_z;			//(被测)Z轴角速度
+extern int16 gyro_z[2], next_gyro_z;			//(被测)Z轴角速度
 
-extern float angle_ringR;
-extern float avl_gyro_z;
+extern int16 angle_ringR;
+extern int16 avl_gyro_z;
 
-extern float gyro_x[2], next_gyro_x;			//(被测)Z轴角速度
+extern int16 gyro_x[2], next_gyro_x;			//(被测)Z轴角速度
 
-extern float angle_pitch;
-extern float avl_gyro_x;
+extern int16 angle_pitch;
+extern int16 avl_gyro_x;
 
 //角度获取
 void tuoluo_init(void);

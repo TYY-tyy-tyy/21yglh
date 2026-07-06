@@ -6,10 +6,10 @@
 #define Start_time    200
 #define ACKERMAN_COEFF  0.375f  
 /* 转向环 */
-int Turn_PWM = 0;                   //最终转向的PWM
+int16 Turn_PWM = 0;                   //最终转向的PWM
 
 /* 停车标志位 */
-int Stop_Car_flag = 0;
+uint8 Stop_Car_flag = 0;
 
 /* 转向环 */
 #define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
@@ -27,7 +27,7 @@ int16 Speed_Left_Out;                    //速度环输出
 int16 Speed_Right_Out;
 
 /* 速度模式 */
-int Speed_Mode = 2;     //速度模式--1为线性，2为匀速
+uint8 Speed_Mode = 2;     //速度模式--1为线性，2为匀速
 
 uint16 time = 0;
 // 菜单参数
@@ -36,17 +36,17 @@ uint8 select_plan = 0;         // 当前使用方案
 
 // 方案1
 int16  TargetSpeed_1 = 180;
-float  Turn_KP_1    = 11;
-float  Turn_GKD_1   = 0.005;
+int16  Turn_KP_1    = 11;
+int16  Turn_GKD_1   = 0.005;
 
 // 方案2
 int16  TargetSpeed_2 = 250;
-float  Turn_KP_2    = 12.5;
-float  Turn_GKD_2   = 0.005;
-float t;
-int L = 20;
-int K = 15;
-float diff;
+int16  Turn_KP_2    = 12.5;
+int16  Turn_GKD_2   = 0.005;
+int16 t;
+int16 L = 20;
+int16 K = 15;
+int16 diff;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明

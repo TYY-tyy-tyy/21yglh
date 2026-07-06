@@ -32,41 +32,19 @@
 * 日期              作者           备注
 * 2025-11-20        大W            first version
 ********************************************************************************************************************/
-#include "qy_headfile.h"
+#include "main.h"
 
 uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
-/* 速度模式切换 */
-int out_Mode = 1;
-
-MODE mode;
-
-/* 丢线保护标志位 */
-int Protection = 0;
-
-/* 图像开启标志 */
-int image_flag = 0;
-
 uint8 COM_QY = 0;
 
-int my_Speed = 0;
-extern int16 TargetSpeed;
-extern uint16 time;
+int16 my_Speed = 0;
+
 uint16 qy_time = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 uint8 xdata image_copy_out[MT9V03X_H][MT9V03X_W];
 int count1 = 0;
-// 方案1
-extern int16  TargetSpeed_1 ;
-extern float  Turn_KP_1;
-extern float  Turn_GKD_1;
 
-// 方案2
-extern int16  TargetSpeed_2 ;
-extern float  Turn_KP_2;
-extern float  Turn_GKD_2;
-extern uint8 menu_cursor;         
-extern uint8 select_plan;
 void main(void)
 {
     clock_init(SYSTEM_CLOCK_96M); 				// 时钟配置及系统初始化<务必保留>
@@ -75,10 +53,7 @@ void main(void)
     // 此处编写用户代码 例如外设初始化代码等
 	/* 所有功能初始化 */
     All_Init();
-    // 此处编写用户代码 例如外设初始化代码等
 	
-//	Left_Motor_Speed(2000);
-////	Right_Motor_Speed(2000);
 	pid.Speed_KP_L = pid.Speed_KP_R = 15;//正常值：6.8；一次超调值：13
 	pid.Speed_KI_L = pid.Speed_KI_R = 3.2;//正常值：1.9；一次超调值：3.2
 	pid.Turn_KP =9;
@@ -106,90 +81,6 @@ void main(void)
 			tft180_show_float(0,MT9V03X_H / 2 + 16,pid.Turn_KD,3,2);
 			tft180_show_float(0,MT9V03X_H / 2 + 32,nowtargetSpeed,3,2);
 		}
-//==================== 菜单按键 ====================
-		
-		
-//	if(COM_QY == 0)  // 停车才能调参
-//	{
-//		// KEY4 切换方案1 / 方案2
-//		if(Get_Key_4())
-//		{
-//	//						menu_cursor = !menu_cursor;
-//	//						select_plan = menu_cursor + 1;
-//			select_plan+=1;
-//			menu_cursor+=1;
-//			if(select_plan > 1)
-//			{
-//				select_plan = 0;
-//			}
-//			if(menu_cursor > 1)
-//			{
-//				menu_cursor = 0;
-//			}
-//		}
-
-//		// KEY1 参数 +
-//		if(Get_Key_1())
-//		{
-//			if(select_plan == 1)
-//			{
-//				Turn_KP_1    += 0.25;
-//			}
-//			else
-//			{
-//				TargetSpeed_2 += 5;
-//				Turn_KP_2    += 0.25;
-//				Turn_GKD_2   += 0.001;
-//			}
-//		}
-
-//		// KEY2 参数 -
-//		if(Get_Key_5())
-//		{
-//			if(select_plan == 1)
-//			{
-//				Turn_KP_1    -= 0.25;
-//			}
-//			else
-//			{
-//				Turn_KP_2    -= 0.25;
-//			}
-//		}
-//		if(select_plan == 1)
-//		{
-//			TargetSpeed = TargetSpeed_1;
-//			pid.Turn_KP = Turn_KP_1;
-//			pid.Turn_GKD = Turn_GKD_1;
-//			KP_x_Increase = 0.002;
-//			KP_x_Decrease = 0.002;
-//		}
-//		else
-//		{
-//			TargetSpeed = TargetSpeed_2;
-//			pid.Turn_KP = Turn_KP_2;
-//			pid.Turn_GKD = Turn_GKD_2;
-//			KP_x_Increase = 0.002;
-//			KP_x_Decrease = 0.002;
-//		}
-//		show_menu();
-//	}
-//	if(Get_Key_3())
-//	{
-//		if(COM_QY == 0)
-//		{
-//			COM_QY = 1;
-//			time = 0;
-//		}
-//		else if(COM_QY == 1)
-//		{
-//			pid.Speed_All_Error_L = 0;
-//			pid.Speed_All_Error_R = 0;
-//			my_Speed = TargetSpeed;
-//			COM_QY = 0; 
-//		}
-//	}
-
-
 		if(Get_Key_3())
 		{
 			if(COM_QY == 0)
@@ -232,7 +123,6 @@ void main(void)
 			printf("%d\n",qy_time);
 			
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-//			Get_Use_Image();
 //			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
@@ -257,11 +147,7 @@ void Interrupt(void)
 {
 	 /* 获取陀螺仪数据 */
 	gyroscope_get_gyro();
-//    get_imu_data();
-
-//    /* 陀螺仪处理 */
-//    imu_task();
-
+	
 //    /* PID决策 */
 //    PID_DecisionMaking();
 	
@@ -282,9 +168,5 @@ void QQYY(void)
 	if(mt9v03x_finish_flag)
 	{
 		qy_time ++;
-	}
-	else
-	{
-//		qy_time = 0;
 	}
 }

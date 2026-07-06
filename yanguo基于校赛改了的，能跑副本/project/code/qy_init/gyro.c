@@ -17,41 +17,39 @@ int16 total_angle = 0;
 #include "gyro.h"
 
 //角度
-float gyro_z[2]={0}, next_gyro_z=0;			//(被测)Z轴角速度
-float gyro_x[2]={0}, next_gyro_x=0;			//(被测)x轴角速度
-float angle_ringR=0;
-float angle_pitch=0;
+int16 gyro_z[2]={0}, next_gyro_z=0;			//(被测)Z轴角速度
+int16 gyro_x[2]={0}, next_gyro_x=0;			//(被测)x轴角速度
+int16 angle_ringR=0;
+int16 angle_pitch=0;
 
-float null_drift_z=0;	//零漂
-float avl_gyro_z=0;   //测量
+int16 null_drift_z=0;	//零漂
+int16 avl_gyro_z=0;   //测量
 
-float null_drift_x=0;	//零漂
-float avl_gyro_x=0;   //测量
+int16 null_drift_x=0;	//零漂
+int16 avl_gyro_x=0;   //测量
 
 /****************角度获取****************/
 
 void gyroscope_get_gyro(void)
 {
 	imu963ra_get_gyro();
-	gyro_z[0] = 0.9*(imu963ra_gyro_z)+0.1*gyro_z[1];
+	gyro_z[0] = (9*(imu963ra_gyro_z)+1*gyro_z[1])/10;
 	gyro_z[1] = gyro_z[0];
-	gyro_x[0] = 0.9*(imu963ra_gyro_x)+0.1*gyro_x[1];
+	gyro_x[0] = (9*(imu963ra_gyro_x)+1*gyro_x[1])/10;
 	gyro_x[1] = gyro_x[0];
-//	avl_gyro_z = imu963ra_gyro_transition(imu963ra_gyro_z);
-	next_gyro_z = imu963ra_gyro_transition(gyro_z[0]);
+	
+	next_gyro_z = imu963ra_gyro_transition(gyro_z[0])*10;
 	avl_gyro_z = next_gyro_z - null_drift_z;
-	
-	next_gyro_x = imu963ra_gyro_transition(gyro_x[0]);
+	next_gyro_x = imu963ra_gyro_transition(gyro_x[0])*10;
 	avl_gyro_x = next_gyro_x - null_drift_x;
-	
 	
 	angle_get();
 }
 
 void angle_get(void)
 {
-	angle_ringR+=0.005*avl_gyro_z;
-	angle_pitch+=0.005*avl_gyro_x;
+	angle_ringR+=avl_gyro_z/10/200;
+	angle_pitch+=avl_gyro_x/10/200;
 }
 
 void angle_clear(void)
@@ -68,7 +66,6 @@ int8 null_drift_calculate(void)
 	static int8 ret=0;
 	
 	//采集数据
-//	
 	
 	temp_z += next_gyro_z;
 	temp_x += next_gyro_x;
@@ -77,8 +74,8 @@ int8 null_drift_calculate(void)
 	if(cnt_null>=200)
 	{
 		ret = 1;
-		null_drift_x = temp_x/200;
-		null_drift_z = temp_z/200;
+		null_drift_x = temp_x/200*10;
+		null_drift_z = temp_z/200*10;
 		angle_clear();
 	}
 	

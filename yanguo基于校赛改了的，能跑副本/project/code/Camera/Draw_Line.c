@@ -10,17 +10,17 @@
 void Patch_line_Left(int16 zuobiao_botton[2], int16 zuobiao_top[2])
 {
     /* 斜率  常数项 */
-    float K = 0.0f, b = 0.0f;
+    int16 K = 0, b = 0;
 	int16 j;
     //k = (y2 - y1) / (x2 - x1);
-    K = (float)((float)zuobiao_top[1] - (float)zuobiao_botton[1]) / (float)((float)zuobiao_top[0] - (float)zuobiao_botton[0]);
+    K = (zuobiao_top[1] - zuobiao_botton[1])*10 / (zuobiao_top[0] - zuobiao_botton[0]);
 
-    b = (float)((float)zuobiao_top[1] - K * (float)zuobiao_top[0]);
+    b = (zuobiao_top[1]*10 - K * zuobiao_top[0]);
 
     for(j = zuobiao_top[1]; j < zuobiao_botton[1]; j ++)  //上到下 j是行
     {
         //x = (y - b) / k
-        Left_Line[j] = (float)((float)j - (float)b) / (float)K; //Left_Line[j]是得到的列坐标
+        Left_Line[j] = (j*10 - b) / K;//Left_Line[j]是得到的列坐标
     }
 }
 
@@ -34,16 +34,16 @@ void Patch_line_Left(int16 zuobiao_botton[2], int16 zuobiao_top[2])
 void Patch_line_Right(int16 zuobiao_botton[2], int16 zuobiao_top[2])
 {
     /* 斜率  常数项 */
-    float K = 0.0f, b = 0.0f;
+    int16 K = 0.0f, b = 0.0f;
 	int16 j;
 
-    K = (float)((float)zuobiao_top[1] - (float)zuobiao_botton[1]) / (float)((float)zuobiao_top[0] - (float)zuobiao_botton[0]);
+    K = (zuobiao_top[1] - zuobiao_botton[1])*10 / (zuobiao_top[0] - zuobiao_botton[0]);
 
-    b = (float)((float)zuobiao_top[1] - K * (float)zuobiao_top[0]);
+    b = (zuobiao_top[1]*10 - K * zuobiao_top[0]);
 
     for(j = zuobiao_top[1]; j < zuobiao_botton[1]; j ++)
     {
-        Right_Line[j] = (float)((float)j - (float)b) / (float)K;
+        Right_Line[j] = (j*10 - b) / K;
     }
 }
 
@@ -55,10 +55,10 @@ void Patch_line_Right(int16 zuobiao_botton[2], int16 zuobiao_top[2])
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-void Add_mid_left(int start, int end)
+void Add_mid_left(int16 start, int16 end)
 {
-    int t;
-	int H;
+    int16 t;
+	int16 H;
     //自动调整位置
     if (start < end)
     {
@@ -81,10 +81,10 @@ void Add_mid_left(int start, int end)
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-void Patch_line_Right_Init(int start, int end)
+void Patch_line_Right_Init(int16 start, int16 end)
 {
-	int t;
-	int y;
+	int16 t;
+	int16 y;
 	//自动调整位置
     if (start < end)
     {
@@ -112,10 +112,10 @@ void Patch_line_Right_Init(int start, int end)
 // 使用示例
 // 备注信息
 //------------------------------------------------------------------------------------------------------------------
-void Patch_line_Left_Init(int start, int end)
+void Patch_line_Left_Init(int16 start, int16 end)
 {
-	int t;
-	int y;
+	int16 t;
+	int16 y;
 	//自动调整位置
     if (start < end)
     {
@@ -145,7 +145,7 @@ void Patch_line_Left_Init(int start, int end)
 //------------------------------------------------------------------------------------------------------------------
 void Right_Patch_Init(void)
 {
-	int y;
+	int16 y;
     for(y = 0; y < MT9V03X_H; y++)
     {
         if(y >= reference_col_farthest) return;
@@ -165,7 +165,7 @@ void Right_Patch_Init(void)
 //------------------------------------------------------------------------------------------------------------------
 void Left_Patch_Init(void)
 {
-	int y;
+	int16 y;
     for(y = 0; y < MT9V03X_H; y++)
     {
         if(y >= reference_col_farthest) continue;

@@ -4,13 +4,13 @@
 #include "qy_headfile.h"
 
 /* 速度模式 */
-extern int Speed_Mode;     //速度模式--1为线性，2为匀速
+extern uint8 Speed_Mode;     //速度模式--1为线性，2为匀速
 
 /* 中点误差 */
 extern int16 Image_error;
 
 /* 停车标志位 */
-extern int Stop_Car_flag;
+extern uint8 Stop_Car_flag;
 
 /* 目标速度 */
 extern int16 TargetSpeed;           //目标速度  190
