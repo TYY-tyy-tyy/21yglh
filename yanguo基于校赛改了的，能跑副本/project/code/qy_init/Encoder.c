@@ -117,13 +117,13 @@ float kalmanFilter(KFP *kfp,float input)
 // 备注信息     单位m
 //------------------------------------------------------------------------------------------------------------------
 /* 赛道长度 */
-int16 Track_length[2] = {0};
+float Track_length = 0;
 
 /* 当前积分值 */
-int16 Enc_value = 0;
+int Enc_value = 0;
 
 /* 统计n个一米的值 */
-int16 Enc_n = 0;
+int Enc_n = 0;
 
 /* 当前编码器一米的积分 */
 #define     EncLength       950
@@ -135,12 +135,8 @@ void Count_Length(void)
     if(Enc_value >= EncLength)
     {
         Enc_value = 0;
-        Track_length[0] += 1;
-		if(Track_length[0] > 10000)
-		{
-			Track_length[1] ++;
-			Track_length[0] = Track_length[0] -10000;
-		}
+        Track_length += 0.1;
+
     }
 }
 

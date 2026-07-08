@@ -848,14 +848,14 @@
               <FilePath>..\user\main.c</FilePath>
             </File>
             <File>
-              <FileName>qy_headfile.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\qy_headfile.h</FilePath>
-            </File>
-            <File>
               <FileName>main.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\user\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>qy_headfile.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\qy_headfile.h</FilePath>
             </File>
           </Files>
         </Group>
