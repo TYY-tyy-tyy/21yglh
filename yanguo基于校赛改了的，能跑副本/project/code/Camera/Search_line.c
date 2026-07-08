@@ -78,7 +78,7 @@ void search_reference_col(void)
 	if(Find_Right_FLAG == Right_3)
 	{
 		/* Ñ°ÕÒ×î³¤°×ÁÐ */
-		for(col = 94; col < (MT9V03X_W - 4); col += 2)
+		for(col = 94; col < (MT9V03X_W - 4); col += 4)
 		{
 			if(qqy == 0)
 			{

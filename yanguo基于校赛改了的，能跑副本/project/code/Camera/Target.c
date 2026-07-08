@@ -306,60 +306,138 @@ void Find_Target2(int p1,int p2)
 void LowerCameraExposure(void)
 {
 	uint8 col,row;
+	uint16 gray_point1 = 0,gray_point2 = 0;
 	if(late_laser == 1)
 	{
-		
-	}
-	if(late_laser == 2)
-	{
-		
-	}
-	if(late_laser == 3)
-	{
-		for(col = 72 ; col < 110 ;col ++ )
+		for(col = 40 ; col < 84 ;col ++ )
 		{
-			for(row = 72 ;row < 106 ;row ++)
+			for(row = 72 ;row < 110 ;row ++)
 			{
 				if(image_copy_out[row][col] > 240)
 				{
-					image_copy_out[row][col] = image_copy_out[row][col]*8/100;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*80/100;
+					image_copy_out[row][col] = gray_point2;
 				}
 				if(image_copy_out[row][col] > 220)
 				{
-					image_copy_out[row][col] = image_copy_out[row][col]*85/100;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*85/100;
+					image_copy_out[row][col] = gray_point2;
 				}
 				if(image_copy_out[row][col] > 200)
 				{
-					image_copy_out[row][col] = image_copy_out[row][col]*9/100;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*90/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+			}
+		}
+	}
+	if(late_laser == 2)
+	{
+		for(col = 66 ; col < 100 ;col ++ )
+		{
+			for(row = 72 ;row < 110 ;row ++)
+			{
+				if(image_copy_out[row][col] > 240)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*80/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 220)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*85/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 200)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*90/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+			}
+		}
+	}
+	if(late_laser == 3)
+	{
+		for(col = 72 ; col < 116 ;col ++ )
+		{
+			for(row = 72 ;row < 110 ;row ++)
+			{
+				if(image_copy_out[row][col] > 240)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*80/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 220)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*85/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 200)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*90/100;
+					image_copy_out[row][col] = gray_point2;
 				}
 			}
 		}
 	}
 	if(late_laser == 4)
 	{
-		
+		for(col = 88 ; col < 132 ;col ++ )
+		{
+			for(row = 72 ;row < 110 ;row ++)
+			{
+				if(image_copy_out[row][col] > 240)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*80/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 220)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*85/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+				if(image_copy_out[row][col] > 200)
+				{
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*90/100;
+					image_copy_out[row][col] = gray_point2;
+				}
+			}
+		}
 	}
 	if(late_laser == 5)
 	{
-		for(col = 72 ; col < 110 ;col ++ )
+		for(col = 104 ; col < 148 ;col ++ )
 		{
-			for(row = 102 ;row < 128 ;row ++)
+			for(row = 72 ;row < 72 ;row ++)
 			{
-				if(image_copy_out[row][col] > 250)
+				if(image_copy_out[row][col] > 240)
 				{
-					image_copy_out[row][col] = (uint8)image_copy_out[row][col]*0.8;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*80/100;
+					image_copy_out[row][col] = gray_point2;
 				}
-				if(image_copy_out[row][col] > 230)
+				if(image_copy_out[row][col] > 220)
 				{
-					image_copy_out[row][col] = (uint8)image_copy_out[row][col]*0.85;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*85/100;
+					image_copy_out[row][col] = gray_point2;
 				}
-				if(image_copy_out[row][col] > 210)
+				if(image_copy_out[row][col] > 200)
 				{
-					image_copy_out[row][col] = (uint8)image_copy_out[row][col]*0.9;
-				}
-				if(image_copy_out[row][col] > 190)
-				{
-					image_copy_out[row][col] = (uint8)image_copy_out[row][col]*0.95;
+					gray_point1 = image_copy_out[row][col];
+					gray_point2 = gray_point1*90/100;
+					image_copy_out[row][col] = gray_point2;
 				}
 			}
 		}

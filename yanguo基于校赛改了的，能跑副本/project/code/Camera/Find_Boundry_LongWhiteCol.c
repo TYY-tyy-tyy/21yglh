@@ -356,7 +356,7 @@ void Find_Boundry_LongWhiteCol(void)
     Find_Ring();
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
     {
-        Find_Crossroads();
+//        Find_Crossroads();
     }
 	
     //根据前面的元素判断传入改变后的左右边界的x坐标，从而二次得到真实的中点坐标

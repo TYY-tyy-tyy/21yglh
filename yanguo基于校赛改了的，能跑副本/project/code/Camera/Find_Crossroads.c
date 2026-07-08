@@ -30,7 +30,7 @@ void Find_Crossroads(void)
 //	}
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
-		
+		Lost_connection_left(40,110);
 	}
 	return;
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
