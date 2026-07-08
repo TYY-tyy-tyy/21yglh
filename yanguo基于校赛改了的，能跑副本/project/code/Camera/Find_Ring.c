@@ -66,8 +66,8 @@ void Find_Left_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
-        if((Left_dowm_Patch >= 40) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
-			&& (Left_Lost_Line_count <= 30) && (Right_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 45))
+        if((Left_dowm_Patch >= 20) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
+			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 45))
         {
             //若是，则进入圆环标志位1
             Find_Left_FLAG = Left_1;
@@ -103,31 +103,48 @@ void Find_Left_Ring(void)
     else if(Find_Left_FLAG == Left_1)
     {
         //当左右轮积分大于1500时
-        if((Encoder_jifen_L > Left_Enc_In) && (Encoder_jifen_R > Left_Enc_In))
-        {
-            //标志位更新
-            Find_Left_FLAG = Left_2;
+		if(Left_dowm_Patch >= 40)
+		{
+			if((Encoder_jifen_L > Left_Enc_In/10*12 && Encoder_jifen_R > Left_Enc_In/10*12) || Left_Lost_Line_count <= 15)
+			{
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-            //编码器积分标志位置0
-            Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-            //陀螺仪积分标志位置1
-            gyro_jifen_flag = 1;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
 
-            //关闭蜂鸣器
-            Buzzer_OFF();
-        }
-        else
-        {
-			Left_Patch_Init();
-            bot[0] = 46;//15
-            bot[1] = 118;
+				//关闭蜂鸣器
+				Buzzer_OFF();
+			}
+			else
+			{
+				Left_Patch_Init();
+			}
+		}
+		else if(Left_dowm_Patch < 40)
+		{
+			if((Encoder_jifen_L > Left_Enc_In && Encoder_jifen_R > Left_Enc_In) || Left_Lost_Line_count <= 15)
+			{
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-            top[0] = 96;//40
-            top[1] = 2;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-//            Patch_line_Left(bot, top);
-        }
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
+
+				//关闭蜂鸣器
+				Buzzer_OFF();
+			}
+			else
+			{
+				Left_Patch_Init();
+			}
+		}
 
     }
     /* 状态二 */
@@ -169,16 +186,6 @@ void Find_Left_Ring(void)
         {
             /* 拉线进环 */
 			Right_Patch_Init();
-            bot[0] = 158;
-            bot[1] = 110;
-
-            top[0] = 2;
-            top[1] = 10;
-
-//            Patch_line_Right(bot, top);
-
-            //计算角度差值
-            gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
 
             //蜂鸣器响起
             Buzzer_ON();
@@ -283,8 +290,8 @@ void Find_Right_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num))
     {
-        if((Right_dowm_Patch >= 40) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
-			&& (Right_Lost_Line_count <= 23) && (Left_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 45))
+        if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
+			&& (Right_Lost_Line_count <= 40) && (Left_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 45))
         {
             //若是，则进入圆环标志位1
             Find_Right_FLAG = Right_1;
@@ -322,31 +329,48 @@ void Find_Right_Ring(void)
     {
 //		COM_QY = 0;
         //当左右轮积分大于1500时
-        if((Encoder_jifen_L > Right_Enc_In) && (Encoder_jifen_R > Right_Enc_In))
-        {
-            //标志位更新
-            Find_Right_FLAG = Right_2;
+		if(Right_dowm_Patch >= 40)
+		{
+			if((Encoder_jifen_L > Right_Enc_In/10*12 && Encoder_jifen_R > Right_Enc_In/10*12) || Right_Lost_Line_count <= 15)
+			{
+				//标志位更新
+				Find_Right_FLAG = Right_2;
 
-            //编码器积分标志位置0
-            Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-            //陀螺仪积分标志位置1
-            gyro_jifen_flag = 1;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
 
-            //关闭蜂鸣器
-            Buzzer_OFF();
-        }
-        else
-        {
-			Right_Patch_Init();
-            bot[0] = 158;
-            bot[1] = 118;
+				//关闭蜂鸣器
+				Buzzer_OFF();
+			}
+			else
+			{
+				Right_Patch_Init();
+			}
+		}
+		else if(Right_dowm_Patch < 40)
+		{
+			if((Encoder_jifen_L > Right_Enc_In && Encoder_jifen_R > Right_Enc_In) || Right_Lost_Line_count <= 15)
+			{
+				//标志位更新
+				Find_Right_FLAG = Right_2;
 
-            top[0] = 108;
-            top[1] = 2;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-//            Patch_line_Right(bot, top);
-        }
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
+
+				//关闭蜂鸣器
+				Buzzer_OFF();
+			}
+			else
+			{
+				Right_Patch_Init();
+			}
+		}
 
     }
     /* 状态二 */

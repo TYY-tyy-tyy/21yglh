@@ -66,19 +66,21 @@ void main(void)
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
-		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+//		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+		printf("%d,%d,%d,%d,%d,%d\n",
+		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 //		tft180_show_int16(Image_W,0,COM_QY);
 		if(COM_QY == 0)
 		{
 			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
 			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
-			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);
+			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
 			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
-			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);
+			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
 			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
 			tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
-			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);
+			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
 			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
 			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
 			tft180_show_int16(48,MT9V03X_H / 2 + 32,angle_ringR);
@@ -125,8 +127,8 @@ void main(void)
 		if(mt9v03x_finish_flag)
 		{
 //			time_flag = 1;
-			printf("%d\n",qy_time);
-			qy_time = 0;
+//			printf("%d\n",qy_time);
+//			qy_time = 0;
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
@@ -146,7 +148,7 @@ void main(void)
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
 			mt9v03x_finish_flag = 0;
-			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time);
 //			printf("%d,%d\n",Image_error,White_Column_MID);
 //			time_flag = 0;
 		}

@@ -151,10 +151,8 @@ void Patch_line_Left_Init(int16 start, int16 end)
 void Right_Patch_Init(void)
 {
 	int16 y;
-    for(y = 0; y < MT9V03X_H; y++)
+    for(y = MT9V03X_H - 10; y >= reference_col_farthest; y-=2)
     {
-        if(y >= reference_col_farthest) return;
-        
         // 左线保持不变
         // 右线 = 左线 + 当前行标准宽度
         Right_Line[y] = Left_Line[y] + Road_Width_Table[y];
@@ -172,10 +170,8 @@ void Right_Patch_Init(void)
 void Left_Patch_Init(void)
 {
 	int16 y;
-    for(y = 0; y < MT9V03X_H; y++)
+    for(y = MT9V03X_H - 10; y >= reference_col_farthest; y-=2)
     {
-        if(y >= reference_col_farthest) continue;
-        
         // 右线保持不变
         // 左线 = 右线 - 当前行标准宽度
         Left_Line[y] = Right_Line[y] - Road_Width_Table[y];

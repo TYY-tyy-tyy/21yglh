@@ -58,5 +58,5 @@ void All_Init(void)
 	//陀螺仪数据初始化
 	null_drift_calculate();
 	
-	pit_us_init(TIM0_PIT,100,QQYY);
+//	pit_us_init(TIM0_PIT,100,QQYY);
 }
