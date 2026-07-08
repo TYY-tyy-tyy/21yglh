@@ -351,7 +351,7 @@ void Find_Boundry_LongWhiteCol(void)
 	/* ÔªËØ²¿·Ö */
     if(White_Column_MID >= 60)
     {
-        Find_Target2(52, 70);
+        Find_Target2(58, 70);
     }
     Find_Ring();
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
