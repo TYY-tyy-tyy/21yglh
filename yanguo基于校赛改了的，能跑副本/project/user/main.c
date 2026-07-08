@@ -121,12 +121,12 @@ void main(void)
 		if(mt9v03x_finish_flag)
 		{
 //			time_flag = 1;
-//			printf("%d\n",qy_time);
-//			qy_time = 0;
+			printf("%d\n",qy_time);
+			qy_time = 0;
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-//			LowerCameraExposure();
+			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
@@ -142,7 +142,7 @@ void main(void)
 				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
 			}
 			mt9v03x_finish_flag = 0;
-//			printf("%d\n",qy_time);
+			printf("%d\n",qy_time);
 //			printf("%d,%d\n",Image_error,White_Column_MID);
 //			time_flag = 0;
 		}
