@@ -161,15 +161,17 @@ void Find_Target2(int p1,int p2)
 	
 	uint8 i,j,k;
 	
-	uint8 tar_eer[4] = {0};
+	uint8 tar_eer[4] = {0};//靶的中心点坐标
 	
-	uint8 Black_counts[4] = {0};
+	uint8 Black_counts[4] = {0};//当行寻到的边界
 	
-	uint8 Black_p[5] = {0};
+	uint8 Black_p[5] = {0};//0到3为判断有无靶（有1无0），4为寻到靶的行数
 	
-	uint8 Find_Target_oad[4] = {0};
+	uint8 Find_Target_oad[4] = {0};//当行寻到靶的位置
 	
-	uint8 Target_num[4] = {0};
+	uint8 Target_num[4] = {0};//当行寻靶中心点划分（5块区域）
+	
+	uint8 ADD_Target_v = 0;//所有靶坐标和
 	
 	uint8 l_edge;
 	uint8 r_edge;
@@ -253,6 +255,7 @@ void Find_Target2(int p1,int p2)
 			if(Black_p[k] != 0)
 			{
 				tar_eer[k] = (remote_target[k][0] + remote_target[k][1])/2;
+				ADD_Target_v += tar_eer[k];
 				if(tar_eer[k] >= Left_Line[p]+Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*2)
 				{
 					Find_Target_oad[k] = 3;
@@ -279,18 +282,63 @@ void Find_Target2(int p1,int p2)
 		{
 			/* count votes from 4 scan lines per position */
 			uint8 pos_votes[6] = {0};
+			ADD_Target_v = ADD_Target_v/Black_p[4];
 			for(k = 0; k < 4; k++)
 			{
 				if(Find_Target_oad[k] >= 1 && Find_Target_oad[k] <= 5)
 					pos_votes[Find_Target_oad[k]]++;
 			}
 			/* priority: 3(mid) > 2(L-mid) > 4(R-mid) > 1(L) > 5(R) */
-			if(pos_votes[3] >= 2)           { all_off(); laser_on(LASER_PIN_3); late_laser = 3;}
-			else if(pos_votes[2] >= 2)      { all_off(); laser_on(LASER_PIN_2); late_laser = 2;}
-			else if(pos_votes[4] >= 2)      { all_off(); laser_on(LASER_PIN_4); late_laser = 4;}
-			else if(pos_votes[1] >= 2)      { all_off(); laser_on(LASER_PIN_1); late_laser = 1;}
-			else if(pos_votes[5] >= 2)      { all_off(); laser_on(LASER_PIN_5); late_laser = 5;}
-			else { all_off(); late_laser = 0;}
+			if(pos_votes[3] >= 2)           
+			{
+				if(ADD_Target_v >= Left_Line[p2]+Target_num[p2]*2 && ADD_Target_v <= Right_Line[p2]-Target_num[p2]*2)
+				{
+					all_off(); 
+					laser_on(LASER_PIN_3); 
+					late_laser = 3;
+				}
+			}
+			else if(pos_votes[2] >= 2)      
+			{ 
+				if(ADD_Target_v >= Left_Line[p2]+Target_num[p2]*1.5 && ADD_Target_v <= Left_Line[p2]+Target_num[p2]*2)
+				{
+					all_off(); 
+					laser_on(LASER_PIN_2); 
+					late_laser = 2;
+				}
+			}
+			else if(pos_votes[4] >= 2)      
+			{ 
+				if(ADD_Target_v >= Right_Line[p2]-Target_num[p2]*2 && ADD_Target_v <= Right_Line[p2]-Target_num[p2]*1.5)
+				{
+					all_off(); 
+					laser_on(LASER_PIN_4); 
+					late_laser = 4;
+				}
+			}
+			else if(pos_votes[1] >= 2)      
+			{ 
+				if(ADD_Target_v >= Left_Line[p2]+8 && ADD_Target_v <= Left_Line[p2]+Target_num[p2]*1.5)
+				{
+					all_off(); 
+					laser_on(LASER_PIN_1); 
+					late_laser = 1;
+				}
+			}
+			else if(pos_votes[5] >= 2)      
+			{ 
+				if(ADD_Target_v >= Right_Line[p2]-Target_num[p2]*1.5 && ADD_Target_v <= Right_Line[p2]-8)
+				{
+					all_off(); 
+					laser_on(LASER_PIN_5); 
+					late_laser = 5;
+				}
+			}
+			else 
+			{ 
+				all_off(); 
+				late_laser = 0;
+			}
 		}
 	}
 	else
