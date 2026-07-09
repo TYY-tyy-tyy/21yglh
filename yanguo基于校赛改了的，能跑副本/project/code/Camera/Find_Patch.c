@@ -248,7 +248,7 @@ int16 White_counts_weight(int16 p)
 	
 	White_counts_weight = Right_Line[p] - Left_Line[p];
 
-	if(White_counts_weight < 40 && count1 > 2000)
+	if(White_counts_weight < 40 && count1 > 1000)
 	{
 		COM_QY = 0;
 	}

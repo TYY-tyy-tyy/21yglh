@@ -53,6 +53,9 @@ int8 Find_Right_FLAG = 0;
 /* 右边局部丢线数量 */
 int8 Right_local_LostNums = 0;
 
+uint8 r_con,l_con;
+
+uint8 ring_preMeet_flag=0;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     找左圆环
@@ -67,7 +70,8 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
         if((Left_dowm_Patch >= 20) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
-			&& (Left_Lost_Line_count <= 30) && (Right_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 140))
+			&& (Left_Lost_Line_count <= 30) && (Right_Lost_Line_count <= 5) 
+				&& (White_Column_MID >= 100) && (White_Nums > 140))
         {
             //若是，则进入圆环标志位1
             Find_Left_FLAG = Left_1;
@@ -325,7 +329,8 @@ void Find_Right_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num))
     {
         if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
-			&& (Right_Lost_Line_count <= 30) && (Left_Lost_Line_count <= 5) && (White_Column_MID >= 100) && (White_Nums > 140))
+			&& (Right_Lost_Line_count <= 30) && (Left_Lost_Line_count <= 5) 
+				&& (White_Column_MID >= 100) && (White_Nums > 140))
         {
             //若是，则进入圆环标志位1
             Find_Right_FLAG = Right_1;
@@ -606,6 +611,18 @@ void Find_Ring(void)
 {
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
     {
+		r_con=Right_ContinueLine();
+		l_con=Left_ContinueLine();
+
+		if(r_con != l_con)
+		{
+			ring_preMeet_flag=1;
+		}
+		else
+		{
+			ring_preMeet_flag=0;
+		}
+		
         //避免大拐弯时的误判圆环
         White_Nums = White_counts_weight(80);
 

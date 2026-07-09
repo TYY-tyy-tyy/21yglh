@@ -84,7 +84,7 @@ void main(void)
 			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
 			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
 			tft180_show_int16(48,MT9V03X_H / 2 + 32,angle_ringR);
-			tft180_show_int16(48,MT9V03X_H / 2 + 48,Encoder_jifen_L);
+			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
 			tft180_show_int16(0,MT9V03X_H / 2,pid.Turn_KP);
 			tft180_show_int16(0,MT9V03X_H / 2 + 16,pid.Turn_KD);
 			tft180_show_int16(0,MT9V03X_H / 2 + 32,nowtargetSpeed);
