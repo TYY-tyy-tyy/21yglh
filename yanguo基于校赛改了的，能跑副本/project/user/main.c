@@ -60,7 +60,7 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170
 	pid.Speed_KI_L = pid.Speed_KI_R = 70;//正常值：25；一次超调值：70
-	pid.Turn_KP = 30;
+	pid.Turn_KP = 45;
 	pid.Turn_KP1 =0;
 	pid.Turn_KD =0;
 	pid.Turn_GKD =0;
@@ -95,6 +95,7 @@ void main(void)
 //		data_buffer[19] = "\r";
 //		data_buffer[20] = "\n";
 //		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
+		wireless_uart_send_byte(0xAA);
 		wireless_uart_send_byte((uint8)Image_error);
 //		wireless_uart_send_byte(',');
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
@@ -114,6 +115,7 @@ void main(void)
 		wireless_uart_send_byte((uint8)Find_Right_FLAG);
 //		wireless_uart_send_byte(',');
 		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+		wireless_uart_send_byte(0xFF);
 //		func_uint_to_str((char *)Image_error, 1);
 //		wireless_uart_send_byte(Image_error);
 //		uart_write_byte(WIRELESS_UART_INDEX, (char *)Image_error);

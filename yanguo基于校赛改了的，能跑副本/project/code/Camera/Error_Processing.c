@@ -66,5 +66,15 @@ void Mid_Error_Processing(void)
 		}
     }
 	if(count == 0){count = 1;}
-    Image_error /= count;
+    Image_error /= count;//×óÕýÓÒ¸º
+	
+	if(Find_Left_FLAG == Left_1)
+	{
+		if(Image_error > 0)
+		{
+			Image_error = -Image_error;
+		}
+	}
+	
+	
 }

@@ -70,12 +70,13 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
         if((Left_dowm_Patch >= 20) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
-			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5) 
-			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
-			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 155))
+			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
+//			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
+			&& (ring_preMeet_flag = 1)
+			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 150))
         {
             //若是，则进入圆环标志位1
-			COM_QY = 0;
+//			COM_QY = 0;
             Find_Left_FLAG = Left_1;
 
             angle_ringR = 0;
@@ -94,6 +95,7 @@ void Find_Left_Ring(void)
             White_Nums = 0;
             gyro_angle_start = 0;
             gyro_angle_end = 0;
+			Left_Patch_Init();
         }
 //        else
 //        {
@@ -114,6 +116,7 @@ void Find_Left_Ring(void)
 		{
 			if((Encoder_jifen_L > Left_Enc_In/10*12 && Encoder_jifen_R > Left_Enc_In/10*12) || Left_Lost_Line_count <= 15)
 			{
+//				COM_QY = 0;
 //				if(Left_Lost_Line_count > 5)
 //				{
 					//标志位更新
@@ -152,6 +155,7 @@ void Find_Left_Ring(void)
 		{
 			if((Encoder_jifen_L > Left_Enc_In && Encoder_jifen_R > Left_Enc_In) || Left_Lost_Line_count <= 15)
 			{
+//				COM_QY = 0;
 //				if(Left_Lost_Line_count > 5)
 //				{
 					//标志位更新
@@ -209,6 +213,7 @@ void Find_Left_Ring(void)
         //转向够角度后停止拉线,且左丢线数小于10时
         if (angle_ringR > 320)
         {
+			COM_QY = 0;
             Find_Left_FLAG = Left_6;
 
             /* 蜂鸣器关闭 */
@@ -226,7 +231,7 @@ void Find_Left_Ring(void)
         else
         {
             /* 拉线进环 */
-			Left_Patch_Init();
+			Right_Patch_Init();
 
             //蜂鸣器响起
 //            Buzzer_ON();
@@ -336,8 +341,9 @@ void Find_Right_Ring(void)
     {
         if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
 			&& (Right_Lost_Line_count <= 37) && (Left_Lost_Line_count <= 5) 
-			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
-			&& (White_Column_MID >= 100) && (White_Nums > 140) && (White_Nums < 155))
+//			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
+			&& (ring_preMeet_flag = 1)
+			&& (White_Column_MID >= 100) && (White_Nums > 130) && (White_Nums < 150))
         {
 			COM_QY = 0;
             //若是，则进入圆环标志位1
@@ -636,7 +642,7 @@ void Find_Ring(void)
 		}
 		
         //避免大拐弯时的误判圆环
-        White_Nums = White_counts_weight(80);
+        White_Nums = White_counts_weight(60);
 
         //统计局部的丢线数量
         Left_local_LostNums = Count_Left_Lost(100,30);

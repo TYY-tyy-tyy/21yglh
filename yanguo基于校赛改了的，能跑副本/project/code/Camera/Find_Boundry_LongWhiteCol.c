@@ -374,4 +374,5 @@ void Find_Boundry_LongWhiteCol(void)
 			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
 		}
 	}
+
 }
