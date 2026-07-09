@@ -80,7 +80,7 @@ void Find_Left_Ring(void)
 			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
 			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
-			&& (ring_preMeet_flag = 1)
+			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 135)  && (White_Nums < 150))
         {
             //若是，则进入圆环标志位1
@@ -256,7 +256,7 @@ void Find_Left_Ring(void)
         }
         else
         {
-			Find_Left_FLAG = Left_0;
+//			Find_Left_FLAG = Left_0;
             /* 拉线进环 */
 //			Right_Patch_Init();
 			/* 拉线进环 */
@@ -388,10 +388,10 @@ void Find_Right_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num))
     {
-        if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
+        if((Right_dowm_Patch >= 40) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
 			&& (Right_Lost_Line_count <= 37) && (Left_Lost_Line_count <= 5) 
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
-			&& (ring_preMeet_flag = 1)
+			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 135) && (White_Nums < 150))
         {
 			COM_QY = 0;
