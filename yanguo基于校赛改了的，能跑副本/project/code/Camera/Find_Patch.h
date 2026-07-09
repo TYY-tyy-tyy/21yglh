@@ -29,6 +29,7 @@ int16 Find_Right_up_point(int16 start, int16 end);
 int16 Find_left_dowm_point(int16 start, int16 end);
 int16 Find_Right_dowm_point(int16 start, int16 end);
 int16 White_counts_weight(int16 p);
+int16 White_counts_h(int16 p);
 void Black_counts_weight(int16 p);
 
 #endif 
