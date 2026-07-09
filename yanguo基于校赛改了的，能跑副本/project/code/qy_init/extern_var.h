@@ -18,6 +18,8 @@ extern double img_data;
 
 extern uint8 COM_QY;
 
+extern uint16 count1;
+
 extern int16 my_Speed;
 
 extern uint8 far image_copy[MT9V03X_H][MT9V03X_W];

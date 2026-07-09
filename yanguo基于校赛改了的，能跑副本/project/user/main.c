@@ -45,7 +45,7 @@ uint16 qy_time1 = 0;
 uint8 time_flag = 0;
 uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
-int count1 = 0;
+uint16 count1 = 0;
 
 void main(void)
 {
@@ -136,10 +136,10 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-			if(count1 > 2000)
-			{
-				Black_counts_weight(80);      //丢线保护
-			}
+//			if(count1 > 2000)
+//			{
+//				Black_counts_weight(80);      //丢线保护
+//			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 //			printf("%d\n",qy_time1);

@@ -32,7 +32,7 @@ typedef enum
 }Right_Ring;
 
 /* 单行的白点总数 */
-extern int8 White_Nums;
+extern int16 White_Nums;
 
 /* 左右圆环标志位 */
 extern int8 Find_Left_FLAG;

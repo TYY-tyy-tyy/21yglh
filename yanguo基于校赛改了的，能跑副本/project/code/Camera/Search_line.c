@@ -107,7 +107,7 @@ void search_reference_col(void)
 					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-					if(abs(compare_value) > REFERENCE_CONTRAST)
+					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
 						remote_distance[col] = (uint8)row+1;
@@ -150,7 +150,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
@@ -186,7 +186,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
@@ -230,7 +230,7 @@ void search_reference_col(void)
 					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-					if(abs(compare_value) > REFERENCE_CONTRAST)
+					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
 						remote_distance[col] = (uint8)row+1;
@@ -273,7 +273,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
@@ -309,7 +309,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
@@ -354,7 +354,7 @@ void search_reference_col(void)
 					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-					if(abs(compare_value) > REFERENCE_CONTRAST)
+					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
 						remote_distance[col] = (uint8)row+1;
@@ -397,7 +397,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
@@ -433,7 +433,7 @@ void search_reference_col(void)
 						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
-						if(abs(compare_value) > REFERENCE_CONTRAST)
+						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
 							remote_distance[col] = (uint8)row+1;
