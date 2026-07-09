@@ -16,6 +16,7 @@ int16 bot_R[2] = {0, 0};
 //------------------------------------------------------------------------------------------------------------------
 void Find_Crossroads(void)
 {
+	uint8 i = 0;
 //	if(r_con == 0 && l_con != 0 && 
 //		Right_Lost_Line_count <= 23 && Left_Lost_Line_count <= 5 && 
 //			Right_Lost_Line_count >= 23 && Left_Lost_Line_count >= 5)
@@ -41,6 +42,7 @@ void Find_Crossroads(void)
 //		Lost_connection_left(40,110);
 //	}
 //	return;
+	
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
 		/* ÕÒ×óÉÏÏÂ½Çµã */
@@ -127,6 +129,26 @@ void Find_Crossroads(void)
             Patch_line_Right(bot_R, top_R);
         }
     }
+	else
+	{
+		for (i = 110; i >= reference_col_farthest; i-=2)
+		{
+			if(Right_Line [i] >= MT9V03X_W - 8)
+			{
+				Right_Line[i] = Left_Line[i] + Road_Width_Table[i];
+				image_copy_out[i][Right_Line[i]] = 0;
+			}
+		}
+		
+		for (i = 110; i >= reference_col_farthest; i-=2)
+		{
+			if(Left_Line [i] == 8)
+			{
+				Left_Line[i] = Right_Line[i] - Road_Width_Table[i];
+				image_copy_out[i][Left_Line[i]] = 0;
+			}
+		}
+	}
 //	Patch_line_Right_Init(30,100);
 //	Patch_line_Left_Init(30,100);
 }

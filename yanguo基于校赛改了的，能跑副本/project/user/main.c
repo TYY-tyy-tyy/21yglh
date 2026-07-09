@@ -58,10 +58,10 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170
 	pid.Speed_KI_L = pid.Speed_KI_R = 70;//正常值：25；一次超调值：70
-	pid.Turn_KP = 40;
-//	pid.Turn_KP1 =0;
+	pid.Turn_KP = 45;
+	pid.Turn_KP1 =0;
 	pid.Turn_KD =0;
-//	pid.Turn_GKD =0.005;
+	pid.Turn_GKD =0;
 
 	while(1)
 	{
@@ -114,12 +114,17 @@ void main(void)
 		}
 		if(Get_Key_5())
 		{
-			pid.Turn_KP += 5;
+			pid.Turn_GKD += 5;
 //			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_1())
 		{
-			pid.Turn_KD += 5;
+			pid.Turn_KP += 5;
+//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
+		}
+		if(Get_Key_2())
+		{
+			pid.Turn_KP1 += 1;
 //			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
 		}
 	
@@ -136,10 +141,10 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-//			if(count1 > 2000)
-//			{
-//				Black_counts_weight(80);      //丢线保护
-//			}
+			if(count1 > 1000)
+			{
+				Black_counts_weight(80);      //丢线保护
+			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 //			printf("%d\n",qy_time1);

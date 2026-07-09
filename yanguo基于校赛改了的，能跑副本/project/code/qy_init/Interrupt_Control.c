@@ -82,7 +82,7 @@ void Interrupt_CCU60_CH0(void)
 	Stop_Car();
 
 	/* 非停车状态时正常控制，若停车 */
-	if(Stop_Car_flag == 0)
+	if(COM_QY == 1)
 	{
 		/* 速度决策 */
 //		Speed_DecisionMaking();
