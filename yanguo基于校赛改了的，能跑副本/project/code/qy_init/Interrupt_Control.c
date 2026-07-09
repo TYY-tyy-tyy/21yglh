@@ -85,7 +85,7 @@ void Interrupt_CCU60_CH0(void)
 	if(COM_QY == 1)
 	{
 		/* 速度决策 */
-//		Speed_DecisionMaking();
+		Speed_DecisionMaking();
 	}
 	/* 转向环输出 */
 	Turn_Out = PID_Turn_Loc(Image_error);  //中点误差扔进转向环PID
@@ -147,19 +147,19 @@ void Speed_DecisionMaking(void)
 {
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = 12;
-        nowtargetSpeed = TargetSpeed * 0.85;
+        pid.Turn_KP = 50;
+        nowtargetSpeed = 150;
     }
-    else if(White_Column_MID > 90 )
+    else if(White_Column_MID > 100)
     {
-        pid.Turn_KP = 7;
-        nowtargetSpeed = TargetSpeed;
+        pid.Turn_KP = 45;
+        nowtargetSpeed = 200;
     }
     else
     {
-        pid.Turn_KP = 12.5;      // 11.5 12.75 14
+        pid.Turn_KP = 45;      // 11.5 12.75 14
         pid.Turn_KP1 = 0;
-        nowtargetSpeed = TargetSpeed ;
+        nowtargetSpeed = 200 ;
     }
 }
 

@@ -82,18 +82,18 @@ void Mid_Error_Processing(void)
 			Image_error = -Image_error;
 		}
 	}
-	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)
-	{
-		if(Image_error < -5)
-		{
-			Image_error = -Image_error;
-		}
-	}
-	if(Find_Right_FLAG >= Right_5 && Find_Right_FLAG < Right_6)
-	{
-		if(Image_error > 5)
-		{
-			Image_error = -Image_error;
-		}
-	}
+//	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)
+//	{
+//		if(Image_error < -5)
+//		{
+//			Image_error = -Image_error;
+//		}
+//	}
+//	if(Find_Right_FLAG >= Right_5 && Find_Right_FLAG < Right_6)
+//	{
+//		if(Image_error > 5)
+//		{
+//			Image_error = -Image_error;
+//		}
+//	}
 }

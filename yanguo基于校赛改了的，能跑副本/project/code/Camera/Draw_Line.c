@@ -21,7 +21,7 @@ void Patch_line_Left(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     {
         //x = (y - b) / k
         Left_Line[j] = (j*10 - b) / K;//Left_Line[j]是得到的列坐标
-		image_copy_out[j][Left_Line[j]] = 0;
+//		image_copy_out[j][Left_Line[j]] = 0;
     }
 }
 
@@ -45,7 +45,7 @@ void Patch_line_Right(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     for(j = zuobiao_top[1]; j < zuobiao_botton[1]; j ++)
     {
         Right_Line[j] = (j*10 - b) / K;
-		image_copy_out[j][Right_Line[j]] = 0;
+//		image_copy_out[j][Right_Line[j]] = 0;
     }
 }
 
@@ -73,7 +73,7 @@ void Add_mid_left(int16 start, int16 end)
         //左边界等于右边界加上赛道宽度
         Left_Line[H] = Right_Line[H] - 60;
         if(Left_Line[H] > 40) Left_Line[H] = 0;
-		image_copy_out[H][Left_Line[H]] = 0;
+//		image_copy_out[H][Left_Line[H]] = 0;
     }
 }
 
@@ -101,7 +101,7 @@ void Patch_line_Right_Init(int16 start, int16 end)
         if(Right_Line[y] > Right_Coordinates[y]-10)
 		{
 			Right_Line[y] = Left_Line[y] + Road_Width_Table[y];
-			image_copy_out[y][Right_Line[y]] = 0;
+//			image_copy_out[y][Right_Line[y]] = 0;
 		}
         // 左线保持不变
         // 右线 = 左线 + 当前行标准宽度
@@ -133,7 +133,7 @@ void Patch_line_Left_Init(int16 start, int16 end)
         if(Left_Line[y] < Left_Coordinates[y]-10)
 		{
 			Left_Line[y] = Right_Line[y] - Road_Width_Table[y];
-			image_copy_out[y][Left_Line[y]] = 0;
+//			image_copy_out[y][Left_Line[y]] = 0;
 		}
         // 右线保持不变
         // 左线 = 右线 - 当前行标准宽度
@@ -156,7 +156,7 @@ void Right_Patch_Init(void)
         // 左线保持不变
         // 右线 = 左线 + 当前行标准宽度
         Right_Line[y] = Left_Line[y] + Road_Width_Table[y];
-		image_copy_out[y][Right_Line[y]] = 0;
+//		image_copy_out[y][Right_Line[y]] = 0;
     }
 }
 
@@ -175,6 +175,6 @@ void Left_Patch_Init(void)
         // 右线保持不变
         // 左线 = 右线 - 当前行标准宽度
         Left_Line[y] = Right_Line[y] - Road_Width_Table[y];
-		image_copy_out[y][Left_Line[y]] = 0;
+//		image_copy_out[y][Left_Line[y]] = 0;
     }
 }

@@ -393,9 +393,8 @@ void Find_Boundry_LongWhiteCol(void)
 		}
 	}
 	
-	else if((Find_Left_FLAG > Left_1) || (Find_Left_FLAG < Left_6))
+	else
 	{
-		reference_col_farthest = 40;
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
 			mid = (Left_Line [i] + Right_Line[i]) / 2.0;                                                                //ÖÐÏß×ø±ê

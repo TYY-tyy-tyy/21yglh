@@ -13,10 +13,10 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 7000;
-uint16 Left_Enc_Out = 5000;
-uint16 Right_Enc_In = 7000;
-uint16 Right_Enc_Out = 5000;
+uint16 Left_Enc_In = 2400;
+uint16 Left_Enc_Out = 500;
+uint16 Right_Enc_In = 2400;
+uint16 Right_Enc_Out = 500;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
 uint16 Right_time_In = 3;
@@ -76,7 +76,8 @@ void Find_Left_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
-        if((Left_dowm_Patch >= 20) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
+        if((Left_dowm_Patch >= 40)//(Left_dowm_Patch >= 20)
+			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
 			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 			&& (ring_preMeet_flag = 1)
@@ -123,9 +124,9 @@ void Find_Left_Ring(void)
         //当左右轮积分大于1500时
 		if(Left_dowm_Patch >= 40)
 		{
-			if((Encoder_jifen_L > Left_Enc_In/10*12 && Encoder_jifen_R > Left_Enc_In/10*12))
+			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*12)
 			{
-//				COM_QY = 0;
+				COM_QY = 0;
 				//标志位更新
 				Find_Left_FLAG = Left_2;
 
@@ -184,6 +185,7 @@ void Find_Left_Ring(void)
 
 				//关闭蜂鸣器
 			}
+			all_off();
 //			else if(Left_Lost_Line_count <= 10)
 //			{
 //				Ring_in_local_flag = 1;
@@ -221,6 +223,7 @@ void Find_Left_Ring(void)
         White_Nums = White_counts_weight(80);
         if (White_Nums > 140)
         {
+//			COM_QY = 0;
             Find_Left_FLAG = Left_3;
 
             //陀螺仪积分标志位置2
@@ -234,9 +237,9 @@ void Find_Left_Ring(void)
     else if (Find_Left_FLAG == Left_3)
     {
         //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 60)
+        if (angle_ringR > 120)
         {
-			COM_QY = 0;
+//			COM_QY = 0;
             Find_Left_FLAG = Left_4;
 
             /* 蜂鸣器关闭 */
@@ -249,12 +252,21 @@ void Find_Left_Ring(void)
             gyro_jifen_flag = 1;
 			
 			/* 编码器积分标志位置1 */
-             Encoder_jifen_flag = 0;
+            Encoder_jifen_flag = 0;
         }
         else
         {
+			Find_Left_FLAG = Left_0;
             /* 拉线进环 */
-			Right_Patch_Init();
+//			Right_Patch_Init();
+			/* 拉线进环 */
+//			bot[0] = Right_Coordinates[110];
+//            bot[1] = 110;
+
+//            top[0] = Right_Coordinates[1];
+//            top[1] = 1;
+
+//            Patch_line_Right(bot, top);
 
             //蜂鸣器响起
 //            Buzzer_ON();
@@ -285,7 +297,7 @@ void Find_Left_Ring(void)
         else
         {
             /* 拉线进环 */
-			Left_Patch_Init();
+//			Left_Patch_Init();
 
             //蜂鸣器关闭
 //             Buzzer_OFF();
@@ -315,11 +327,11 @@ void Find_Left_Ring(void)
          {
              /* 拉线出环 */
 			 Right_Patch_Init();
-             bot[0] = 158;
-             bot[1] = 110;
+//             bot[0] = 158;
+//             bot[1] = 110;
 
-             top[0] = 2;
-             top[1] = 10;
+//             top[0] = 2;
+//             top[1] = 10;
 
 //             Patch_line_Right(bot, top);
 
