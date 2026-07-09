@@ -31,7 +31,7 @@ void menu_all(void)
 	}
 	else if(menu_num == 4)
 	{
-		menu_3();
+		menu_4();
 	}
 }
 
@@ -59,6 +59,10 @@ void menu_0(void)
 		else if(menu_all_num == 2)
 		{
 			menu_num = 3;
+		}
+		else if(menu_all_num == 3)
+		{
+			menu_num = 4;
 		}
 	}
 	if(menu_all_num < 0)
@@ -203,6 +207,14 @@ void menu_2(void)//img
 //	tft180_show_string(8,MT9V03X_H / 2 + 32,"ys");
 	tft180_show_int16(56,MT9V03X_H / 2,REFERENCE_CONTRAST);
 	tft180_show_int16(56,MT9V03X_H / 2 + 16,set_time);
+	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
+	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
+	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
+	tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
+	tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
+	tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
+	tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
+	tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
 }
 
 void menu_3(void)//PID
@@ -275,4 +287,38 @@ void menu_3(void)//PID
 	tft180_show_int16(56,MT9V03X_H / 2 + 16,pid.Turn_KP1);
 	tft180_show_int16(56,MT9V03X_H / 2 + 32,pid.Turn_GKD);
 	tft180_show_int16(56,MT9V03X_H / 2 + 48,pid.Turn_KD);
+}
+
+void menu_4(void)//RUN
+{
+	if(Key_3)
+	{
+		if(COM_QY == 0)
+		{
+			COM_QY = 1;
+			count1 = 0;
+		}
+		else if(COM_QY == 1)
+		{
+			pid.Speed_All_Error_L = 0;
+			pid.Speed_All_Error_R = 0;
+			my_Speed = 200 ;
+			COM_QY = 0; 
+		}
+	}
+	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
+	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
+	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
+	tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
+	tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
+	tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
+	tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
+	tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
+	tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
+	tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
+	tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
+	tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
+	tft180_show_int16(0,MT9V03X_H / 2,pid.Turn_KP);
+	tft180_show_int16(0,MT9V03X_H / 2 + 16,pid.Turn_KD);
+	tft180_show_int16(0,MT9V03X_H / 2 + 32,angle_ringR);
 }
