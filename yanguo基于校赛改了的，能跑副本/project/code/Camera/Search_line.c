@@ -75,10 +75,10 @@ void search_reference_col(void)
 		remote_distance[col] = MT9V03X_H - 1;
 	}
 	/* 右圆环特殊扫线 */
-	if(Find_Right_FLAG == Right_3)
+	if(Find_Right_FLAG == Right_4)
 	{
 		/* 寻找最长白列 */
-		for(col = 94; col < (MT9V03X_W - 4); col += 4)
+		for(col = 94; col < (MT9V03X_W - 4); col += 6)
 		{
 			if(qqy == 0)
 			{
@@ -199,9 +199,9 @@ void search_reference_col(void)
 			}
 		}
 	}
-	else if(Find_Left_FLAG == Left_3)
+	else if(Find_Left_FLAG == Left_4)
 	{
-		for(col = 4; col < (MT9V03X_W - 94); col += 4)
+		for(col = 4; col < (MT9V03X_W - 94); col += 6)
 		{
 			if(qqy == 0)
 			{

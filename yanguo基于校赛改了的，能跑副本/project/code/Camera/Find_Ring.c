@@ -13,9 +13,9 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 2400;
-uint16 Left_Enc_Out = 500;
-uint16 Right_Enc_In = 2400;
+uint16 Left_Enc_In = 4500;
+uint16 Left_Enc_Out = 2400;
+uint16 Right_Enc_In = 4500;
 uint16 Right_Enc_Out = 500;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
@@ -97,7 +97,7 @@ void Find_Left_Ring(void)
 
             //蜂鸣器响起
 //            Buzzer_ON();
-			all_on();
+//			all_on();
 
             //数据清零
             White_Nums = 0;
@@ -126,7 +126,7 @@ void Find_Left_Ring(void)
 		{
 			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*12)
 			{
-				COM_QY = 0;
+//				COM_QY = 0;
 				//标志位更新
 				Find_Left_FLAG = Left_2;
 
@@ -237,7 +237,7 @@ void Find_Left_Ring(void)
     else if (Find_Left_FLAG == Left_3)
     {
         //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 120)
+        if (angle_ringR > 90)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_4;
@@ -258,7 +258,7 @@ void Find_Left_Ring(void)
         {
 //			Find_Left_FLAG = Left_0;
             /* 拉线进环 */
-//			Right_Patch_Init();
+			Right_Patch_Init();
 			/* 拉线进环 */
 //			bot[0] = Right_Coordinates[110];
 //            bot[1] = 110;
@@ -270,16 +270,16 @@ void Find_Left_Ring(void)
 
             //蜂鸣器响起
 //            Buzzer_ON();
-			all_on();
+//			all_on();
         }
      }
      /* 状态四 */
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 320)
+        if (angle_ringR > 360)
         {
-			COM_QY = 0;
+//			COM_QY = 0;
             Find_Left_FLAG = Left_6;
 
             //蜂鸣器响起
@@ -297,7 +297,7 @@ void Find_Left_Ring(void)
         else
         {
             /* 拉线进环 */
-//			Left_Patch_Init();
+			Left_Patch_Init();
 
             //蜂鸣器关闭
 //             Buzzer_OFF();
@@ -339,7 +339,7 @@ void Find_Left_Ring(void)
              gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
              //蜂鸣器响起
 //             Buzzer_ON();
-			 all_on();
+//			 all_on();
          }
      }
      /* 状态六 */
@@ -347,10 +347,10 @@ void Find_Left_Ring(void)
      {
          /* 蜂鸣器响起 */
 //          Buzzer_ON();
-		 all_on();
+//		 all_on();
 
          //当左右轮积分大于1500时
-         if((Encoder_jifen_L > Left_Enc_Out) && (Encoder_jifen_R > Left_Enc_Out))
+         if(((Encoder_jifen_L + Encoder_jifen_R)/2) > Left_Enc_Out)
          {
              Find_Left_FLAG = Left_0;
 
@@ -364,12 +364,12 @@ void Find_Left_Ring(void)
          }
          else
          {
-			 Left_Patch_Init();
-             bot[0] = 30;
-             bot[1] = 118;
+//			 Left_Patch_Init();
+//             bot[0] = 30;
+//             bot[1] = 118;
 
-             top[0] = 80;
-             top[1] = 2;
+//             top[0] = 80;
+//             top[1] = 2;
 
 //             Patch_line_Left(bot, top);
          }
@@ -408,7 +408,7 @@ void Find_Right_Ring(void)
 
             //蜂鸣器响起
 //            Buzzer_ON();
-			all_on();
+//			all_on();
 
             //数据清零
             White_Nums = 0;
@@ -567,7 +567,7 @@ void Find_Right_Ring(void)
 
             //蜂鸣器响起
 //            Buzzer_ON();
-			all_on();
+//			all_on();
         }
      }
      /* 状态四 */
@@ -629,7 +629,7 @@ void Find_Right_Ring(void)
              gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
              //蜂鸣器响起
 //             Buzzer_ON();
-			 all_on();
+//			 all_on();
          }
      }
      /* 状态六 */
@@ -638,7 +638,7 @@ void Find_Right_Ring(void)
 //		 COM_QY = 0;
          /* 蜂鸣器响起 */
 //          Buzzer_ON();
-		 all_on();
+//		 all_on();
 
          //当左右轮积分大于1500时
          if((Encoder_jifen_L > Right_Enc_Out) && (Encoder_jifen_R > Right_Enc_Out))

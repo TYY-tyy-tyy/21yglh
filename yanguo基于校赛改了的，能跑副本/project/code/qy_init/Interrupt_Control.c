@@ -145,10 +145,10 @@ void Interrupt_CCU60_CH0(void)
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
-    if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
+    if((Find_Left_FLAG == Left_4) || (Find_Right_FLAG == Right_4))
     {
-        pid.Turn_KP = 50;
-        nowtargetSpeed = 150;
+        pid.Turn_KP = 55;
+        nowtargetSpeed = 200;
     }
     else if(White_Column_MID > 100)
     {
