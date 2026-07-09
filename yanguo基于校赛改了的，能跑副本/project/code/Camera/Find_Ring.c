@@ -13,10 +13,14 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 5000;
+uint16 Left_Enc_In = 7000;
 uint16 Left_Enc_Out = 5000;
-uint16 Right_Enc_In = 5000;
+uint16 Right_Enc_In = 7000;
 uint16 Right_Enc_Out = 5000;
+uint16 Left_time_In = 3;
+uint16 Left_time_Out = 3;
+uint16 Right_time_In = 3;
+uint16 Right_time_Out = 3;
 
 /* ------------------------------------------------ */
 
@@ -57,6 +61,9 @@ uint8 r_con,l_con;
 
 uint8 ring_preMeet_flag=0;
 
+uint8 Ring_in_local_flag = 0;
+uint16 Ring_time = 0;
+
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     找左圆环
 // 参数说明
@@ -71,9 +78,9 @@ void Find_Left_Ring(void)
     {
         if((Left_dowm_Patch >= 20) && (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
 			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
-//			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
+			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 			&& (ring_preMeet_flag = 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 135)  && (White_Nums < 150))
         {
             //若是，则进入圆环标志位1
 //			COM_QY = 0;
@@ -95,6 +102,8 @@ void Find_Left_Ring(void)
             White_Nums = 0;
             gyro_angle_start = 0;
             gyro_angle_end = 0;
+			Ring_in_local_flag = 0;
+			Ring_time = 0;
 //			Left_Patch_Init();
         }
 //        else
@@ -114,37 +123,44 @@ void Find_Left_Ring(void)
         //当左右轮积分大于1500时
 		if(Left_dowm_Patch >= 40)
 		{
-			if((Encoder_jifen_L > Left_Enc_In/10*12 && Encoder_jifen_R > Left_Enc_In/10*12) || Left_Lost_Line_count <= 15)
+			if((Encoder_jifen_L > Left_Enc_In/10*12 && Encoder_jifen_R > Left_Enc_In/10*12))
 			{
 //				COM_QY = 0;
-//				if(Left_Lost_Line_count > 5)
-//				{
-					//标志位更新
-					Find_Left_FLAG = Left_2;
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-					//编码器积分标志位置0
-					Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-					//陀螺仪积分标志位置1
-					gyro_jifen_flag = 1;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
 
-					//关闭蜂鸣器
-					Buzzer_OFF();
-//				}
-//				else
-//				{
-//					//标志位更新
-//					Find_Left_FLAG = Left_0;
+				//关闭蜂鸣器
+				Buzzer_OFF();
+			}
+			else if(Left_Lost_Line_count <= 10)
+			{
+				Ring_in_local_flag = 1;
+			}
+			if(Ring_in_local_flag == 1)
+			{
+				Ring_time++;
+			}
+			if(Ring_time >= Left_time_In)
+			{
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-//					//编码器积分标志位置0
-//					Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-//					//陀螺仪积分标志位置1
-//					gyro_jifen_flag = 0;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
+				
+				Ring_time = 0;
 
-//					//关闭蜂鸣器
-//					Buzzer_OFF();
-//				}
+				//关闭蜂鸣器
+				Buzzer_OFF();
 			}
 //			else
 //			{
@@ -153,44 +169,49 @@ void Find_Left_Ring(void)
 		}
 		else if(Left_dowm_Patch < 40)
 		{
-			if((Encoder_jifen_L > Left_Enc_In && Encoder_jifen_R > Left_Enc_In) || Left_Lost_Line_count <= 15)
+			if(Encoder_jifen_L > Left_Enc_In && Encoder_jifen_R > Left_Enc_In)
 			{
 //				COM_QY = 0;
-//				if(Left_Lost_Line_count > 5)
-//				{
-					//标志位更新
-					Find_Left_FLAG = Left_2;
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-					//编码器积分标志位置0
-					Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-					//陀螺仪积分标志位置1
-					gyro_jifen_flag = 1;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
 
-					//关闭蜂鸣器
-					Buzzer_OFF();
-//				}
-//				else
-//				{
-//					//标志位更新
-//					Find_Left_FLAG = Left_0;
+				//关闭蜂鸣器
+			}
+			else if(Left_Lost_Line_count <= 10)
+			{
+				Ring_in_local_flag = 1;
+			}
+			if(Ring_in_local_flag == 1)
+			{
+				Ring_time++;
+			}
+			if(Ring_time >= Left_time_In)
+			{
+				//标志位更新
+				Find_Left_FLAG = Left_2;
 
-//					//编码器积分标志位置0
-//					Encoder_jifen_flag = 0;
+				//编码器积分标志位置0
+				Encoder_jifen_flag = 0;
 
-//					//陀螺仪积分标志位置1
-//					gyro_jifen_flag = 0;
+				//陀螺仪积分标志位置1
+				gyro_jifen_flag = 1;
+				
+				Ring_time = 0;
 
-//					//关闭蜂鸣器
-//					Buzzer_OFF();
-//				}
+				//关闭蜂鸣器
+				Buzzer_OFF();
 			}
 //			else
 //			{
 //				Left_Patch_Init();
 //			}
 		}
-
     }
     /* 状态二 */
     else if(Find_Left_FLAG == Left_2)
@@ -355,9 +376,9 @@ void Find_Right_Ring(void)
     {
         if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
 			&& (Right_Lost_Line_count <= 37) && (Left_Lost_Line_count <= 5) 
-//			&& (pid.Turn_last_error > -5) && (pid.Turn_last_error < 5) 
+			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 			&& (ring_preMeet_flag = 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 130) && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 135) && (White_Nums < 150))
         {
 			COM_QY = 0;
             //若是，则进入圆环标志位1
@@ -659,8 +680,8 @@ void Find_Ring(void)
         White_Nums = White_counts_weight(60);
 
         //统计局部的丢线数量
-        Left_local_LostNums = Count_Left_Lost(100,30);
-        Right_local_LostNums = Count_Right_Lost(100,30);//40 25
+        Left_local_LostNums = Count_Left_Lost(110,70);
+        Right_local_LostNums = Count_Right_Lost(110,70);//40 25
 
         //避免十字误判圆环
         Left_dowm_Patch = Find_left_dowm_point(110,20);

@@ -360,9 +360,9 @@ void Find_Boundry_LongWhiteCol(void)
     }
 	
     //根据前面的元素判断传入改变后的左右边界的x坐标，从而二次得到真实的中点坐标
-	for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
+	if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
 	{
-		if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
+		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
 			mid = (Left_Line [i] + Right_Line[i]) / 2.0;                                                                //中线坐标
 			last_mid = mid;
@@ -376,7 +376,10 @@ void Find_Boundry_LongWhiteCol(void)
 				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
 			}
 		}
-		else if((Find_Left_FLAG == Left_1) || (Find_Left_FLAG == Left_6))
+	}
+	else if((Find_Left_FLAG == Left_1) || (Find_Left_FLAG == Left_6))
+	{
+		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
 			//计算误差
 			Road_Wide[i] = Right_Coordinates[i] - Right_Line[i];//47
@@ -388,8 +391,12 @@ void Find_Boundry_LongWhiteCol(void)
 			
 			image_copy_out[i][reference_col] = 0;
 		}
-		
-		else if((Find_Left_FLAG > Left_1) || (Find_Left_FLAG < Left_6))
+	}
+	
+	else if((Find_Left_FLAG > Left_1) || (Find_Left_FLAG < Left_6))
+	{
+		reference_col_farthest = 40;
+		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
 			mid = (Left_Line [i] + Right_Line[i]) / 2.0;                                                                //中线坐标
 			last_mid = mid;
