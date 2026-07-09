@@ -15,7 +15,7 @@
 #define SEARCH_RANGE        10             //搜线半径
 #define STOPROW             1              //搜线停止行
 #define CONTRASTOFFSET      1              //搜线对比偏移
-#define REFERENCE_CONTRAST     5            //参考对比度
+extern int16 REFERENCE_CONTRAST;            //参考对比度
 
 /* 本图像的参考点 */
 extern uint8 reference_point[3];

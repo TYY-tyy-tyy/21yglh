@@ -1122,6 +1122,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\qy_init\laser.h</FilePath>
             </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\qy_init\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>memu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\qy_init\memu.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
