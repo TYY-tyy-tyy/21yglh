@@ -201,7 +201,7 @@ void search_reference_col(void)
 	}
 	else if(Find_Left_FLAG == Left_3)
 	{
-		for(col = 4; col < (MT9V03X_W - 94); col += 2)
+		for(col = 4; col < (MT9V03X_W - 94); col += 4)
 		{
 			if(qqy == 0)
 			{
@@ -325,7 +325,7 @@ void search_reference_col(void)
 	/* 常规取列 */
 	else
 	{
-		for(col = 20; col < (MT9V03X_W-20); col += 2)
+		for(col = 20; col < (MT9V03X_W-20); col += 4)
 		{
 			if(qqy == 0)
 			{
