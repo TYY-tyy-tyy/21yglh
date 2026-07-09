@@ -28,11 +28,11 @@ void Find_Crossroads(void)
 //	{
 //		Left_Patch_Init();
 //	}
-	if(Left_Lost_Line_count >= 30)
+	if(Left_Lost_Line_count >= 30 && Right_Lost_Line_count < 10)
 	{
 		Right_Patch_Init();
 	}
-	else if(Right_Lost_Line_count >= 30)
+	else if(Right_Lost_Line_count >= 30 && Left_Lost_Line_count < 10)
 	{
 		Left_Patch_Init();
 	}

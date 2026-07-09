@@ -132,7 +132,7 @@ void main(void)
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-//			LowerCameraExposure();
+			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
