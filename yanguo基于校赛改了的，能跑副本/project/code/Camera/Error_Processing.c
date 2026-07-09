@@ -76,5 +76,15 @@ void Mid_Error_Processing(void)
 		}
 	}
 	
-	
+	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)
+	{
+		if(Image_error > 5)
+		{
+			Image_error = -Image_error;
+		}
+		else if(Image_error > 0 && Image_error <= 5)
+		{
+			Image_error = -5;
+		}
+	}
 }

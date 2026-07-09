@@ -107,6 +107,7 @@ void main(void)
 		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
 //		wireless_uart_send_byte(',');
 		wireless_uart_send_byte((uint8)White_Column_MID);
+		wireless_uart_send_byte((uint8)White_Nums);
 //		wireless_uart_send_byte(',');
 		wireless_uart_send_byte((uint8)Right_local_LostNums);
 //		wireless_uart_send_byte(',');

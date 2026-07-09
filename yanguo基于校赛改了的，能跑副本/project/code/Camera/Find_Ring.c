@@ -95,7 +95,7 @@ void Find_Left_Ring(void)
             White_Nums = 0;
             gyro_angle_start = 0;
             gyro_angle_end = 0;
-			Left_Patch_Init();
+//			Left_Patch_Init();
         }
 //        else
 //        {
@@ -146,10 +146,10 @@ void Find_Left_Ring(void)
 //					Buzzer_OFF();
 //				}
 			}
-			else
-			{
-				Left_Patch_Init();
-			}
+//			else
+//			{
+//				Left_Patch_Init();
+//			}
 		}
 		else if(Left_dowm_Patch < 40)
 		{
@@ -185,10 +185,10 @@ void Find_Left_Ring(void)
 //					Buzzer_OFF();
 //				}
 			}
-			else
-			{
-				Left_Patch_Init();
-			}
+//			else
+//			{
+//				Left_Patch_Init();
+//			}
 		}
 
     }
@@ -211,10 +211,10 @@ void Find_Left_Ring(void)
     else if (Find_Left_FLAG == Left_3)
     {
         //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 320)
+        if (angle_ringR > 60)
         {
 			COM_QY = 0;
-            Find_Left_FLAG = Left_6;
+            Find_Left_FLAG = Left_4;
 
             /* 蜂鸣器关闭 */
             Buzzer_OFF();
@@ -226,7 +226,7 @@ void Find_Left_Ring(void)
             gyro_jifen_flag = 1;
 			
 			/* 编码器积分标志位置1 */
-             Encoder_jifen_flag = 1;
+             Encoder_jifen_flag = 0;
         }
         else
         {
@@ -241,18 +241,32 @@ void Find_Left_Ring(void)
      /* 状态四 */
      else if(Find_Left_FLAG == Left_4)
      {
-         Right_dowm_Patch = Find_Right_dowm_point(100,60);
+         //转向够角度后停止拉线,且左丢线数小于10时
+        if (angle_ringR > 320)
+        {
+			COM_QY = 0;
+            Find_Left_FLAG = Left_6;
 
-         if (Right_dowm_Patch >= 30)
-         {
-             Find_Left_FLAG = Left_5;
+            //蜂鸣器响起
+//			Buzzer_ON();
 
-             /* 数据清零 */
-             White_Nums = 0;
+            /* 变量清零 */
+            gyro_angle_dif = 0;
 
-             /* 陀螺仪标志位置2 */
-             gyro_jifen_flag = 2;
-         }
+            /* 陀螺仪标志位置1 */
+            gyro_jifen_flag = 1;
+			
+			/* 编码器积分标志位置1 */
+             Encoder_jifen_flag = 1;
+        }
+        else
+        {
+            /* 拉线进环 */
+			Left_Patch_Init();
+
+            //蜂鸣器关闭
+//             Buzzer_OFF();
+        }
      }
      /* 状态五 */
      else if(Find_Left_FLAG == Left_5)
@@ -627,8 +641,8 @@ void Find_Right_Ring(void)
 //------------------------------------------------------------------------------------------------------------------
 void Find_Ring(void)
 {
-    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
-    {
+//    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
+//    {
 		r_con=Right_ContinueLine();
 		l_con=Left_ContinueLine();
 
@@ -651,7 +665,7 @@ void Find_Ring(void)
         //避免十字误判圆环
         Left_dowm_Patch = Find_left_dowm_point(110,20);
         Right_dowm_Patch = Find_Right_dowm_point(110,20);//58 20
-    }
+//    }
 	
 	Find_Right_Ring();
 	Find_Left_Ring();
