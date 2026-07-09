@@ -88,6 +88,10 @@ void Mid_Error_Processing(void)
 		{
 			Image_error = -Image_error;
 		}
+		if(Image_error < 5)
+		{
+			Image_error = 5;
+		}
 	}
 //	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)
 //	{

@@ -13,9 +13,9 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 4800;
+uint16 Left_Enc_In = 4200;
 uint16 Left_Enc_Out = 2400;
-uint16 Right_Enc_In = 4800;
+uint16 Right_Enc_In = 4200;
 uint16 Right_Enc_Out = 500;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
@@ -76,12 +76,12 @@ void Find_Left_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
-        if((Left_dowm_Patch >= 40)//(Left_dowm_Patch >= 20)
-			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
+        if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
+			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 15) 
 			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 135)  && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 150))
         {
             //若是，则进入圆环标志位1
 //			COM_QY = 0;
@@ -96,7 +96,7 @@ void Find_Left_Ring(void)
             gyro_jifen_flag = 1;
 
             //蜂鸣器响起
-//            Buzzer_ON();
+            Buzzer_ON();
 //			all_on();
 
             //数据清零
@@ -269,7 +269,7 @@ void Find_Left_Ring(void)
 //            Patch_line_Right(bot, top);
 
             //蜂鸣器响起
-//            Buzzer_ON();
+            Buzzer_ON();
 //			all_on();
         }
      }
@@ -283,7 +283,7 @@ void Find_Left_Ring(void)
             Find_Left_FLAG = Left_6;
 
             //蜂鸣器响起
-//			Buzzer_ON();
+			Buzzer_ON();
 
             /* 变量清零 */
             gyro_angle_dif = 0;
@@ -338,7 +338,7 @@ void Find_Left_Ring(void)
              /* 计算角度差值 */
              gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
              //蜂鸣器响起
-//             Buzzer_ON();
+             Buzzer_ON();
 //			 all_on();
          }
      }
@@ -346,7 +346,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_6)
      {
          /* 蜂鸣器响起 */
-//          Buzzer_ON();
+          Buzzer_ON();
 //		 all_on();
 
          //当左右轮积分大于1500时
@@ -388,11 +388,11 @@ void Find_Right_Ring(void)
     /* 判断是否为圆环 */
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num))
     {
-        if((Right_dowm_Patch >= 40) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 10) 
+        if((Right_dowm_Patch >= 20) && (Left_dowm_Patch == 0) && (Right_local_LostNums >= 15) 
 			&& (Right_Lost_Line_count <= 37) && (Left_Lost_Line_count <= 5) 
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 135) && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 130) && (White_Nums < 150))
         {
 			COM_QY = 0;
             //若是，则进入圆环标志位1
@@ -407,7 +407,7 @@ void Find_Right_Ring(void)
             gyro_jifen_flag = 1;
 
             //蜂鸣器响起
-//            Buzzer_ON();
+            Buzzer_ON();
 //			all_on();
 
             //数据清零
@@ -566,7 +566,7 @@ void Find_Right_Ring(void)
             gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
 
             //蜂鸣器响起
-//            Buzzer_ON();
+            Buzzer_ON();
 //			all_on();
         }
      }
@@ -628,7 +628,7 @@ void Find_Right_Ring(void)
              /* 计算角度差值 */
              gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
              //蜂鸣器响起
-//             Buzzer_ON();
+             Buzzer_ON();
 //			 all_on();
          }
      }
@@ -637,7 +637,7 @@ void Find_Right_Ring(void)
      {
 //		 COM_QY = 0;
          /* 蜂鸣器响起 */
-//          Buzzer_ON();
+          Buzzer_ON();
 //		 all_on();
 
          //当左右轮积分大于1500时
