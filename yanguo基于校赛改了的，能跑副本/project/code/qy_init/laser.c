@@ -31,3 +31,12 @@ void all_off(void)
 	gpio_set_level(LASER_PIN_4, 0);
 	gpio_set_level(LASER_PIN_5, 0);
 }
+
+void all_on(void)
+{
+	gpio_set_level(LASER_PIN_1, 1);
+	gpio_set_level(LASER_PIN_2, 1);
+	gpio_set_level(LASER_PIN_3, 1);
+	gpio_set_level(LASER_PIN_4, 1);
+	gpio_set_level(LASER_PIN_5, 1);
+}

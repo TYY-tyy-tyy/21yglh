@@ -29,6 +29,8 @@ void All_Init(void)
 	
 	/* 激光笔初始化 */
 	laser_init();
+	
+	wireless_uart_init();
 
     /* 摄像头初始化 */
     while(1)

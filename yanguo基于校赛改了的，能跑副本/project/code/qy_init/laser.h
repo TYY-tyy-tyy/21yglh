@@ -23,5 +23,6 @@ void laser_init(void);
 void laser_on(gpio_pin_enum LASER_PIN);
 void laser_off(gpio_pin_enum LASER_PIN);
 void all_off(void);
+void all_on(void);
 
 #endif

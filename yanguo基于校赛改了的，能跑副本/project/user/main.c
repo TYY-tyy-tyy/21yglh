@@ -47,6 +47,8 @@ uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
 uint16 count1 = 0;
 
+uint8 data_buffer[21];
+
 void main(void)
 {
     clock_init(SYSTEM_CLOCK_96M); 				// 时钟配置及系统初始化<务必保留>
@@ -68,8 +70,54 @@ void main(void)
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
 //		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
-		printf("%d,%d,%d,%d,%d,%d\n",
-		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
+//		printf("%d,%d,%d,%d,%d,%d\n",
+//		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
+//		data_buffer[0] = Image_error;
+//		data_buffer[2] = Right_dowm_Patch;
+//		data_buffer[4] = Left_dowm_Patch;
+//		data_buffer[6] = Right_Lost_Line_count;
+//		data_buffer[8] = Left_Lost_Line_count;
+//		data_buffer[10] = White_Column_MID;
+//		data_buffer[12] = Right_local_LostNums;
+//		data_buffer[14] = Left_local_LostNums;
+//		data_buffer[16] = Find_Right_FLAG;
+//		data_buffer[18] = Find_Left_FLAG;
+//		func_uint_to_str((char *)data_buffer, 21);
+//		data_buffer[1] = ",";
+//		data_buffer[3] = ",";
+//		data_buffer[5] = ",";
+//		data_buffer[7] = ",";
+//		data_buffer[9] = ",";
+//		data_buffer[11] = ",";
+//		data_buffer[13] = ",";
+//		data_buffer[15] = ",";
+//		data_buffer[17] = ",";
+//		data_buffer[19] = "\r";
+//		data_buffer[20] = "\n";
+//		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
+//		wireless_uart_send_byte((char *)Image_error);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Right_dowm_Patch);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Left_dowm_Patch);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Right_Lost_Line_count);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Left_Lost_Line_count);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)White_Column_MID);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Right_local_LostNums);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Left_local_LostNums);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Find_Right_FLAG);
+//		wireless_uart_send_byte(',');
+//		wireless_uart_send_byte((char *)Find_Left_FLAG);
+
+		uart_write_byte(WIRELESS_UART_INDEX, Image_error);
+		wireless_uart_send_byte('\r');
+		wireless_uart_send_byte('\n');
 //		tft180_show_int16(Image_W,0,COM_QY);
 		if(COM_QY == 0)
 		{
