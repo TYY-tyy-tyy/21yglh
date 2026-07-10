@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 220;
+int16 my_Speed = 260;
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
@@ -60,9 +60,9 @@ void main(void)
 	/* 所有功能初始化 */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170
-	pid.Speed_KI_L = pid.Speed_KI_R = 70;//正常值：25；一次超调值：70
-	T_KP = 40;
+	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：210
+	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
+	T_KP = 47;
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;
@@ -70,7 +70,7 @@ void main(void)
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
-//		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
@@ -97,35 +97,19 @@ void main(void)
 //		data_buffer[19] = "\r";
 //		data_buffer[20] = "\n";
 //		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
-		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)Image_error);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Right_dowm_Patch);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Left_dowm_Patch);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)White_Column_MID);
-		wireless_uart_send_byte((uint8)White_Nums);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Right_local_LostNums);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Left_local_LostNums);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Find_Right_FLAG);
-//		wireless_uart_send_byte(',');
-		wireless_uart_send_byte((uint8)Find_Left_FLAG);
-		wireless_uart_send_byte(0xFF);
-//		func_uint_to_str((char *)Image_error, 1);
-//		wireless_uart_send_byte(Image_error);
-//		uart_write_byte(WIRELESS_UART_INDEX, (char *)Image_error);
-//		wireless_uart_send_string("SEEKFREE wireless uart demo.\r\n");
-//		wireless_uart_send_byte('\r');
-//		wireless_uart_send_byte('\n');
-//		tft180_show_int16(Image_W,0,COM_QY);
+//		wireless_uart_send_byte(0xAA);
+//		wireless_uart_send_byte((uint8)Image_error);
+//		wireless_uart_send_byte((uint8)Right_dowm_Patch);
+//		wireless_uart_send_byte((uint8)Left_dowm_Patch);
+//		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
+//		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
+//		wireless_uart_send_byte((uint8)White_Column_MID);
+//		wireless_uart_send_byte((uint8)White_Nums);
+//		wireless_uart_send_byte((uint8)Right_local_LostNums);
+//		wireless_uart_send_byte((uint8)Left_local_LostNums);
+//		wireless_uart_send_byte((uint8)Find_Right_FLAG);
+//		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+//		wireless_uart_send_byte(0xFF);
 		if(COM_QY == 0)
 		{
 			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
@@ -163,25 +147,25 @@ void main(void)
 		if(Get_Key_4())
 		{
 			my_Speed += 20;
-			if(my_Speed > 300)
+			if(my_Speed > 350)
 			{
 				my_Speed = 50;
 			}
 		}
 		if(Get_Key_5())
 		{
-			T_GKD += 1;
+//			T_GKD += 1;
 //			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_1())
 		{
-			T_KP += 1;
-//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
+//			T_KP += 1;
+			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_2())
 		{
-			T_KP1 += 1;
-//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
+//			T_KP1 += 1;
+			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
 		}
 	
 		/* 图像处理 */

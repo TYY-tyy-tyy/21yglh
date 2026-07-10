@@ -49,7 +49,7 @@ void Mid_Error_Processing(void)
     count = 0;
     for(i = MT9V03X_H - 10,j = 59; i >= reference_col_farthest; i-=2,j--)
     {
-		if(White_Column_MID > 110 && White_Nums < 100)
+		if(White_Column_MID > 110 && White_Nums < 90)
 		{
 			Image_error += Image_Weight1[j] * Road_Wide[i];
 			count += Image_Weight1[j];

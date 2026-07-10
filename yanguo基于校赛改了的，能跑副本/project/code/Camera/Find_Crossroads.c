@@ -43,7 +43,7 @@ void Find_Crossroads(void)
 //	}
 //	return;
 	
-	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
+	if(Left_Lost_Line_count >= 15 && Right_Lost_Line_count >= 15)
 	{
 		/* урвСиооб╫г╣Ц */
         Left_up_Patch = Find_left_up_point(30,100);

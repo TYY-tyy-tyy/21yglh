@@ -278,7 +278,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 350)
+        if (angle_ringR > 340 && Right_Lost_Line_count < 5)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_6;
