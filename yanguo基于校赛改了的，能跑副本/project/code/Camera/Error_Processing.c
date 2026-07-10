@@ -68,14 +68,14 @@ void Mid_Error_Processing(void)
 	if(count == 0){count = 1;}
     Image_error /= count;//×óÕýÓÒ¸º
 	
-	if(Find_Left_FLAG == Left_1)
+	if((Find_Left_FLAG == Left_1) || (Find_Left_FLAG == Left_6))
 	{
 		if(Image_error > 0)
 		{
 			Image_error = -Image_error;
 		}
 	}
-	if(Find_Right_FLAG == Right_1)
+	if((Find_Right_FLAG == Right_1) || (Find_Right_FLAG == Right_6))
 	{
 		if(Image_error < 0)
 		{
@@ -91,6 +91,17 @@ void Mid_Error_Processing(void)
 		if(Image_error < 5)
 		{
 			Image_error = 5;
+		}
+	}
+	if(Find_Right_FLAG == Right_4)
+	{
+		if(Image_error > 0)
+		{
+			Image_error = -Image_error;
+		}
+		if(Image_error > -5)
+		{
+			Image_error = -5;
 		}
 	}
 //	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)

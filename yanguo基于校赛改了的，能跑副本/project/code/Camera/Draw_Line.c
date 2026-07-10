@@ -155,7 +155,7 @@ void Right_Patch_Init(void)
     {
         // 左线保持不变
         // 右线 = 左线 + 当前行标准宽度
-        Right_Line[y] = Left_Line[y] + Road_Width_Table[y];
+        Right_Line[y] = Left_Line[y] + Road_Width_Table[y]*9/10;
 //		image_copy_out[y][Right_Line[y]] = 0;
     }
 }
@@ -174,7 +174,7 @@ void Left_Patch_Init(void)
     {
         // 右线保持不变
         // 左线 = 右线 - 当前行标准宽度
-        Left_Line[y] = Right_Line[y] - Road_Width_Table[y];
+        Left_Line[y] = Right_Line[y] - Road_Width_Table[y]*9/10;
 //		image_copy_out[y][Left_Line[y]] = 0;
     }
 }
