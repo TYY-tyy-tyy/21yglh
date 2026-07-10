@@ -435,7 +435,7 @@ void Black_counts_weight(int p)
 		}
 	}
 
-	if(Black_counts > 60)
+	if(Black_counts > 60 && ((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0)))
 	{
 		/* 无刷标志位置0 */
         Blds_flag = 0;

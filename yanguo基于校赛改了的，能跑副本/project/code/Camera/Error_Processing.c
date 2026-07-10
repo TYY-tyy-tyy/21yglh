@@ -49,20 +49,20 @@ void Mid_Error_Processing(void)
     count = 0;
     for(i = MT9V03X_H - 10,j = 59; i >= reference_col_farthest; i-=2,j--)
     {
-		if(White_Column_MID > 100)
+		if(White_Column_MID > 110)
 		{
 			Image_error += Image_Weight1[j] * Road_Wide[i];
-			count += Image_Weight3[j];
+			count += Image_Weight1[j];
 		}
-        else if(White_Column_MID > 60)
+        else if(White_Column_MID > 80)
 		{
 			Image_error += Image_Weight2[j] * Road_Wide[i];
 			count += Image_Weight2[j];
 		}
 		else
 		{
-			Image_error += Image_Weight3[j] * Road_Wide[i];
-			count += Image_Weight1[j];
+			Image_error += Image_Weight2[j] * Road_Wide[i];
+			count += Image_Weight2[j];
 		}
     }
 	if(count == 0){count = 1;}
