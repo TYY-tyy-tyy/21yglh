@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 260;
+int16 my_Speed = 300;//220
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
@@ -62,7 +62,7 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：210
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
-	T_KP = 47;
+	T_KP = 47;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;
@@ -70,7 +70,7 @@ void main(void)
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
-		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+//		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
@@ -97,19 +97,19 @@ void main(void)
 //		data_buffer[19] = "\r";
 //		data_buffer[20] = "\n";
 //		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
-//		wireless_uart_send_byte(0xAA);
-//		wireless_uart_send_byte((uint8)Image_error);
-//		wireless_uart_send_byte((uint8)Right_dowm_Patch);
-//		wireless_uart_send_byte((uint8)Left_dowm_Patch);
-//		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
-//		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
-//		wireless_uart_send_byte((uint8)White_Column_MID);
-//		wireless_uart_send_byte((uint8)White_Nums);
-//		wireless_uart_send_byte((uint8)Right_local_LostNums);
-//		wireless_uart_send_byte((uint8)Left_local_LostNums);
-//		wireless_uart_send_byte((uint8)Find_Right_FLAG);
-//		wireless_uart_send_byte((uint8)Find_Left_FLAG);
-//		wireless_uart_send_byte(0xFF);
+		wireless_uart_send_byte(0xAA);
+		wireless_uart_send_byte((uint8)Image_error);
+		wireless_uart_send_byte((uint8)Right_dowm_Patch);
+		wireless_uart_send_byte((uint8)Left_dowm_Patch);
+		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
+		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
+		wireless_uart_send_byte((uint8)White_Column_MID);
+		wireless_uart_send_byte((uint8)White_Nums);
+		wireless_uart_send_byte((uint8)Right_local_LostNums);
+		wireless_uart_send_byte((uint8)Left_local_LostNums);
+		wireless_uart_send_byte((uint8)Find_Right_FLAG);
+		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+		wireless_uart_send_byte(0xFF);
 		if(COM_QY == 0)
 		{
 			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
@@ -154,18 +154,17 @@ void main(void)
 		}
 		if(Get_Key_5())
 		{
-//			T_GKD += 1;
-//			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
+			T_GKD += 1;
 		}
 		if(Get_Key_1())
 		{
-//			T_KP += 1;
-			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
+			T_KP += 1;
+//			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_2())
 		{
-//			T_KP1 += 1;
-			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
+			T_KP1 += 1;
+//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
 		}
 	
 		/* 图像处理 */
