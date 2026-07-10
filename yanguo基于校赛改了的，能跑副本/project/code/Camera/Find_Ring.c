@@ -13,10 +13,10 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 3500;
-uint16 Left_Enc_Out = 2400;
-uint16 Right_Enc_In = 3500;
-uint16 Right_Enc_Out = 2400;
+uint16 Left_Enc_In = 3200;
+uint16 Left_Enc_Out = 1200;
+uint16 Right_Enc_In = 3200;
+uint16 Right_Enc_Out = 1200;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
 uint16 Right_time_In = 3;
@@ -77,8 +77,8 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
-			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
-			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 15) && (Right_Lost_Line_count == Right_local_LostNums)
+			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 15) 
+			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 20) && (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 //			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 130))
@@ -171,7 +171,7 @@ void Find_Left_Ring(void)
 		}
 		else if(Left_dowm_Patch < 40)
 		{
-			if(Encoder_jifen_L > Left_Enc_In && Encoder_jifen_R > Left_Enc_In)
+			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*12)
 			{
 //				COM_QY = 0;
 				//标志位更新
@@ -277,7 +277,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 360)
+        if (angle_ringR > 340)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_6;

@@ -74,10 +74,21 @@ void Mid_Error_Processing(void)
 		{
 			Image_error = -Image_error;
 		}
+		if(Image_error > -2)
+		{
+			Image_error = -2;
+		}
 	}
 	if((Find_Right_FLAG == Right_1) || (Find_Right_FLAG == Right_6))
 	{
 		if(Image_error < 0)
+		{
+			Image_error = -Image_error;
+		}
+	}
+	if(Find_Left_FLAG == Left_3)
+	{
+		if(Image_error < -5)
 		{
 			Image_error = -Image_error;
 		}
@@ -88,9 +99,9 @@ void Mid_Error_Processing(void)
 		{
 			Image_error = -Image_error;
 		}
-		if(Image_error < 5)
+		if(Image_error < 10)
 		{
-			Image_error = 5;
+			Image_error = 10;
 		}
 	}
 	if(Find_Right_FLAG == Right_4)
