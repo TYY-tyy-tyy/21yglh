@@ -77,7 +77,7 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
-			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 15) 
+			&& (Right_dowm_Patch == 0 || Right_dowm_Patch == 20) && (Left_local_LostNums >= 15) 
 			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 20) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
@@ -278,7 +278,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 340)
+        if (angle_ringR > 350)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_6;

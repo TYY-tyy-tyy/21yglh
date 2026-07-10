@@ -349,7 +349,7 @@ void Find_Boundry_LongWhiteCol(void)
 	}
 	
 	/* ÔªËØ²¿·Ö */
-    if((White_Column_MID >= 60) && (Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
+    if((White_Column_MID >= 100) && (Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
     {
         Find_Target2(52, 70);
     }
