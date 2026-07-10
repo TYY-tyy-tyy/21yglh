@@ -13,10 +13,10 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 4500;
+uint16 Left_Enc_In = 3200;
 uint16 Left_Enc_Out = 2400;
-uint16 Right_Enc_In = 4500;
-uint16 Right_Enc_Out = 500;
+uint16 Right_Enc_In = 3200;
+uint16 Right_Enc_Out = 2400;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
 uint16 Right_time_In = 3;
@@ -78,10 +78,10 @@ void Find_Left_Ring(void)
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
 			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 10) 
-			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 5)
-//			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
+			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 15) && (Right_Lost_Line_count == Right_local_LostNums)
+			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 //			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 120))
+			&& (White_Column_MID >= 100) && (White_Nums > 130))
         {
             //若是，则进入圆环标志位1
 //			COM_QY = 0;
@@ -221,7 +221,7 @@ void Find_Left_Ring(void)
     else if(Find_Left_FLAG == Left_2)
     {
         White_Nums = White_counts_weight(80);
-        if (White_Nums > 140)
+        if (White_Nums > 130)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_3;
@@ -701,8 +701,8 @@ void Find_Ring(void)
         Right_local_LostNums = Count_Right_Lost(110,50);//40 25
 
         //避免十字误判圆环
-        Left_dowm_Patch = Find_left_dowm_point(110,20);
-        Right_dowm_Patch = Find_Right_dowm_point(110,20);//58 20
+        Left_dowm_Patch = Find_left_dowm_point(100,20);
+        Right_dowm_Patch = Find_Right_dowm_point(100,20);//58 20
 //    }
 	
 	Find_Right_Ring();

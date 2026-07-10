@@ -84,7 +84,7 @@ int Count_Right_Lost(int start, int end)
     for (i = start; i >= end; i-=2)
     {
         //只找第一个符合条件的点
-        if(Right_Line [i] >= MT9V03X_W - 8)
+        if(Right_Line [i] == MT9V03X_W - 8)
         {
             Right_lost_nums++;
         }
