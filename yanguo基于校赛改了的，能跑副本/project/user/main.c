@@ -49,6 +49,8 @@ uint16 count1 = 0;
 
 uint8 data_buffer[21];
 
+int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI;
+
 void main(void)
 {
     clock_init(SYSTEM_CLOCK_96M); 				// 时钟配置及系统初始化<务必保留>
@@ -60,10 +62,10 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170
 	pid.Speed_KI_L = pid.Speed_KI_R = 70;//正常值：25；一次超调值：70
-	pid.Turn_KP = 40;
-	pid.Turn_KP1 =0;
+	T_KP = 38;
+	T_KP1 =0;
 	pid.Turn_KD =0;
-	pid.Turn_GKD =0;
+	T_GKD =0;
 
 	while(1)
 	{
@@ -138,9 +140,9 @@ void main(void)
 			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
 			tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
 			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
-			tft180_show_int16(0,MT9V03X_H / 2,pid.Turn_KP);
-			tft180_show_int16(0,MT9V03X_H / 2 + 16,pid.Turn_KP1);
-			tft180_show_int16(0,MT9V03X_H / 2 + 32,pid.Turn_GKD);
+			tft180_show_int16(0,MT9V03X_H / 2,T_KP);
+			tft180_show_int16(0,MT9V03X_H / 2 + 16,T_KP1);
+			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
 			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
 		}
 		if(Get_Key_3())
@@ -168,17 +170,17 @@ void main(void)
 		}
 		if(Get_Key_5())
 		{
-			pid.Turn_GKD += 1;
+			T_GKD += 1;
 //			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		if(Get_Key_1())
 		{
-			pid.Turn_KP += 1;
+			T_KP += 1;
 //			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
 		}
 		if(Get_Key_2())
 		{
-			pid.Turn_KP1 += 1;
+			T_KP1 += 1;
 //			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
 		}
 	
