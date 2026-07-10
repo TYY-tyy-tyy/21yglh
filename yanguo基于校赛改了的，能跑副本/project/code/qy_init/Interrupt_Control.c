@@ -35,10 +35,11 @@ int16  Turn_GKD_1   = 0.005;
 int16  TargetSpeed_2 = 250;
 int16  Turn_KP_2    = 12.5;
 int16  Turn_GKD_2   = 0.005;
-float t;
-int16 L = 20;
-int16 K = 15;
+
+float steer_rad;
 float diff;
+float left_ratio;
+float right_ratio;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明
@@ -82,7 +83,7 @@ void Interrupt_CCU60_CH0(void)
 	Stop_Car();
 
 	/* 非停车状态时正常控制，若停车 */
-	if(COM_QY == 1)
+		if(COM_QY == 1)
 	{
 		/* 速度决策 */
 		Speed_DecisionMaking();
@@ -95,21 +96,33 @@ void Interrupt_CCU60_CH0(void)
 	/* 转向环限幅 */
 	if(Turn_PWM >= SERVO_MOTOR_L_MAX) Turn_PWM = SERVO_MOTOR_L_MAX;
 	else if(Turn_PWM <= SERVO_MOTOR_R_MAX) Turn_PWM = SERVO_MOTOR_R_MAX;
-	t = tan((Turn_PWM - 4550) * 0.001176f);
-    diff = ACKERMAN_COEFF * t;
-	
-	/* 速度环串转向环 -------------------------------------------------- */
+		// 阿克曼差速模型：计算转向角
+		steer_rad = (Turn_PWM - 4550) * 0.001176f;
+		diff = STEER_K * tan(steer_rad);
+
+		// 限幅：防止内侧轮过慢导致打滑
+		if (diff >  DIFF_MAX) diff =  DIFF_MAX;
+		if (diff < -DIFF_MAX) diff = -DIFF_MAX;
+
+		left_ratio  = 1.0f - diff;
+		right_ratio = 1.0f + diff;
+
+		// 内侧轮最低转速保护
+		if (left_ratio  < ANTI_SLIP) left_ratio  = ANTI_SLIP;
+		if (right_ratio < ANTI_SLIP) right_ratio = ANTI_SLIP;
+
+		/* 速度环串转向环 -------------------------------------------------- */
 	/* 左右轮闭环输出  */
-	if(COM_QY == 1)
-	{
-		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
-        Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
+		if(COM_QY == 1)
+		{
+			Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * left_ratio, Encoder_Left);
+        Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * right_ratio, Encoder_Right);
     }
-    else
-    {
-        Speed_Left_Out = 0;
-        Speed_Right_Out = 0;
-    }
+		else
+		{
+			Speed_Left_Out = 0;
+			Speed_Right_Out = 0;
+		}
 
 	/* 速度环并转向环 -------------------------------------------------- */
 	Left_Out = Speed_Left_Out;
@@ -195,7 +208,7 @@ void show_menu(void)
         tft180_show_float(MT9V03X_W / 2, 16, Turn_GKD_2, 1, 3);
     }
 
-    if(COM_QY == 1)
+		if(COM_QY == 1)
         tft180_show_string(0, 110, "RUN");
     else
         tft180_show_string(0, 110, "STOP");
