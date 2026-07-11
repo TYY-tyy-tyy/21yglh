@@ -151,18 +151,18 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    
+    else if((White_Column_MID > 110) && (Image_error<=-20 || Image_error>=20))
+    {
+        pid.Turn_KP = 55;//20
+        nowtargetSpeed = my_Speed *0.9;
+		
+    }
 	else if(White_Column_MID > 113 )
     {
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
-	 else if((White_Column_MID > 110) && (Image_error<=-20 || Image_error>=20))
-    {
-        pid.Turn_KP = 60;//20
-        nowtargetSpeed = my_Speed *0.9;
-		
-    }
+	 
 //	else if(ring_preMeet_flag == 1
 //		||(Left_Lost_Line_count>= 10 && Right_Lost_Line_count <= 10)
 //		||(Left_Lost_Line_count <= 10 && Right_Lost_Line_count >= 10))
@@ -222,8 +222,8 @@ void show_menu(void)
 
 int clamp_x(int16 x)
 {
-    if (x < -52) return -52;
-    if (x > 52)  return 52;
+    if (x < -54) return -54;
+    if (x > 54)  return 54;
     return x;
 }
 int get_y(int16 x)
@@ -231,6 +231,6 @@ int get_y(int16 x)
     int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // ÕûÊı¼ÆËã£ºy = 46 + (3 \* |x|) / 52
-    int16 y = 52 + (4 * abs_x) / 52;//48 
+    int16 y = 50 + (8 * abs_x) / 52;//48 
     return y;
 }
