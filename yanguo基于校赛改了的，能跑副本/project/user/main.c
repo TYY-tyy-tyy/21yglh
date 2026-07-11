@@ -64,11 +64,10 @@ void main(void)
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
 	Ring_T_KP = 47;
 	W_T_KP = 20;
-	T_KP = 30;//40 44
+	T_KP = 40;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;
-
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);

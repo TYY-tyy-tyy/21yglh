@@ -7,7 +7,7 @@
 #define Right_Out_Max 7000
 
 #define Start_time    200
-#define ACKERMAN_COEFF  0.370f 
+#define ACKERMAN_COEFF  0.375f //220 260 0.370
 
 /* 转向环 */
 #define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)

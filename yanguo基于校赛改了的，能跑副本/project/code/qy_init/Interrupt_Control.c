@@ -9,8 +9,7 @@ uint8 Stop_Car_flag = 0;
 int16 Turn_Out = 0;                 //转向环输出
 int16 Turn_Out_MAX = 0;             //最大转向输出
 
-/* 速度环 */
-int16 TargetSpeed = 200;           //目标速度  190
+
 
 int16 nowtargetSpeed;
 int16 targetSpeed_min ;    //弯道速度
@@ -152,7 +151,7 @@ void Speed_DecisionMaking(void)
     }
     else if(White_Column_MID > 110)
     {
-        pid.Turn_KP = W_T_KP;//20
+//        pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
     else
