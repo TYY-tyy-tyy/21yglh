@@ -48,8 +48,8 @@ int16 y;
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
-//	Test_Speed();
-//	return;
+	Test_Speed();
+	return;
 	nowtargetSpeed = my_Speed;
 	T_KP = get_y(Image_error);//40 44
 	/* 时间变量自增 */
