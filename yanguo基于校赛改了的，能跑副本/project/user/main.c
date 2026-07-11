@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 290;//220 260
+int16 my_Speed = 320;//220 260 290
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
@@ -182,7 +182,8 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-			if(count1 > 100)
+			Extract_Road_Features();
+			if(count1 > 1000)
 			{
 				Black_counts_weight(80);      //丢线保护
 			}
