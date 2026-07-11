@@ -1,0 +1,232 @@
+/*********************************************************************************************************************
+* STC32G144K Opensourec Library 即（STC32G144K 开源库）是一个基于官方 SDK 接口的第三方开源库
+* Copyright (c) 2025 SEEKFREE 逐飞科技
+*
+* 本文件是STC32G144K开源库的一部分
+*
+* STC32G144K 开源库 是免费软件
+* 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
+* 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
+*
+* 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
+* 甚至没有隐含的适销性或适合特定用途的保证
+* 更多细节请参见 GPL
+*
+* 您应该在收到本开源库的同时收到一份 GPL 的副本
+* 如果没有，请参阅<https://www.gnu.org/licenses/>
+*
+* 额外注明：
+* 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
+* 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
+* 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
+* 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
+*
+* 文件名称          
+* 公司名称          成都逐飞科技有限公司
+* 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
+* 开发环境          MDK FOR C251
+* 适用平台          STC32G144K
+* 店铺链接          https://seekfree.taobao.com/
+*
+* 修改记录
+* 日期              作者           备注
+* 2025-11-20        大W            first version
+********************************************************************************************************************/
+#include "main.h"
+
+uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
+
+uint8 COM_QY = 0;
+
+int16 my_Speed = 260;//220
+
+uint16 qy_time = 0;
+uint16 qy_time1 = 0;
+uint8 time_flag = 0;
+uint8 far image_copy[MT9V03X_H][MT9V03X_W];
+uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
+uint16 count1 = 0;
+
+uint8 data_buffer[21];
+
+int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI;
+
+void main(void)
+{
+    clock_init(SYSTEM_CLOCK_96M); 				// 时钟配置及系统初始化<务必保留>
+    debug_init();                       		// 调试串口信息初始化
+
+    // 此处编写用户代码 例如外设初始化代码等
+	/* 所有功能初始化 */
+    All_Init();
+	
+	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：210
+	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
+	T_KP = 44;//40 44
+	T_KP1 =0;
+	pid.Turn_KD =0;
+	T_GKD =0;
+
+	while(1)
+	{
+//		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
+//		printf("%d,%d,%d,%d,%d,%d\n",Encoder_Left,Encoder_Right,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+//		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
+//		printf("%d,%d,%d,%d,%d,%d\n",
+//		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
+//		data_buffer[0] = Image_error;
+//		data_buffer[2] = Right_dowm_Patch;
+//		data_buffer[4] = Left_dowm_Patch;
+//		data_buffer[6] = Right_Lost_Line_count;
+//		data_buffer[8] = Left_Lost_Line_count;
+//		data_buffer[10] = White_Column_MID;
+//		data_buffer[12] = Right_local_LostNums;
+//		data_buffer[14] = Left_local_LostNums;
+//		data_buffer[16] = Find_Right_FLAG;
+//		data_buffer[18] = Find_Left_FLAG;
+//		func_uint_to_str((char *)data_buffer, 21);
+//		data_buffer[1] = ",";
+//		data_buffer[3] = ",";
+//		data_buffer[5] = ",";
+//		data_buffer[7] = ",";
+//		data_buffer[9] = ",";
+//		data_buffer[11] = ",";
+//		data_buffer[13] = ",";
+//		data_buffer[15] = ",";
+//		data_buffer[17] = ",";
+//		data_buffer[19] = "\r";
+//		data_buffer[20] = "\n";
+//		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
+		wireless_uart_send_byte(0xAA);
+		wireless_uart_send_byte((uint8)Image_error);
+		wireless_uart_send_byte((uint8)Right_dowm_Patch);
+		wireless_uart_send_byte((uint8)Left_dowm_Patch);
+		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
+		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
+		wireless_uart_send_byte((uint8)White_Column_MID);
+		wireless_uart_send_byte((uint8)White_Nums);
+		wireless_uart_send_byte((uint8)Right_local_LostNums);
+		wireless_uart_send_byte((uint8)Left_local_LostNums);
+		wireless_uart_send_byte((uint8)Find_Right_FLAG);
+		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+		wireless_uart_send_byte(0xFF);
+		if(COM_QY == 0)
+		{
+			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
+			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
+			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
+			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
+			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
+			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
+			tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
+			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
+			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
+			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
+			tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
+			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
+			tft180_show_int16(0,MT9V03X_H / 2,T_KP);
+			tft180_show_int16(0,MT9V03X_H / 2 + 16,T_KP1);
+			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
+			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
+		}
+		if(Get_Key_3())
+		{
+			if(COM_QY == 0)
+			{
+				COM_QY = 1;
+				time = 0;
+			}
+			else if(COM_QY == 1)
+			{
+				pid.Speed_All_Error_L = 0;
+				pid.Speed_All_Error_R = 0;
+				my_Speed = 200 ;
+				COM_QY = 0; 
+			}
+		}
+		if(Get_Key_4())
+		{
+			my_Speed += 20;
+			if(my_Speed > 350)
+			{
+				my_Speed = 50;
+			}
+		}
+		if(Get_Key_5())
+		{
+			T_GKD += 1;
+		}
+		if(Get_Key_1())
+		{
+			T_KP += 1;
+//			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
+		}
+		if(Get_Key_2())
+		{
+			T_KP1 += 1;
+//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
+		}
+	
+		/* 图像处理 */
+		if(mt9v03x_finish_flag)
+		{
+//			time_flag = 1;
+//			printf("%d\n",qy_time);
+//			qy_time = 0;
+//			qy_time1 = 0;
+//			printf("%d\n",qy_time);
+			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
+//			LowerCameraExposure();
+			get_reference_point();      //获取图像差比和参考点
+			search_reference_col();
+			Find_Boundry_LongWhiteCol(); //找边界搜线
+			if(count1 > 1000)
+			{
+				Black_counts_weight(80);      //丢线保护
+			}
+//			seekfree_assistant_camera_send();
+//			printf("%d\n",qy_time);
+//			printf("%d\n",qy_time1);
+			if(COM_QY == 0)
+			{
+				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
+			}
+			mt9v03x_finish_flag = 0;
+//			printf("%d\n",qy_time);
+//			printf("%d,%d\n",Image_error,White_Column_MID);
+//			time_flag = 0;
+		}
+	}
+}
+
+void Interrupt(void)
+{
+	 /* 获取陀螺仪数据 */
+	gyroscope_get_gyro();
+	
+//    /* PID决策 */
+//    PID_DecisionMaking();
+	
+	Mid_Error_Processing();
+	Interrupt_CCU60_CH0();
+	if(COM_QY == 1)
+	{
+	count1++;
+	}
+	else
+	{
+	count1=0;
+	}
+}
+
+void QQYY(void)
+{
+	if(mt9v03x_finish_flag)
+	{
+		qy_time ++;
+	}
+	if(time_flag)
+	{
+		qy_time1 ++;
+	}
+}
