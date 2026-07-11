@@ -156,6 +156,12 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
+	 else if((White_Column_MID > 110) && (Image_error<=-7 || Image_error>=7))
+    {
+        pid.Turn_KP = 50;//20
+        nowtargetSpeed = my_Speed/10*9;
+		
+    }
     else
     {
         pid.Turn_KP = T_KP;     
@@ -213,6 +219,6 @@ int get_y(int16 x)
     int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // ÕûÊı¼ÆËã£ºy = 46 + (3 \* |x|) / 52
-    int16 y = 44 + (6 * abs_x) / 52;
+    int16 y = 46 + (4 * abs_x) / 52;
     return y;
 }
