@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 290;//220 260 290
+int16 my_Speed = 320;//220 260 290
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
