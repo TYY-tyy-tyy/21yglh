@@ -151,18 +151,18 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if((White_Column_MID > 110) && (Image_error<=-20 || Image_error>=20))
-    {
-        pid.Turn_KP = 55;//20
-        nowtargetSpeed = my_Speed *0.9;
-		
-    }
+    
 	else if(White_Column_MID > 113 )
     {
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
-	 
+	 else if((White_Column_MID > 110) && (Image_error<=-20 || Image_error>=20))
+    {
+        pid.Turn_KP = 55;//20
+        nowtargetSpeed = my_Speed *0.9;
+		
+    }
 //	else if(ring_preMeet_flag == 1
 //		||(Left_Lost_Line_count>= 10 && Right_Lost_Line_count <= 10)
 //		||(Left_Lost_Line_count <= 10 && Right_Lost_Line_count >= 10))
