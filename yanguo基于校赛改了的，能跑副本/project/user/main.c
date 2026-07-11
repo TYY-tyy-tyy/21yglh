@@ -184,7 +184,7 @@ void main(void)
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
 //			Extract_Road_Features();
-			if(count1 > 1000)
+			if(count1 > 700)
 			{
 				Black_counts_weight(80);      //丢线保护
 			}
@@ -214,7 +214,7 @@ void Interrupt(void)
 	Mid_Error_Processing();
 	Interrupt_CCU60_CH0();
 	Open_Blds();
-	if(COM_QY == 1)
+	if(COM_QY == 2)
 	{
 		count1++;
 	}
