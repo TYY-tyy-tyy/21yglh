@@ -11,11 +11,11 @@
 /* ================================================================ */
 
 /* ==================== 阈值配置（可按需调整） ==================== */
-#define ROAD_STRAIGHT_THR       8      // |Road_Wide| < 此值视为直道
+#define ROAD_STRAIGHT_THR       6      // |Road_Wide| < 此值视为直道
 #define ROAD_SLOPE_THR          3      // 一阶差分超过此值视为有变化趋势
 #define ROAD_PEAK_MIN           12     // |peak| 小于此值不算有效弯道
-#define ROAD_ZC_HYSTERESIS      8      // 过零检测滞回区间
-#define ROAD_ZC_MIN_SPAN        10     // 过零最小间距（过滤跳变）
+#define ROAD_ZC_HYSTERESIS      6      // 过零检测滞回区间
+#define ROAD_ZC_MIN_SPAN        8     // 过零最小间距（过滤跳变）
 
 /* ==================== 分段边界 ==================== */
 /* 图像行号 0(远) → 119(近)，车在行号大的一侧         */

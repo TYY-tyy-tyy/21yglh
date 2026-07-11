@@ -31,6 +31,7 @@
 #include "laser.h"
 #include "Target.h"
 #include "Coordinates.h"
+#include "Road_Feature.h"
 //=====================================================”√ªß≤„======================================================
 
 #endif 

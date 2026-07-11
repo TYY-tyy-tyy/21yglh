@@ -98,19 +98,20 @@ void main(void)
 //		data_buffer[19] = "\r";
 //		data_buffer[20] = "\n";
 //		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
-//		wireless_uart_send_byte(0xAA);
-//		wireless_uart_send_byte((uint8)Image_error);
-//		wireless_uart_send_byte((uint8)Right_dowm_Patch);
-//		wireless_uart_send_byte((uint8)Left_dowm_Patch);
-//		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
-//		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
-//		wireless_uart_send_byte((uint8)White_Column_MID);
-//		wireless_uart_send_byte((uint8)White_Nums);
-//		wireless_uart_send_byte((uint8)Right_local_LostNums);
-//		wireless_uart_send_byte((uint8)Left_local_LostNums);
-//		wireless_uart_send_byte((uint8)Find_Right_FLAG);
-//		wireless_uart_send_byte((uint8)Find_Left_FLAG);
-//		wireless_uart_send_byte(0xFF);
+		wireless_uart_send_byte(0xAA);
+		wireless_uart_send_byte((uint8)g_track_feature.type);
+		wireless_uart_send_byte((uint8)Image_error);
+		wireless_uart_send_byte((uint8)Right_dowm_Patch);
+		wireless_uart_send_byte((uint8)Left_dowm_Patch);
+		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
+		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
+		wireless_uart_send_byte((uint8)White_Column_MID);
+		wireless_uart_send_byte((uint8)White_Nums);
+		wireless_uart_send_byte((uint8)Right_local_LostNums);
+		wireless_uart_send_byte((uint8)Left_local_LostNums);
+		wireless_uart_send_byte((uint8)Find_Right_FLAG);
+		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+		wireless_uart_send_byte(0xFF);
 		
 		if(COM_QY == 0)
 		{
