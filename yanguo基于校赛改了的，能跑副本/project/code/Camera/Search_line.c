@@ -30,20 +30,47 @@ void get_reference_point(void)
     uint16 reference_point_Num = 0;     //统计点的总数量
     uint16 reference_point_Sum[2] = {0};     //统计点的合
     //计算总数量
-    reference_point_Num = REFRENCE_ROW * 28;
+    reference_point_Num = REFRENCE_ROW * 18;
     //60~56
-    for(H = MT9V03X_H-10; H > (MT9V03X_H - 10 - REFRENCE_ROW); H-=1)
+    for(H = MT9V03X_H-5; H > (MT9V03X_H - 5 - REFRENCE_ROW); H-=1)
     {
         //20~74
-        for(W = 80; W < 108; W+=1)
-        {
-            reference_point_Sum[0] +=  image_copy_out[H][W];
-			if(reference_point_Sum[0] > 10000)
+//		if((Left_Lost_Line_count < 10 && Right_Lost_Line_count < 10) || (Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10))
+//		{
+			for(W = 85; W < 103; W+=1)
 			{
-				reference_point_Sum[0] = reference_point_Sum[0] - 10000;
-				reference_point_Sum[1] += 1;
+				reference_point_Sum[0] +=  image_copy_out[H][W];
+				if(reference_point_Sum[0] > 10000)
+				{
+					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
+					reference_point_Sum[1] += 1;
+				}
 			}
-        }
+//		}
+//		else if((Left_Lost_Line_count < 10 && Right_Lost_Line_count >= 10))
+//		{
+//			for(W = 110; W < 138; W+=1)
+//			{
+//				reference_point_Sum[0] +=  image_copy_out[H][W];
+//				if(reference_point_Sum[0] > 10000)
+//				{
+//					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
+//					reference_point_Sum[1] += 1;
+//				}
+//			}
+//		}
+//		else if((Left_Lost_Line_count >= 10 && Right_Lost_Line_count < 10))
+//		{
+//			for(W = 50; W < 78; W+=1)
+//			{
+//				reference_point_Sum[0] +=  image_copy_out[H][W];
+//				if(reference_point_Sum[0] > 10000)
+//				{
+//					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
+//					reference_point_Sum[1] += 1;
+//				}
+//			}
+//		}
     }
     //求平均值
     reference_point[0] = (uint8) (reference_point_Sum[0] / reference_point_Num);
