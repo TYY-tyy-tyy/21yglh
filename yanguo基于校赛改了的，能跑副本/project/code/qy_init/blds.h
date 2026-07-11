@@ -22,7 +22,7 @@ extern int16 Blds_PWM_MAX;    //芯片最大PWM
 extern int16 Blds_PWM_MIN;    //芯片最大PWM
 
 /* 检测无刷开启标志位 */
-extern int Blds_flag;
+extern int8 Blds_flag;
 
 /* 无刷转速变量 */
 extern int16 Blds_Speed;
@@ -30,6 +30,6 @@ extern int16 Blds_Speed;
 void Blds_Init(void);
 void Left_Blds_Speed(int16 Speed);
 void Right_Blds_Speed(int16 Speed);
-void Open_Blds(int flag);
+void Open_Blds(int8 flag);
 
 #endif /* CODE_BLDS_BLDS_H_ */
