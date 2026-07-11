@@ -12,7 +12,7 @@ void All_Init(void)
     Motors_Init();
 
     /* 无刷初始化 */
-    Blds_Init();
+//    Blds_Init();
 
     /* PID初始化 */
     PID_Init();

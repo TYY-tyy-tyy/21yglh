@@ -83,7 +83,7 @@ void Interrupt_CCU60_CH0(void)
 	Stop_Car();
 
 	/* 非停车状态时正常控制，若停车 */
-	if(COM_QY == 2)
+	if(COM_QY == 1)
 	{
 		/* 速度决策 */
 		Speed_DecisionMaking();
@@ -101,7 +101,7 @@ void Interrupt_CCU60_CH0(void)
 	
 	/* 速度环串转向环 -------------------------------------------------- */
 	/* 左右轮闭环输出  */
-	if(COM_QY == 2)
+	if(COM_QY == 1)
 	{
 		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
         Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
@@ -159,7 +159,7 @@ void Speed_DecisionMaking(void)
     }
 	 else if((White_Column_MID > 110) && (Image_error<=-18 || Image_error>=18))
     {
-        pid.Turn_KP = 63;//20
+        pid.Turn_KP = 65;//20
         nowtargetSpeed = my_Speed *0.9;
 		
     }
@@ -231,6 +231,6 @@ int get_y(int16 x)
     int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // 整数计算：y = 46 + (3 \* |x|) / 52
-    int16 y = 62 + (4 * abs_x) / 52;//48 
+    int16 y = 64+ (4 * abs_x) / 52;//48 
     return y;
 }
