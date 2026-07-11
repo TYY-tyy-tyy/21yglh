@@ -66,7 +66,7 @@ void main(void)
 	W_T_KP = 15;
 //	T_KP = 40;//40 44
 	T_KP1 =0;
-	pid.Turn_KD =0;
+	pid.Turn_KD =0.008;
 	T_GKD =0;
 	while(1)
 	{

@@ -151,14 +151,14 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if(White_Column_MID > 110 )
+    else if(White_Column_MID > 113 )
     {
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
 	 else if((White_Column_MID > 110) && (Image_error<=-20 || Image_error>=20))
     {
-        pid.Turn_KP = 55;//20
+        pid.Turn_KP = 60;//20
         nowtargetSpeed = my_Speed *0.9;
 		
     }
