@@ -151,21 +151,26 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if(White_Column_MID > 110 )
+    else if(White_Column_MID > 110&& (Image_error>=-10 && Image_error<=10))
     {
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
-//	 else if((White_Column_MID > 100 && White_Column_MID <112) && (Image_error<=-7 || Image_error>=7))
+//	 else if((White_Column_MID > 110) && (Image_error<=-7 || Image_error>=7))
 //    {
-//        pid.Turn_KP = 65;
+//        pid.Turn_KP = 60;//20
 //        nowtargetSpeed = my_Speed/10*9;
 //		
 //    }
-	 if(g_track_feature.type == TRACK_S_CURVE)
-  {
-        pid.Turn_KP = 65;
-        nowtargetSpeed = my_Speed/10*9;
+	 else if(g_track_feature.type == TRACK_S_CURVE)
+	{
+      // zero_cross_row 附近减小方向变化率，避免突变
+		pid.Turn_KP = 60;//20
+      if(abs(pid.Turn_last_error) > 5)
+      {
+           
+		nowtargetSpeed = my_Speed/10*9;  // 限幅
+      }
   }
     else
     {
@@ -224,6 +229,6 @@ int get_y(int16 x)
     int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // 整数计算：y = 46 + (3 \* |x|) / 52
-    int16 y = 50 + (4 * abs_x) / 52;//48 
+    int16 y = 51 + (5 * abs_x) / 52;//48 
     return y;
 }
