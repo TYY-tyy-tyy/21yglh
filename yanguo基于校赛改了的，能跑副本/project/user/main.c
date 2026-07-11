@@ -62,7 +62,7 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：210
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
-	T_KP = 47;//40 44
+	T_KP = 48;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;

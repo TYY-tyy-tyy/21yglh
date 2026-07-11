@@ -152,14 +152,14 @@ void Speed_DecisionMaking(void)
     }
     else if(White_Column_MID > 110)
     {
-        pid.Turn_KP = 20;
+        pid.Turn_KP = 30;//20
         nowtargetSpeed = my_Speed;
     }
     else
     {
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed ;
+        nowtargetSpeed = my_Speed *0.95;
     }
 }
 
