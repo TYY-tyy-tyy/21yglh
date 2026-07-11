@@ -706,8 +706,8 @@ void Find_Ring(void)
         Right_dowm_Patch = Find_Right_dowm_point(100,20);//58 20
 //    }
 	
-	Find_Right_Ring();
-	Find_Left_Ring();
+//	Find_Right_Ring();
+//	Find_Left_Ring();
 //    if(Diswitch_Key_1 == 1) Find_Left_Ring();   //»·µº
 //    if(Diswitch_Key_2 == 1) Find_Right_Ring();
 }

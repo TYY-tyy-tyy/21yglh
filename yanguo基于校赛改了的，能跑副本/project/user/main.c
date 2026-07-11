@@ -60,8 +60,8 @@ void main(void)
 	/* 所有功能初始化 */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 220;//正常值：125；一次超调值：210  170
-	pid.Speed_KI_L = pid.Speed_KI_R = 90;//正常值：25；一次超调值：70  35
+	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170  220
+	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：35  90
 	Ring_T_KP = 47;
 	W_T_KP = 20;
 //	T_KP = 40;//40 44
@@ -138,7 +138,7 @@ void main(void)
 				COM_QY = 1;
 				time = 0;
 			}
-			else if(COM_QY == 1)
+			else if(COM_QY != 0)
 			{
 				pid.Speed_All_Error_L = 0;
 				pid.Speed_All_Error_R = 0;
@@ -182,7 +182,7 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-			if(count1 > 1000)
+			if(count1 > 100)
 			{
 				Black_counts_weight(80);      //丢线保护
 			}
@@ -211,13 +211,14 @@ void Interrupt(void)
 	
 	Mid_Error_Processing();
 	Interrupt_CCU60_CH0();
+	Open_Blds();
 	if(COM_QY == 1)
 	{
-	count1++;
+		count1++;
 	}
-	else
+	else if(COM_QY == 0)
 	{
-	count1=0;
+		count1=0;
 	}
 }
 

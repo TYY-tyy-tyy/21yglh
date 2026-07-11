@@ -48,8 +48,8 @@ int16 y;
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
-	Test_Speed();
-	return;
+//	Test_Speed();
+//	return;
 	nowtargetSpeed = my_Speed;
 	T_KP = get_y(Image_error);//40 44
 	/* 时间变量自增 */
@@ -83,7 +83,7 @@ void Interrupt_CCU60_CH0(void)
 	Stop_Car();
 
 	/* 非停车状态时正常控制，若停车 */
-	if(COM_QY == 1)
+	if(COM_QY == 2)
 	{
 		/* 速度决策 */
 		Speed_DecisionMaking();
@@ -101,7 +101,7 @@ void Interrupt_CCU60_CH0(void)
 	
 	/* 速度环串转向环 -------------------------------------------------- */
 	/* 左右轮闭环输出  */
-	if(COM_QY == 1)
+	if(COM_QY == 2)
 	{
 		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
         Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
@@ -158,7 +158,7 @@ void Speed_DecisionMaking(void)
     }
 	 else if((White_Column_MID > 110) && (Image_error<=-7 || Image_error>=7))
     {
-        pid.Turn_KP = 50;//20
+        pid.Turn_KP = 52;//20
         nowtargetSpeed = my_Speed/10*9;
 		
     }
@@ -219,6 +219,6 @@ int get_y(int16 x)
     int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // 整数计算：y = 46 + (3 \* |x|) / 52
-    int16 y = 46 + (4 * abs_x) / 52;
+    int16 y = 48 + (4 * abs_x) / 52;
     return y;
 }
