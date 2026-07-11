@@ -30,12 +30,12 @@ void get_reference_point(void)
     uint16 reference_point_Num = 0;     //统计点的总数量
     uint16 reference_point_Sum[2] = {0};     //统计点的合
     //计算总数量
-    reference_point_Num = REFRENCE_ROW * 54;
+    reference_point_Num = REFRENCE_ROW * 28;
     //60~56
-    for(H = MT9V03X_H-15; H > (MT9V03X_H - 15 - REFRENCE_ROW*2); H-=2)
+    for(H = MT9V03X_H-10; H > (MT9V03X_H - 10 - REFRENCE_ROW); H-=1)
     {
         //20~74
-        for(W = 40; W < 148; W+=2)
+        for(W = 80; W < 108; W+=1)
         {
             reference_point_Sum[0] +=  image_copy_out[H][W];
 			if(reference_point_Sum[0] > 10000)

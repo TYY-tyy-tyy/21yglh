@@ -60,9 +60,9 @@ void Find_Boundry_LongWhiteCol(void)
 				//获取当前灰度值
 				gray_point_1 = image_copy_out[i][j];
 				//获取对比度灰度值
-				gray_point_2 = image_copy_out[i][j+2];
-				gray_point_3 = image_copy_out[i][j+4];
-				gray_point_4 = image_copy_out[i][j+6];
+				gray_point_2 = image_copy_out[i][j+1];
+				gray_point_3 = image_copy_out[i][j+2];
+				gray_point_4 = image_copy_out[i][j+3];
 //				image_copy_out[i][j] = 255;
 				if(j == MT9V03X_W - 8)
 				{
@@ -111,9 +111,9 @@ void Find_Boundry_LongWhiteCol(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[i][j];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[i][j+2];
-					gray_point_3 = image_copy_out[i][j+4];
-					gray_point_4 = image_copy_out[i][j+6];
+					gray_point_2 = image_copy_out[i][j+1];
+					gray_point_3 = image_copy_out[i][j+2];
+					gray_point_4 = image_copy_out[i][j+3];
 //					image_copy_out[i][j] = 255;
 					if(j == MT9V03X_W - 8)
 					{
@@ -155,9 +155,9 @@ void Find_Boundry_LongWhiteCol(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[i][j];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[i][j+2];
-					gray_point_3 = image_copy_out[i][j+4];
-					gray_point_4 = image_copy_out[i][j+6];
+					gray_point_2 = image_copy_out[i][j+1];
+					gray_point_3 = image_copy_out[i][j+2];
+					gray_point_4 = image_copy_out[i][j+3];
 //					image_copy_out[i][j] = 255;
 					if(j == MT9V03X_W - 8)
 					{
@@ -201,9 +201,9 @@ void Find_Boundry_LongWhiteCol(void)
 				//获取当前灰度值
 				gray_point_1 = image_copy_out[i][j];
 				//获取对比度灰度值
-				gray_point_2 = image_copy_out[i][j-2];
-				gray_point_3 = image_copy_out[i][j-4];
-				gray_point_4 = image_copy_out[i][j-6];
+				gray_point_2 = image_copy_out[i][j-1];
+				gray_point_3 = image_copy_out[i][j-2];
+				gray_point_4 = image_copy_out[i][j-3];
 //				image_copy_out[i][j] = 255;
 				if(j == 8)
 				{
@@ -252,9 +252,9 @@ void Find_Boundry_LongWhiteCol(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[i][j];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[i][j-2];
-					gray_point_3 = image_copy_out[i][j-4];
-					gray_point_4 = image_copy_out[i][j-6];
+					gray_point_2 = image_copy_out[i][j-1];
+					gray_point_3 = image_copy_out[i][j-2];
+					gray_point_4 = image_copy_out[i][j-3];
 //					image_copy_out[i][j] = 255;
 					if(j == 8)
 					{
@@ -296,9 +296,9 @@ void Find_Boundry_LongWhiteCol(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[i][j];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[i][j-2];
-					gray_point_3 = image_copy_out[i][j-4];
-					gray_point_4 = image_copy_out[i][j-6];
+					gray_point_2 = image_copy_out[i][j-1];
+					gray_point_3 = image_copy_out[i][j-2];
+					gray_point_4 = image_copy_out[i][j-3];
 //					image_copy_out[i][j] = 255;
 					if(j == 8)
 					{

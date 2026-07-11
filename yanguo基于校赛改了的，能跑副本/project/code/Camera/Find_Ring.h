@@ -72,6 +72,7 @@ extern uint16 Right_Enc_In;
 extern uint16 Right_Enc_Out;
 
 extern uint8 r_con,l_con;
+extern uint8 ring_preMeet_flag;
 
 void Find_Left_Ring(void);
 void Find_Right_Ring(void);

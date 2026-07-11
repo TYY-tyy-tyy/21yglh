@@ -162,16 +162,17 @@ void Speed_DecisionMaking(void)
 //        nowtargetSpeed = my_Speed/10*9;
 //		
 //    }
-	 else if(g_track_feature.type == TRACK_S_CURVE)
-	{
-      // zero_cross_row 附近减小方向变化率，避免突变
-		pid.Turn_KP = 60;//20
-      if(abs(pid.Turn_last_error) > 5)
-      {
-           
-		nowtargetSpeed = my_Speed/10*9;  // 限幅
-      }
-  }
+//	else if(ring_preMeet_flag == 1
+//		||(Left_Lost_Line_count>= 10 && Right_Lost_Line_count <= 10)
+//		||(Left_Lost_Line_count <= 10 && Right_Lost_Line_count >= 10))
+//	{
+//      // zero_cross_row 附近减小方向变化率，避免突变
+//		pid.Turn_KP = 60;//20
+//		if(abs(pid.Turn_last_error) > 5)
+//		{
+//		   nowtargetSpeed = my_Speed/10*9;  // 限幅
+//		}
+//	}
     else
     {
         pid.Turn_KP = T_KP;     
