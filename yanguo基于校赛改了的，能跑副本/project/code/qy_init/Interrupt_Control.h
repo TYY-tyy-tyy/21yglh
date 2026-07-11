@@ -7,7 +7,7 @@
 #define Right_Out_Max 7000
 
 #define Start_time    200
-#define ACKERMAN_COEFF  0.375f //220 260 0.370
+#define ACKERMAN_COEFF  0.370f //220 260 0.370
 
 /* 转向环 */
 #define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
@@ -39,4 +39,6 @@ extern uint16 time;
 void Interrupt_CCU60_CH0(void);
 void Speed_DecisionMaking(void);
 void show_menu(void);
+int clamp_x(int16 x);
+int get_y(int16 x);
 #endif /* CODE_INTERRUPT_CONTROL_INTERRUPT_CONTROL_H_ */

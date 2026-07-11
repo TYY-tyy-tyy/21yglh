@@ -51,6 +51,7 @@ void Interrupt_CCU60_CH0(void)
 //	Test_Speed();
 //	return;
 	nowtargetSpeed = my_Speed;
+	T_KP = get_y(Image_error);//40 44
 	/* 时间变量自增 */
 	if(time <= 15000) 
 	{
@@ -157,9 +158,9 @@ void Speed_DecisionMaking(void)
     }
     else
     {
-        pid.Turn_KP = y;      // 11.5 12.75 14
+        pid.Turn_KP = T_KP;     
         pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed;
+        nowtargetSpeed = my_Speed / 10*9;
     }
 }
 
@@ -201,15 +202,15 @@ void show_menu(void)
         tft180_show_string(0, 110, "STOP");
 }
 
-int clamp_x(int x)
+int clamp_x(int16 x)
 {
     if (x < -52) return -52;
     if (x > 52)  return 52;
     return x;
 }
-int get_y(int x)
+int get_y(int16 x)
 {
-    int16 x_val = clamp_x(Image_error);
+    int16 x_val = clamp_x(x);
     int16 abs_x = abs(x_val);
     // 整数计算：y = 46 + (3 \* |x|) / 52
     int16 y = 46 + (3 * abs_x) / 52;

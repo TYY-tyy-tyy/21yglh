@@ -111,10 +111,11 @@ void main(void)
 		wireless_uart_send_byte((uint8)Find_Right_FLAG);
 		wireless_uart_send_byte((uint8)Find_Left_FLAG);
 		wireless_uart_send_byte(0xFF);
+		tft180_show_int16(MT9V03X_W / 2,0,Speed_Left_Out);
+		tft180_show_int16(MT9V03X_W / 2,16,Speed_Right_Out);
 		if(COM_QY == 0)
 		{
-			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
-			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
+			
 			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
 			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
 			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
