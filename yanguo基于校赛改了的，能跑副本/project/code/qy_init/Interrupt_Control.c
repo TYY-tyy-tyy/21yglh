@@ -38,6 +38,7 @@ float t;
 int16 L = 20;
 int16 K = 15;
 float diff;
+int16 y;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明
@@ -156,7 +157,7 @@ void Speed_DecisionMaking(void)
     }
     else
     {
-        pid.Turn_KP = T_KP;      // 11.5 12.75 14
+        pid.Turn_KP = y;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed;
     }
@@ -198,4 +199,19 @@ void show_menu(void)
         tft180_show_string(0, 110, "RUN");
     else
         tft180_show_string(0, 110, "STOP");
+}
+
+int clamp_x(int x)
+{
+    if (x < -52) return -52;
+    if (x > 52)  return 52;
+    return x;
+}
+int get_y(int x)
+{
+    int16 x_val = clamp_x(Image_error);
+    int16 abs_x = abs(x_val);
+    // 整数计算：y = 46 + (3 \* |x|) / 52
+    int16 y = 46 + (3 * abs_x) / 52;
+    return y;
 }
