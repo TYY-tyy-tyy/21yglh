@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //计时变量     3ms多处理一帧
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 285;//220 260
+int16 my_Speed = 290;//220 260
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
@@ -49,7 +49,7 @@ uint16 count1 = 0;
 
 uint8 data_buffer[21];
 
-int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI;
+int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI,Ring_T_KP,W_T_KP;
 
 void main(void)
 {
@@ -62,7 +62,9 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：210
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
-	T_KP = 46;//40 44
+	Ring_T_KP = 47;
+	W_T_KP = 20;
+	T_KP = 30;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;

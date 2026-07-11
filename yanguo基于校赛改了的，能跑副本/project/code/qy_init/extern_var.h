@@ -21,7 +21,7 @@ extern uint8 COM_QY;
 extern uint16 count1;
 
 extern int16 my_Speed;
-extern int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI;
+extern int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI,Ring_T_KP,W_T_KP;
 
 extern uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 extern uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
