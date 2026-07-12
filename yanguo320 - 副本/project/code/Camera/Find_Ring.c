@@ -41,6 +41,10 @@ uint16 Ring_time = 0;
 int8 Left_time = 0;
 int8 Right_time = 0;
 
+/* 入环后直行延时脉冲数（防止提前转弯） */
+uint16 Left_Enc_Delay = 600;
+uint16 Right_Enc_Delay = 600;
+
 /* -----------------------左圆环------------------------- */
 /* 标志位 */
 int8 Find_Left_FLAG = 0;
@@ -169,16 +173,29 @@ void Find_Left_Ring(void)
 //			COM_QY = 0;
             Find_Left_FLAG = Left_3;
 
-            //陀螺仪积分标志位置2
-            gyro_jifen_flag = 2;
-
             //数据清零
             White_Nums = 0;
+
+            //重新启动编码器积分用于直行延时
+            Encoder_jifen_flag = 1;
         }
     }
     /* 状态三 */
     else if (Find_Left_FLAG == Left_3)
     {
+		if (Ring_in_local_flag == 0)
+    {
+        if (((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_Delay)
+        {
+            Ring_in_local_flag = 1;        // 直行够了，进入转弯子状态
+
+            Encoder_jifen_flag = 0;        // 关编码器积分
+            gyro_jifen_flag = 1;           // 开陀螺仪积分（开始计转弯角度）
+
+            gyro_angle_dif = 0;
+            angle_ringR = 0;
+        }
+    }
         //转向够角度后停止拉线,且左丢线数小于10时
         if (angle_ringR > 70)
         {

@@ -54,6 +54,10 @@ extern int8 Right_local_LostNums;
 extern int8 Left_time;
 extern int8 Right_time;
 
+/* 入环后直行延时脉冲数 */
+extern uint16 Left_Enc_Delay;
+extern uint16 Right_Enc_Delay;
+
 /* 环的数量 */
 extern int16 Left_Ring_num;
 extern int16 Right_Ring_num;
