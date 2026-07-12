@@ -299,7 +299,7 @@ void menu_4(void)//RUN
 			COM_QY = 1;
 			count1 = 0;
 		}
-		else if(COM_QY == 1)
+		else if(COM_QY != 0)
 		{
 			pid.Speed_All_Error_L = 0;
 			pid.Speed_All_Error_R = 0;
