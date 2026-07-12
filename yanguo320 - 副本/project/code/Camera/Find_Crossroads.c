@@ -48,13 +48,10 @@ void Find_Crossroads(void)
 	
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
-		if(Crossroads_FLAG)
-		{
-			Crossroads_num ++;
-		}
-		else
+		if(!Crossroads_FLAG)
 		{
 			Crossroads_FLAG = 1;
+			Crossroads_num ++;
 		}
 		/* 找左上下角点 */
         Left_up_Patch = Find_left_up_point(30,110);
@@ -88,57 +85,73 @@ void Find_Crossroads(void)
             Patch_line_Left(bot_L, top_L);
             Patch_line_Right(bot_R, top_R);
         }
-        //若上面两个角点存在
-        else if((Left_up_Patch != 0) && (Right_up_Patch != 0))
-        {
-            /* 左下 */
-            bot_L[0] = Left_Coordinates[118];
-            bot_L[1] = 118;
+//        //若上面两个角点存在
+//        else if((Left_up_Patch != 0) && (Right_up_Patch != 0))
+//        {
+//            /* 左下 */
+//            bot_L[0] = Left_Coordinates[118];
+//            bot_L[1] = 118;
 
-            /* 左上 */
-            top_L[0] = (int16)Left_Line[Left_up_Patch];
-            top_L[1] = (int16)Left_up_Patch;
+//            /* 左上 */
+//            top_L[0] = (int16)Left_Line[Left_up_Patch];
+//            top_L[1] = (int16)Left_up_Patch;
 
-            /* 右下 */
-            bot_R[0] = Right_Coordinates[118];
-            bot_R[1] = 118;
+//            /* 右下 */
+//            bot_R[0] = Right_Coordinates[118];
+//            bot_R[1] = 118;
 
-            /* 右上 */
-            top_R[0] = (int16)Right_Line[Right_up_Patch];
-            top_R[1] = (int16)Right_up_Patch;
+//            /* 右上 */
+//            top_R[0] = (int16)Right_Line[Right_up_Patch];
+//            top_R[1] = (int16)Right_up_Patch;
 
-            /* 画线 */
-            Patch_line_Left(bot_L, top_L);
-            Patch_line_Right(bot_R, top_R);
-        }
-        //若左边两个角点存在
-        else if((Left_up_Patch != 0) && (Left_dowm_Patch != 0))
-        {
-            /* 左下 */
-            bot_L[0] = (int16)Left_Line[Left_dowm_Patch];
-            bot_L[1] = (int16)Left_dowm_Patch;
+//            /* 画线 */
+//            Patch_line_Left(bot_L, top_L);
+//            Patch_line_Right(bot_R, top_R);
+//        }
+//        //若左边两个角点存在
+//        else if((Left_up_Patch != 0) && (Left_dowm_Patch != 0))
+//        {
+//            /* 左下 */
+//            bot_L[0] = (int16)Left_Line[Left_dowm_Patch];
+//            bot_L[1] = (int16)Left_dowm_Patch;
 
-            /* 左上 */
-            top_L[0] = (int16)Left_Line[Left_up_Patch];
-            top_L[1] = (int16)Left_up_Patch;
+//            /* 左上 */
+//            top_L[0] = (int16)Left_Line[Left_up_Patch];
+//            top_L[1] = (int16)Left_up_Patch;
 
-            /* 画线 */
-            Patch_line_Left(bot_L, top_L);
-        }
-        //若右边两个角点存在
-        else if((Right_up_Patch != 0) && (Right_dowm_Patch != 0))
-        {
-            /* 右下 */
-            bot_R[0] = (int16)Right_Line[Right_dowm_Patch];
-            bot_R[1] = (int16)Right_dowm_Patch;
+//            /* 画线 */
+//            Patch_line_Left(bot_L, top_L);
+//        }
+//        //若右边两个角点存在
+//        else if((Right_up_Patch != 0) && (Right_dowm_Patch != 0))
+//        {
+//            /* 右下 */
+//            bot_R[0] = (int16)Right_Line[Right_dowm_Patch];
+//            bot_R[1] = (int16)Right_dowm_Patch;
 
-            /* 右上 */
-            top_R[0] = (int16)Right_Line[Right_up_Patch];
-            top_R[1] = (int16)Right_up_Patch;
+//            /* 右上 */
+//            top_R[0] = (int16)Right_Line[Right_up_Patch];
+//            top_R[1] = (int16)Right_up_Patch;
 
-            /* 画线 */
-            Patch_line_Right(bot_R, top_R);
-        }
+//            /* 画线 */
+//            Patch_line_Right(bot_R, top_R);
+//        }
+//		else
+//		{
+//			for (i = 110; i >= 10; i-=2)
+//			{
+//				if((Right_Line[i] >= MT9V03X_W - 20))
+//				{
+//					Right_Line[i] = Right_Coordinates[i];
+//					image_copy_out[i][Right_Line[i]] = 0;
+//				}
+//				if((Left_Line[i] <= 20))
+//				{
+//					Left_Line[i] = Left_Coordinates[i];
+//					image_copy_out[i][Left_Line[i]] = 0;
+//				}
+//			}
+//		}
     }
 	else
 	{

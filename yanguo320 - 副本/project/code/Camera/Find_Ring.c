@@ -282,7 +282,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_6)
      {
          /* 蜂鸣器响起 */
-		 Ring_time = 50;
+		 Ring_time = 100;
          Buzzer_ON();
 
          //当左右轮积分大于1500时
