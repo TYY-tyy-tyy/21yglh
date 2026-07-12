@@ -38,7 +38,7 @@ void menu_all(void)
 
 void menu_0(void)
 {
-	uint8 menu_all_num = 0;
+	static int8 menu_all_num = 0;
 	if(Key_1)
 	{
 		menu_all_num ++;
@@ -86,7 +86,7 @@ void menu_0(void)
 
 void menu_1(void)//speed
 {
-	static uint8 menu_all_num = 0;
+	static int8 menu_all_num = 0;
 	if(Key_1)
 	{
 		menu_all_num ++;
@@ -103,7 +103,7 @@ void menu_1(void)//speed
 		}
 		else if(menu_all_num == 1)
 		{
-			pid.Speed_KI_L = pid.Speed_KP_R = pid.Speed_KP_R + 1;
+			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
 		}
 		else if(menu_all_num == 2)
 		{
@@ -118,7 +118,7 @@ void menu_1(void)//speed
 		}
 		else if(menu_all_num == 1)
 		{
-			pid.Speed_KI_L = pid.Speed_KP_R = pid.Speed_KP_R - 1;
+			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R - 1;
 		}
 		else if(menu_all_num == 2)
 		{
@@ -148,8 +148,8 @@ void menu_1(void)//speed
 
 void menu_2(void)//img
 {
-	static uint8 menu_all_num = 0;
-	uint16 set_time = 500;
+	static int8 menu_all_num = 0;
+	static uint16 set_time = 510;
 	if(Key_1)
 	{
 		menu_all_num ++;
@@ -206,8 +206,8 @@ void menu_2(void)//img
 	tft180_show_string(8,MT9V03X_H / 2,"dbd");
 	tft180_show_string(8,MT9V03X_H / 2 + 16,"bgsj");
 //	tft180_show_string(8,MT9V03X_H / 2 + 32,"ys");
-	tft180_show_int16(56,MT9V03X_H / 2,REFERENCE_CONTRAST);
-	tft180_show_int16(56,MT9V03X_H / 2 + 16,set_time);
+	tft180_show_int16(40,MT9V03X_H / 2,REFERENCE_CONTRAST);
+	tft180_show_int16(40,MT9V03X_H / 2 + 16,set_time);
 	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
 	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
 	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
@@ -220,7 +220,7 @@ void menu_2(void)//img
 
 void menu_3(void)//PID
 {
-	static uint8 menu_all_num = 0;
+	static int8 menu_all_num = 0;
 	if(Key_1)
 	{
 		menu_all_num ++;

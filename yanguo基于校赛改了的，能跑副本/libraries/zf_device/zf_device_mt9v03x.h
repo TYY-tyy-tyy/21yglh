@@ -83,7 +83,7 @@
 typedef enum
 {
     MT9V03X_INIT = 0,                              				    // 摄像头初始化命令
-    MT9V03X_AUTO_EXP = 1,                              		        // 自动曝光命令
+    MT9V03X_AUTO_EXP = 0,                              		        // 自动曝光命令
     MT9V03X_EXP_TIME = 2,                              		        // 曝光时间命令
     MT9V03X_FPS = 3,                                   		        // 摄像头帧率命令
     MT9V03X_SET_COL = 4,                               		        // 图像列命令
