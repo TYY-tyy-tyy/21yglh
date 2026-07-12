@@ -84,7 +84,7 @@ void Find_Left_Ring(void)
 			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 150))
         {
             //若是，则进入圆环标志位1
-//			COM_QY = 0;
+			COM_QY = 0;
             Find_Left_FLAG = Left_1;
 
             angle_ringR = 0;

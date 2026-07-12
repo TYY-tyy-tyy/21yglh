@@ -395,7 +395,7 @@ void Find_Right_Ring(void)
 //			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 130) && (White_Nums < 150))
         {
-//			COM_QY = 0;
+			COM_QY = 0;
             //若是，则进入圆环标志位1
             Find_Right_FLAG = Right_1;
 			
