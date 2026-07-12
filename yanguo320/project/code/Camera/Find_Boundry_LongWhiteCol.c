@@ -86,7 +86,7 @@ void Find_Boundry_LongWhiteCol(void)
 				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 				compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-				if(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+				if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //					&& compare_value4 < REFERENCE_CONTRAST
 					)
 				{
@@ -138,7 +138,7 @@ void Find_Boundry_LongWhiteCol(void)
 					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //						&& compare_value4 < REFERENCE_CONTRAST
 						)
 					{
@@ -183,7 +183,7 @@ void Find_Boundry_LongWhiteCol(void)
 					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //						&& compare_value4 < REFERENCE_CONTRAST
 						)
 					{
@@ -230,7 +230,7 @@ void Find_Boundry_LongWhiteCol(void)
 				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 				compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-				iif(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+				if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //					&& compare_value4 < REFERENCE_CONTRAST
 					)
 				{
@@ -282,7 +282,7 @@ void Find_Boundry_LongWhiteCol(void)
 					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //						&& compare_value4 < REFERENCE_CONTRAST
 						)
 					{
@@ -327,7 +327,7 @@ void Find_Boundry_LongWhiteCol(void)
 					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
 					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
-					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(ompare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
+					if(abs(compare_value1) > REFERENCE_CONTRAST && abs(compare_value2) > REFERENCE_CONTRAST && abs(compare_value3) > REFERENCE_CONTRAST
 //						&& compare_value4 < REFERENCE_CONTRAST
 						)
 					{

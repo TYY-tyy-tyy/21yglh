@@ -133,6 +133,16 @@ void main(void)
 //			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
 //			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
 		}
+		else
+		{
+			if(Get_Key_3())
+			{
+				pid.Speed_All_Error_L = 0;
+				pid.Speed_All_Error_R = 0;
+				my_Speed = 200 ;
+				COM_QY = 0; 
+			}
+		}
 //		if(Get_Key_3())
 //		{
 //			if(COM_QY == 0)
