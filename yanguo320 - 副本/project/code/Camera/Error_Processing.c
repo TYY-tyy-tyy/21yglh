@@ -49,7 +49,7 @@ void Mid_Error_Processing(void)
     count = 0;
     for(i = MT9V03X_H - 10,j = 59; i >= reference_col_farthest; i-=2,j--)
     {
-		if((Find_Left_FLAG >= Left_1) || (Find_Left_FLAG >= Left_6))
+		if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
 		{
 			Image_error += Image_Weight3[j] * Road_Wide[i];
 			count += Image_Weight3[j];
