@@ -3,13 +3,14 @@
 
 #include "zf_common_headfile.h"
 
-//=====================================================ÓÃ»§²ã======================================================
+//=====================================================ï¿½Ã»ï¿½ï¿½ï¿½======================================================
 #include "extern_var.h"
 #include "Motors.h"
 #include "Encoder.h"
 #include "PID.h"
 #include "All_Init.h"
 #include "Interrupt_Control.h"
+#include "Eight_fields.h"
 #include "Find_Boundry_LongWhiteCol.h"
 #include "Show_data.h"
 #include "Error_Processing.h"
@@ -33,6 +34,6 @@
 #include "Coordinates.h"
 #include "Road_Feature.h"
 #include "memu.h"
-//=====================================================ÓÃ»§²ã======================================================
+//=====================================================ï¿½Ã»ï¿½ï¿½ï¿½======================================================
 
 #endif 
