@@ -328,7 +328,7 @@ static int16 Find_Zero_Crossing(void)
 /* ================================================================ */
 // 函数名称    赛道分类
 // 函数说明    综合所有特征做最终赛道元素判定
-//             环岛状态由 Find_Ring() 管理，本函数直接复用其标记
+//             环岛检测基于 Road_Wide 波形特征（幅度+方向一致性+阶跃跳变）
 // ================================================================ */
 static void Classify_Track(void)
 {
@@ -336,16 +336,87 @@ static void Classify_Track(void)
     uint8  straight_segments, i;
     int16  ref_avg, ref_peak, ref_peak_row;
 
-    /* ===== 优先级0：环岛 — 直接复用 Find_Ring 状态机的标记 ===== */
-    if(Find_Left_FLAG >= Left_1 || Find_Right_FLAG >= Right_1)
+    /* ============================================================ */
+    /* 优先级0：环岛检测 — 基于 Road_Wide 波形特征                    */
+    /*                                                              */
+    /* 环岛与普通弯道的波形差异：                                     */
+    /*   ① 偏移幅度更大：环岛入口处道路中心偏移远超普通弯道            */
+    /*   ② 三场同向：远/中/近三段偏移方向一致                         */
+    /*      （S弯会过零变号，普通弯道近场可能已回正）                  */
+    /*   ③ 阶跃突变：中远场交界处出现大的差分跳变（环岛入口瞬间）     */
+    /*                                                              */
+    /* 三个特征加权打分，总分 >= ROAD_RING_MIN_CONF 判定为环岛        */
+    /* ============================================================ */
     {
-        if(Find_Left_FLAG >= Left_1)
-            g_track_feature.type = TRACK_LEFT_RING;
-        else
-            g_track_feature.type = TRACK_RIGHT_RING;
+        uint8 ring_score = 0;
+        uint8 ring_side  = 0;  /* 1=左环, 2=右环 */
+        int16 i;
+        uint8 jump_cnt;
 
-        g_track_feature.confidence = 90;
-        return;
+        /* ---- 特征①：中场峰值幅度（权重35） ---- */
+        /* 环岛级偏移 >= ROAD_RING_PEAK_THR(24) → 满分 */
+        /* 介于弯道和环岛之间(18~23) → 半分            */
+        if(road_seg[1].sample_cnt >= 5)
+        {
+            if(abs(road_seg[1].peak) >= ROAD_RING_PEAK_THR)
+            {
+                ring_score += 35;
+            }
+            else if(abs(road_seg[1].peak) >= ROAD_PEAK_MIN + 6)
+            {
+                ring_score += 20;
+            }
+            ring_side = (road_seg[1].peak > 0) ? 1 : 2;
+        }
+        /* 若中场数据不足，参考近场峰值 */
+        else if(road_seg[2].sample_cnt >= 5 && abs(road_seg[2].peak) >= ROAD_RING_PEAK_THR)
+        {
+            ring_score += 25;
+            ring_side = (road_seg[2].peak > 0) ? 1 : 2;
+        }
+
+        /* ---- 特征②：远中近三场方向一致性（权重30） ---- */
+        /* 三段全偏同一侧 → 强烈环岛特征（普通弯道近场往往已回正） */
+        if(road_seg[0].sample_cnt >= 3 && road_seg[1].sample_cnt >= 5 && road_seg[2].sample_cnt >= 5)
+        {
+            if((road_seg[0].avg > ROAD_STRAIGHT_THR
+                && road_seg[1].avg > ROAD_STRAIGHT_THR
+                && road_seg[2].avg > ROAD_STRAIGHT_THR)
+               || (road_seg[0].avg < -ROAD_STRAIGHT_THR
+                   && road_seg[1].avg < -ROAD_STRAIGHT_THR
+                   && road_seg[2].avg < -ROAD_STRAIGHT_THR))
+            {
+                ring_score += 30;
+            }
+        }
+
+        /* ---- 特征③：中远场阶跃跳变（权重25） ---- */
+        /* 环岛入口处 Road_Wide 发生突变，一阶差分出现大值 */
+        jump_cnt = 0;
+        for(i = ROAD_MID_END; i >= ROAD_MID_START; i -= 2)
+        {
+            if(!road_valid[i]) continue;
+            if(abs(road_diff[i]) >= ROAD_RING_JUMP_THR)
+                jump_cnt++;
+        }
+        if(jump_cnt >= 3)
+        {
+            ring_score += 25;
+        }
+        else if(jump_cnt >= 1)
+        {
+            ring_score += 10;
+        }
+
+        /* ---- 综合判定 ---- */
+        if(ring_score >= ROAD_RING_MIN_CONF && ring_side > 0)
+        {
+            g_track_feature.type = (ring_side == 1) ? TRACK_LEFT_RING : TRACK_RIGHT_RING;
+            g_track_feature.confidence = ring_score;
+            if(g_track_feature.confidence > 100)
+                g_track_feature.confidence = 100;
+            return;
+        }
     }
 
     /* ===== 优先级1：严重丢线 ===== */

@@ -15,7 +15,12 @@
 #define ROAD_SLOPE_THR          3      // 一阶差分超过此值视为有变化趋势
 #define ROAD_PEAK_MIN           12     // |peak| 小于此值不算有效弯道
 #define ROAD_ZC_HYSTERESIS      6      // 过零检测滞回区间
-#define ROAD_ZC_MIN_SPAN        8     // 过零最小间距（过滤跳变）
+#define ROAD_ZC_MIN_SPAN        8      // 过零最小间距（过滤跳变）
+
+/* 环岛波形检测阈值 */
+#define ROAD_RING_PEAK_THR      24     // 环岛级峰值阈值（2倍普通弯道，远大于弯道）
+#define ROAD_RING_JUMP_THR      9      // 阶跃跳变阈值（一阶差分超此值视为环岛入口突变）
+#define ROAD_RING_MIN_CONF      50     // 环岛判定最低置信度
 
 /* ==================== 分段边界 ==================== */
 /* 图像行号 0(远) → 119(近)，车在行号大的一侧         */
