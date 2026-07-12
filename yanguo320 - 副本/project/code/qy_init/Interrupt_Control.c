@@ -150,7 +150,7 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = 55;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if(White_Column_MID > 110)
+    else if(White_Column_MID > 110 && Image_error > -5 && Image_error < 5)
     {
         pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
