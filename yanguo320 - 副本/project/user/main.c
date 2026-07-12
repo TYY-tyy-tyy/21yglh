@@ -117,7 +117,7 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-			Extract_Road_Features();
+//			Extract_Road_Features();
 			if(count1 > 0)
 			{
 				Black_counts_weight(100);      //丢线保护

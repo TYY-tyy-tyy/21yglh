@@ -74,7 +74,7 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num) && Ring_time < 2)
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
-			&& (Right_dowm_Patch == 0 || Right_dowm_Patch == 20) && (Left_local_LostNums >= 15) 
+			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 15) 
 			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
@@ -585,7 +585,7 @@ void Find_Ring(void)
 		}
 		
         //避免大拐弯时的误判圆环
-        White_Nums = White_counts_weight(60);
+        White_Nums = White_counts_weight(40);
 
         //统计局部的丢线数量
         Left_local_LostNums = Count_Left_Lost(110,50);
@@ -596,6 +596,6 @@ void Find_Ring(void)
         Right_dowm_Patch = Find_Right_dowm_point(110,20);//58 20
 //    }
 	
-//	Find_Right_Ring();
-//	Find_Left_Ring();
+	Find_Right_Ring();
+	Find_Left_Ring();
 }
