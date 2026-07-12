@@ -10,11 +10,11 @@
 #define SERVO_CONTROL_R_MAX             (98)                                           // 定义主板上舵机活动范围 角度
 
 /* 舵机中值 */
-#define SERVO_MOTOR_Mid          (4550 )
+#define SERVO_MOTOR_Mid          (4780 )//4550
 /* 左边最大打角 */
-#define SERVO_MOTOR_L_MAX           (4995 )//350
+#define SERVO_MOTOR_L_MAX           (5230 )//350
 /* 右边最大打角 */
-#define SERVO_MOTOR_R_MAX           (4105)//350
+#define SERVO_MOTOR_R_MAX           (4330)//350
 
 #define SERVO_CONTROL_DUTY(x)         ((float)PWM_DUTY_MAX / (1000.0 / (float)SERVO_CONTROL_FREQ) * (0.5 + (float)(x) / 90.0))
 
