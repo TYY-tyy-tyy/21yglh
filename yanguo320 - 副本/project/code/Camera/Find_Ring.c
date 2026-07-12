@@ -3,7 +3,7 @@
 /* ------------------------------------------------ */
 /* ÍÓÂÝÒÇ»ý·Ö½Ç¶È */
 int16 Gyro_In_Left = 70;//70
-int16 Gyro_Out_Left = 70;
+int16 Gyro_Out_Left = 75;
 
 int16 Gyro_In_Right = 70;
 int16 Gyro_Out_Right = 80;
