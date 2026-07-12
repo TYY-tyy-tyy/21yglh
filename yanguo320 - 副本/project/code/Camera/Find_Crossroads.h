@@ -3,6 +3,8 @@
 
 #include "qy_headfile.h"
 
+extern uint16 Crossroads_num;
+
 void Find_Crossroads(void);
 
 #endif 

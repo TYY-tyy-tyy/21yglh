@@ -7,6 +7,9 @@ int16 bot_L[2] = {0, 0};
 int16 top_R[2] = {0, 0};
 int16 bot_R[2] = {0, 0};
 
+uint16 Crossroads_num = 0;
+uint8 Crossroads_FLAG = 0;
+
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     找十字
 // 参数说明
@@ -45,6 +48,14 @@ void Find_Crossroads(void)
 	
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
+		if(Crossroads_FLAG)
+		{
+			Crossroads_num ++;
+		}
+		else
+		{
+			Crossroads_FLAG = 1;
+		}
 		/* 找左上下角点 */
         Left_up_Patch = Find_left_up_point(30,110);
 //        Left_dowm_Patch = Find_left_dowm_point(110,40);
@@ -129,6 +140,10 @@ void Find_Crossroads(void)
             Patch_line_Right(bot_R, top_R);
         }
     }
+	else
+	{
+		Crossroads_FLAG = 0;
+	}
 //	else
 //	{
 //		for (i = 110; i >= reference_col_farthest; i-=2)
