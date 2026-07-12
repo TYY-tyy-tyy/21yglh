@@ -61,7 +61,7 @@ void main(void)
     All_Init();
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170
-	pid.Speed_KI_L = pid.Speed_KI_R = 70;//正常值：25；一次超调值：70
+	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：70
 	T_KP = 55;
 	T_KP1 =0;
 	pid.Turn_KD =0;
@@ -193,7 +193,7 @@ void main(void)
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-			LowerCameraExposure();
+//			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
