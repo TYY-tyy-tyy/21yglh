@@ -14,9 +14,9 @@ int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
 uint16 Left_Enc_In = 3400;
-uint16 Left_Enc_Out = 2000;
+uint16 Left_Enc_Out = 1500;
 uint16 Right_Enc_In = 3400;
-uint16 Right_Enc_Out = 1200;
+uint16 Right_Enc_Out = 1500;
 
 /* ------------------------------------------------ */
 
@@ -319,16 +319,16 @@ void Find_Left_Ring(void)
              //关闭蜂鸣器
              Buzzer_OFF();
          }
-//		 else
-//		 {
-//			 /* 拉线出环 */
-//             bot[0] = Left_Coordinates[110];
-//             bot[1] = 110;
+		 else
+		 {
+			 /* 拉线出环 */
+             bot[0] = Left_Coordinates[110];
+             bot[1] = 110;
 
-//             top[0] = Left_Coordinates[10];
-//             top[1] = 10;
-//			 Patch_line_Left(bot, top);
-//		 }
+             top[0] = Left_Coordinates[10];
+             top[1] = 10;
+			 Patch_line_Left(bot, top);
+		 }
      }
 }
 
