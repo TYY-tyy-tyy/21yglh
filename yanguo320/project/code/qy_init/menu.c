@@ -233,38 +233,38 @@ void menu_3(void)//PID
 	{
 		if(menu_all_num == 0)	
 		{
-			pid.Turn_KP += 1;
+			W_T_KP += 1;
 		}
 		else if(menu_all_num == 1)
 		{
-			pid.Turn_KP1 += 1;
+			T_KP += 1;
 		}
 		else if(menu_all_num == 2)
 		{
-			pid.Turn_GKD += 1;
+			T_KP1 += 1;
 		}
 		else if(menu_all_num == 3)
 		{
-			pid.Turn_KD += 1;
+			T_GKD += 1;
 		}
 	}
 	else if(Key_4)
 	{
 		if(menu_all_num == 0)	
 		{
-			pid.Turn_KP -= 1;
+			W_T_KP -= 1;
 		}
 		else if(menu_all_num == 1)
 		{
-			pid.Turn_KP1 -= 1;
+			T_KP -= 1;
 		}
 		else if(menu_all_num == 2)
 		{
-			pid.Turn_GKD -= 1;
+			T_KP1 -= 1;
 		}
 		else if(menu_all_num == 3)
 		{
-			pid.Turn_KD -= 1;
+			T_GKD -= 1;
 		}
 	}
 	else if(Key_5)
@@ -280,14 +280,14 @@ void menu_3(void)//PID
 		menu_all_num = 0;
 	}
 	tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
-	tft180_show_string(8,MT9V03X_H / 2,"T_KP");
-	tft180_show_string(8,MT9V03X_H / 2 + 16,"T_KP1");
-	tft180_show_string(8,MT9V03X_H / 2 + 32,"T_GKD");
-	tft180_show_string(8,MT9V03X_H / 2 + 48,"T_KD");
-	tft180_show_int16(56,MT9V03X_H / 2,pid.Turn_KP);
-	tft180_show_int16(56,MT9V03X_H / 2 + 16,pid.Turn_KP1);
-	tft180_show_int16(56,MT9V03X_H / 2 + 32,pid.Turn_GKD);
-	tft180_show_int16(56,MT9V03X_H / 2 + 48,pid.Turn_KD);
+	tft180_show_string(8,MT9V03X_H / 2,"W_T_KP");
+	tft180_show_string(8,MT9V03X_H / 2 + 16,"T_KP");
+	tft180_show_string(8,MT9V03X_H / 2 + 32,"T_KP1");
+	tft180_show_string(8,MT9V03X_H / 2 + 48,"T_GKD");
+	tft180_show_int16(56,MT9V03X_H / 2,W_T_KP);
+	tft180_show_int16(56,MT9V03X_H / 2 + 16,T_KP);
+	tft180_show_int16(56,MT9V03X_H / 2 + 32,T_KP1);
+	tft180_show_int16(56,MT9V03X_H / 2 + 48,T_GKD);
 }
 
 void menu_4(void)//RUN

@@ -150,10 +150,11 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-	else if(White_Column_MID > 110 )
+	else if(White_Column_MID > 110 || (Image_error>=-5 || Image_error<=5))
     {
 //        pid.Turn_KP = W_T_KP;//20
 		pid.Turn_KP = LinearMap(T_KP,W_T_KP,Image_error,50);//40 44
+		pid.Turn_GKD = T_GKD;
         nowtargetSpeed = my_Speed;
     }
 	 else if((White_Column_MID < 110) || (Image_error<=-10 || Image_error>=10))
@@ -177,6 +178,7 @@ void Speed_DecisionMaking(void)
     else
     {
 		pid.Turn_KP = LinearMap(T_KP,W_T_KP,Image_error,50);//40 44 
+		pid.Turn_GKD = T_GKD;
 		nowtargetSpeed = my_Speed *0.9;
     }
 }
