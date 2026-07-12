@@ -9,7 +9,8 @@ uint8 Stop_Car_flag = 0;
 int16 Turn_Out = 0;                 //转向环输出
 int16 Turn_Out_MAX = 0;             //最大转向输出
 
-
+/* 速度环 */
+int16 TargetSpeed = 200;           //目标速度  190
 
 int16 nowtargetSpeed;
 int16 targetSpeed_min ;    //弯道速度
@@ -38,7 +39,6 @@ float t;
 int16 L = 20;
 int16 K = 15;
 float diff;
-int16 y;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明
@@ -147,46 +147,56 @@ void Speed_DecisionMaking(void)
 {
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = Ring_T_KP;
+        pid.Turn_KP = 55;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if(White_Column_MID > 100)
+    else if(White_Column_MID > 110)
     {
-        pid.Turn_KP = T_KP;
+        pid.Turn_KP = W_T_KP;//20
         nowtargetSpeed = my_Speed;
     }
     else
     {
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed ;
+        nowtargetSpeed = my_Speed/10*9;
     }
 }
 
-/**
- * @brief 误差线性映射输出
- * @param max_val 输出最大值
- * @param min_val 输出最小值
- * @param err     当前误差
- * @param err_limit 误差最大绝对值（误差超过该值按极值算）
- * @return 线性映射后输出值
- */
-int16 LinearMap(int16 max_val, int16 min_val, int16 err, int16 err_limit)
+//==================== 图像下方菜单 ====================
+void show_menu(void)
 {
-	int16 range,temp,out;
-    // 取误差绝对值
-    int16 abs_err = abs(err);
-    // 误差限幅
-    if (abs_err > err_limit)
-        abs_err = err_limit;
+    tft180_show_string(0, 65, "Plan:");
+    
+    if(menu_cursor == 0)
+        tft180_show_string(40, 65, ">1");
+    else
+        tft180_show_string(40, 65, " 1");
+        
+    if(menu_cursor == 1)
+        tft180_show_string(60, 65, ">2");
+    else
+        tft180_show_string(60, 65, " 2");
 
-    // 整数定点运算，放大1000消除小数丢失
-    range = max_val - min_val;
-    temp = (int16)abs_err * range * 100 / err_limit;
-    out = min_val + temp / 100;
+    tft180_show_string(0, 80, "Speed:");
+    tft180_show_string(0, 95, "KP:");
+    tft180_show_string(MT9V03X_W / 2, 0, "GKD:");
 
-    // 输出兜底限幅
-    if (out > max_val) out = max_val;
-    if (out < min_val) out = min_val;
-    return out;
+    if(select_plan == 1)
+    {
+        tft180_show_int16(45, 80, TargetSpeed_1);
+        tft180_show_float(24, 95, Turn_KP_1, 2, 2);
+		tft180_show_float(MT9V03X_W / 2, 16, Turn_GKD_1, 1, 3);
+    }
+    else
+    {
+        tft180_show_int16(45, 80, TargetSpeed_2);
+        tft180_show_float(24, 95, Turn_KP_2, 2, 2);
+        tft180_show_float(MT9V03X_W / 2, 16, Turn_GKD_2, 1, 3);
+    }
+
+    if(COM_QY == 1)
+        tft180_show_string(0, 110, "RUN");
+    else
+        tft180_show_string(0, 110, "STOP");
 }

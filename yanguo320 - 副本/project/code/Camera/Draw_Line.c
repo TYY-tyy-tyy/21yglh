@@ -21,7 +21,7 @@ void Patch_line_Left(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     {
         //x = (y - b) / k
         Left_Line[j] = (j*10 - b) / K;//Left_Line[j]是得到的列坐标
-//		image_copy_out[j][Left_Line[j]] = 0;
+		image_copy_out[j][Left_Line[j]] = 0;
     }
 }
 
@@ -45,7 +45,7 @@ void Patch_line_Right(int16 zuobiao_botton[2], int16 zuobiao_top[2])
     for(j = zuobiao_top[1]; j < zuobiao_botton[1]; j ++)
     {
         Right_Line[j] = (j*10 - b) / K;
-//		image_copy_out[j][Right_Line[j]] = 0;
+		image_copy_out[j][Right_Line[j]] = 0;
     }
 }
 
