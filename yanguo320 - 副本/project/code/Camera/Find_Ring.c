@@ -75,7 +75,7 @@ void Find_Left_Ring(void)
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
 			&& (Right_dowm_Patch == 0 || Right_dowm_Patch == 20) && (Left_local_LostNums >= 15) 
-			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 20) 
+			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 //			&& (ring_preMeet_flag == 1)

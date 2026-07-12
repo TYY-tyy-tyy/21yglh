@@ -159,7 +159,7 @@ void Speed_DecisionMaking(void)
     {
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed/10*9;
+        nowtargetSpeed = my_Speed/10*8;
     }
 }
 

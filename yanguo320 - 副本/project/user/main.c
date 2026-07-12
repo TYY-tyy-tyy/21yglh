@@ -75,29 +75,6 @@ void main(void)
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
-//		data_buffer[0] = Image_error;
-//		data_buffer[2] = Right_dowm_Patch;
-//		data_buffer[4] = Left_dowm_Patch;
-//		data_buffer[6] = Right_Lost_Line_count;
-//		data_buffer[8] = Left_Lost_Line_count;
-//		data_buffer[10] = White_Column_MID;
-//		data_buffer[12] = Right_local_LostNums;
-//		data_buffer[14] = Left_local_LostNums;
-//		data_buffer[16] = Find_Right_FLAG;
-//		data_buffer[18] = Find_Left_FLAG;
-//		func_uint_to_str((char *)data_buffer, 21);
-//		data_buffer[1] = ",";
-//		data_buffer[3] = ",";
-//		data_buffer[5] = ",";
-//		data_buffer[7] = ",";
-//		data_buffer[9] = ",";
-//		data_buffer[11] = ",";
-//		data_buffer[13] = ",";
-//		data_buffer[15] = ",";
-//		data_buffer[17] = ",";
-//		data_buffer[19] = "\r";
-//		data_buffer[20] = "\n";
-//		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
 		wireless_uart_send_byte(0xAA);
 		wireless_uart_send_byte((uint8)Image_error);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
@@ -115,22 +92,6 @@ void main(void)
 		if(COM_QY == 0)
 		{
 			menu_all();
-//			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
-//			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
-//			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
-//			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
-//			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
-//			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
-//			tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
-//			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
-//			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
-//			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
-//			tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
-//			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
-//			tft180_show_int16(0,MT9V03X_H / 2,T_KP);
-//			tft180_show_int16(0,MT9V03X_H / 2 + 16,T_KP1);
-//			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
-//			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
 		}
 		else
 		{
@@ -142,43 +103,6 @@ void main(void)
 				COM_QY = 0; 
 			}
 		}
-//		if(Get_Key_3())
-//		{
-//			if(COM_QY == 0)
-//			{
-//				COM_QY = 1;
-//				time = 0;
-//			}
-//			else if(COM_QY != 0)
-//			{
-//				pid.Speed_All_Error_L = 0;
-//				pid.Speed_All_Error_R = 0;
-//				my_Speed = 200 ;
-//				COM_QY = 0; 
-//			}
-//		}
-//		if(Get_Key_4())
-//		{
-//			my_Speed += 20;
-//			if(my_Speed > 350)
-//			{
-//				my_Speed = 50;
-//			}
-//		}
-//		if(Get_Key_5())
-//		{
-//			T_GKD += 1;
-//		}
-//		if(Get_Key_1())
-//		{
-////			T_KP += 1;
-//			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
-//		}
-//		if(Get_Key_2())
-//		{
-////			T_KP1 += 1;
-//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
-//		}
 	
 		/* Í¼Ïñ´¦Àí */
 		if(mt9v03x_finish_flag)
