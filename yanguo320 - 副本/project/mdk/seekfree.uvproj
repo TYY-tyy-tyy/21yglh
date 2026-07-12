@@ -1132,16 +1132,6 @@
               <FileType>5</FileType>
               <FilePath>..\code\qy_init\memu.h</FilePath>
             </File>
-            <File>
-              <FileName>Road_Feature.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\qy_init\Road_Feature.c</FilePath>
-            </File>
-            <File>
-              <FileName>Road_Feature.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\qy_init\Road_Feature.h</FilePath>
-            </File>
           </Files>
         </Group>
       </Groups>

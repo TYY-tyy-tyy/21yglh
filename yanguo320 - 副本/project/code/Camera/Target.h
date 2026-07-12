@@ -3,7 +3,7 @@
 
 #include "qy_headfile.h"
 
-#define Target_EER 		2
+extern uint8 Target_EER;
 
 void Find_Target1(void);
 void Find_Target2(int p1,int p2);

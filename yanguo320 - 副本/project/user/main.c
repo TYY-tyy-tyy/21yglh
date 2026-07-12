@@ -99,7 +99,6 @@ void main(void)
 //		data_buffer[20] = "\n";
 //		wireless_uart_send_buffer(data_buffer, strlen((const char *)data_buffer));
 		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)g_track_feature.type);
 		wireless_uart_send_byte((uint8)Image_error);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
@@ -190,7 +189,7 @@ void main(void)
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
 			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-//			LowerCameraExposure();
+			LowerCameraExposure();
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线

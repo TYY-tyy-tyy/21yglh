@@ -171,7 +171,7 @@ void menu_2(void)//img
 		}
 		else if(menu_all_num == 2)
 		{
-			
+			Target_EER ++;
 		}
 	}
 	else if(Key_4)
@@ -187,7 +187,7 @@ void menu_2(void)//img
 		}
 		else if(menu_all_num == 2)
 		{
-			
+			Target_EER --;
 		}
 	}
 	else if(Key_5)
@@ -198,16 +198,18 @@ void menu_2(void)//img
 	{
 		menu_all_num = 2;
 	}
-	else if(menu_all_num > 1)
+	else if(menu_all_num > 2)
 	{
 		menu_all_num = 0;
 	}
 	tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
 	tft180_show_string(8,MT9V03X_H / 2,"dbd");
 	tft180_show_string(8,MT9V03X_H / 2 + 16,"bgsj");
+	tft180_show_string(8,MT9V03X_H / 2 + 32,"bdbd");
 //	tft180_show_string(8,MT9V03X_H / 2 + 32,"ys");
 	tft180_show_int16(40,MT9V03X_H / 2,REFERENCE_CONTRAST);
 	tft180_show_int16(40,MT9V03X_H / 2 + 16,set_time);
+	tft180_show_int16(40,MT9V03X_H / 2 + 32,Target_EER);
 	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
 	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
 	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22

@@ -41,7 +41,7 @@ void All_Init(void)
             break;
     }
 //	system_delay_ms(500);
-	mt9v03x_set_exposure_time(200);
+	mt9v03x_set_exposure_time(60);
 //	system_delay_ms(500);
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
 	seekfree_assistant_camera_information_config(SEEKFREE_ASSISTANT_MT9V03X, image_copy_out[0], MT9V03X_W, MT9V03X_H);

@@ -6,6 +6,8 @@ uint8 remote_target[63] = {0};
 
 uint8 late_laser = 0;
 
+uint8 Target_EER = 3;
+
 void Find_Target1(void)
 {
 	int col,row,b_num = 0;
@@ -192,14 +194,14 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i+1];
-			if(gray_point_1 < white_min_point)
-			{
-				remote_target[k][j] = i;
-				j++;
-				Black_counts[k]++;
-				image_copy_out[p][i] = 255;
-				break;
-			}
+//			if(gray_point_1 < white_min_point)
+//			{
+//				remote_target[k][j] = i;
+//				j++;
+//				Black_counts[k]++;
+//				image_copy_out[p][i] = 255;
+//				break;
+//			}
 			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
 			if(compare_value > Target_REFERENCE_CONTRAST)
 			{
@@ -215,16 +217,16 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i-1];
-			if(gray_point_1 < white_min_point)
-			{
-				remote_target[k][j] = i;
-				j++;
-				Black_counts[k]++;
-				image_copy_out[p][i] = 255;
-				break;
-			}
+//			if(gray_point_1 < white_min_point && i - remote_target[k][0] < Target_num[k])
+//			{
+//				remote_target[k][j] = i;
+//				j++;
+//				Black_counts[k]++;
+//				image_copy_out[p][i] = 255;
+//				break;
+//			}
 			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
-			if(compare_value > Target_REFERENCE_CONTRAST)
+			if(compare_value > Target_REFERENCE_CONTRAST && i - remote_target[k][0] < Target_num[k])
 			{
 				remote_target[k][j] = i;
 				j++;
@@ -257,21 +259,21 @@ void Find_Target2(int p1,int p2)
 				{
 					Find_Target_oad[k] = 3;
 				}
-				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*1.5 && tar_eer[k] <= Left_Line[p]+Target_num[k]*2)
-				{
-					Find_Target_oad[k] = 2;
-				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*1.5)
-				{
-					Find_Target_oad[k] = 4;
-				}
-				else if(tar_eer[k] >= Left_Line[p]+8 && tar_eer[k] <= Left_Line[p]+Target_num[k]*1.5)
+				else if(tar_eer[k] >= Left_Line[p]+8 && tar_eer[k] <= Left_Line[p]+Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 1;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*1.5 && tar_eer[p] <= Right_Line[p]-8)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*18/10 && tar_eer[p] <= Right_Line[p]-8)
 				{
 					Find_Target_oad[k] = 5;
+				}
+				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*18/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*2)
+				{
+					Find_Target_oad[k] = 2;
+				}
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*18/10)
+				{
+					Find_Target_oad[k] = 4;
 				}
 			}
 		}
@@ -286,10 +288,10 @@ void Find_Target2(int p1,int p2)
 			}
 			/* priority: 3(mid) > 2(L-mid) > 4(R-mid) > 1(L) > 5(R) */
 			if(pos_votes[3] >= 2)           { all_off(); laser_on(LASER_PIN_3); late_laser = 3;}
-			else if(pos_votes[2] >= 2)      { all_off(); laser_on(LASER_PIN_2); late_laser = 2;}
-			else if(pos_votes[4] >= 2)      { all_off(); laser_on(LASER_PIN_4); late_laser = 4;}
 			else if(pos_votes[1] >= 2)      { all_off(); laser_on(LASER_PIN_1); late_laser = 1;}
 			else if(pos_votes[5] >= 2)      { all_off(); laser_on(LASER_PIN_5); late_laser = 5;}
+			else if(pos_votes[2] >= 2)      { all_off(); laser_on(LASER_PIN_2); late_laser = 2;}
+			else if(pos_votes[4] >= 2)      { all_off(); laser_on(LASER_PIN_4); late_laser = 4;}
 			else { all_off(); late_laser = 0;}
 		}
 	}
