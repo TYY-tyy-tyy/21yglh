@@ -356,37 +356,63 @@ static void Classify_Track(void)
         /* ---- 特征①：中场峰值幅度（权重35） ---- */
         /* 环岛级偏移 >= ROAD_RING_PEAK_THR(24) → 满分 */
         /* 介于弯道和环岛之间(18~23) → 半分            */
-        if(road_seg[1].sample_cnt >= 5)
+        if(road_seg[1].sample_cnt >= 5 && abs(road_seg[1].peak) >= ROAD_PEAK_MIN + 6)
         {
+            ring_side = (road_seg[1].peak > 0) ? 1 : 2;
+
             if(abs(road_seg[1].peak) >= ROAD_RING_PEAK_THR)
             {
                 ring_score += 35;
             }
-            else if(abs(road_seg[1].peak) >= ROAD_PEAK_MIN + 6)
+            else
             {
                 ring_score += 20;
             }
-            ring_side = (road_seg[1].peak > 0) ? 1 : 2;
         }
         /* 若中场数据不足，参考近场峰值 */
         else if(road_seg[2].sample_cnt >= 5 && abs(road_seg[2].peak) >= ROAD_RING_PEAK_THR)
         {
+            ring_side  = (road_seg[2].peak > 0) ? 1 : 2;
             ring_score += 25;
-            ring_side = (road_seg[2].peak > 0) ? 1 : 2;
         }
 
         /* ---- 特征②：远中近三场方向一致性（权重30） ---- */
         /* 三段全偏同一侧 → 强烈环岛特征（普通弯道近场往往已回正） */
-        if(road_seg[0].sample_cnt >= 3 && road_seg[1].sample_cnt >= 5 && road_seg[2].sample_cnt >= 5)
+        /* 若 ring_side 已确定，必须同向才加分（防止方向矛盾）   */
         {
-            if((road_seg[0].avg > ROAD_STRAIGHT_THR
-                && road_seg[1].avg > ROAD_STRAIGHT_THR
-                && road_seg[2].avg > ROAD_STRAIGHT_THR)
-               || (road_seg[0].avg < -ROAD_STRAIGHT_THR
-                   && road_seg[1].avg < -ROAD_STRAIGHT_THR
-                   && road_seg[2].avg < -ROAD_STRAIGHT_THR))
+            uint8 all_left  = 0;
+            uint8 all_right = 0;
+
+            if(road_seg[0].sample_cnt >= 3 && road_seg[1].sample_cnt >= 5 && road_seg[2].sample_cnt >= 5)
             {
-                ring_score += 30;
+                if(road_seg[0].avg > ROAD_STRAIGHT_THR
+                   && road_seg[1].avg > ROAD_STRAIGHT_THR
+                   && road_seg[2].avg > ROAD_STRAIGHT_THR)
+                {
+                    all_left = 1;
+                }
+                else if(road_seg[0].avg < -ROAD_STRAIGHT_THR
+                        && road_seg[1].avg < -ROAD_STRAIGHT_THR
+                        && road_seg[2].avg < -ROAD_STRAIGHT_THR)
+                {
+                    all_right = 1;
+                }
+
+                if(all_left || all_right)
+                {
+                    /* 若 ring_side 未确定，从三场一致性推断方向 */
+                    if(ring_side == 0)
+                    {
+                        ring_side = all_left ? 1 : 2;
+                        ring_score += 20;  /* 方向首次确定，降权 */
+                    }
+                    /* 若已确定，检查是否同向 */
+                    else if((ring_side == 1 && all_left) || (ring_side == 2 && all_right))
+                    {
+                        ring_score += 30;  /* 同向确认，满分 */
+                    }
+                    /* 方向矛盾：不加分，不降分（可能是噪声） */
+                }
             }
         }
 
