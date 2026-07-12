@@ -97,11 +97,10 @@ void Patch_line_Right_Init(int16 start, int16 end)
     }
     for(y = start; y < end; y++)
     {
-        if(y >= reference_col_farthest) return;
-        if(Right_Line[y] > Right_Coordinates[y]-10)
+        if(Right_Line[y] > MT9V03X_W-20)
 		{
 			Right_Line[y] = Left_Line[y] + Road_Width_Table[y];
-//			image_copy_out[y][Right_Line[y]] = 0;
+			image_copy_out[y][Right_Line[y]] = 0;
 		}
         // 左线保持不变
         // 右线 = 左线 + 当前行标准宽度
@@ -129,11 +128,10 @@ void Patch_line_Left_Init(int16 start, int16 end)
     }
     for(y = start; y < end; y++)
     {
-        if(y >= reference_col_farthest) return;
-        if(Left_Line[y] < Left_Coordinates[y]-10)
+        if(Left_Line[y] < 20)
 		{
 			Left_Line[y] = Right_Line[y] - Road_Width_Table[y];
-//			image_copy_out[y][Left_Line[y]] = 0;
+			image_copy_out[y][Left_Line[y]] = 0;
 		}
         // 右线保持不变
         // 左线 = 右线 - 当前行标准宽度
