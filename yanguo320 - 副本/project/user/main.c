@@ -120,7 +120,7 @@ void main(void)
 //			Extract_Road_Features();
 			if(count1 > 0)
 			{
-				Black_counts_weight(80);      //丢线保护
+				Black_counts_weight(100);      //丢线保护
 			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
@@ -158,7 +158,7 @@ void Interrupt(void)
 			COM_QY = 2;
 		}
 	}
-	if(COM_QY == 1)
+	if(COM_QY == 2)
 	{
 		count1++;
 	}

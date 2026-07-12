@@ -3,7 +3,7 @@
 /* ------------------------------------------------ */
 /* 陀螺仪积分角度 */
 int16 Gyro_In_Left = 70;//70
-int16 Gyro_Out_Left = 80;
+int16 Gyro_Out_Left = 70;
 
 int16 Gyro_In_Right = 70;
 int16 Gyro_Out_Right = 80;
@@ -14,7 +14,7 @@ int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
 uint16 Left_Enc_In = 3400;
-uint16 Left_Enc_Out = 1200;
+uint16 Left_Enc_Out = 2000;
 uint16 Right_Enc_In = 3400;
 uint16 Right_Enc_Out = 1200;
 
