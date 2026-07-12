@@ -403,7 +403,7 @@ int16 White_counts_weight(int16 p)
 // 使用示例
 // 备注信息     用于丢线保护
 //------------------------------------------------------------------------------------------------------------------
-void Black_counts_weight(int p)
+void Black_counts_weight(int16 p)
 {
 	int16 gray_point_1 = 0, gray_point_2 = 0,compare_value = 0;
 	int16 i;
@@ -435,7 +435,7 @@ void Black_counts_weight(int p)
 		}
 	}
 
-	if(Black_counts > 60 && ((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0)))
+	if(Black_counts > 60 && ((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0)) && angle_pitch < 15 && angle_pitch > -15)
 	{
 		COM_QY = 0;
 	}

@@ -407,36 +407,36 @@ void Find_Boundry_LongWhiteCol(void)
 			image_copy_out[i][reference_col] = 0;
 		}
 	}
-	else if((Find_Left_FLAG == Left_4))
-	{
-		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
-		{
-			//计算误差
-			Road_Wide[i] = Right_Coordinates[i] - Right_Line[i];//47
-			
-			last_mid = 94 - Road_Wide[i];
+//	else if((Find_Left_FLAG == Left_4))
+//	{
+//		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
+//		{
+//			//计算误差
+//			Road_Wide[i] = Right_Coordinates[i] - Right_Line[i];//47
+//			
+//			last_mid = 94 - Road_Wide[i];
 
-			//把中线像素点输出到图像
-			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-			
-			image_copy_out[i][reference_col] = 0;
-		}
-	}
-	else if((Find_Right_FLAG == Right_4))
-	{
-		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
-		{
-			//计算误差
-			Road_Wide[i] = Left_Coordinates[i] - Left_Line[i];//47
-			
-			last_mid = 94 - Road_Wide[i];
+//			//把中线像素点输出到图像
+//			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//			
+//			image_copy_out[i][reference_col] = 0;
+//		}
+//	}
+//	else if((Find_Right_FLAG == Right_4))
+//	{
+//		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
+//		{
+//			//计算误差
+//			Road_Wide[i] = Left_Coordinates[i] - Left_Line[i];//47
+//			
+//			last_mid = 94 - Road_Wide[i];
 
-			//把中线像素点输出到图像
-			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-			
-			image_copy_out[i][reference_col] = 0;
-		}
-	}
+//			//把中线像素点输出到图像
+//			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//			
+//			image_copy_out[i][reference_col] = 0;
+//		}
+//	}
 	else
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)

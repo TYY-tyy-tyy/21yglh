@@ -17,10 +17,6 @@ uint16 Left_Enc_In = 3400;
 uint16 Left_Enc_Out = 1200;
 uint16 Right_Enc_In = 3400;
 uint16 Right_Enc_Out = 1200;
-uint16 Left_time_In = 3;
-uint16 Left_time_Out = 3;
-uint16 Right_time_In = 3;
-uint16 Right_time_Out = 3;
 
 /* ------------------------------------------------ */
 
@@ -38,6 +34,8 @@ uint16 Encoder_jifen_R;
 /* 陀螺仪角度记录变量 */
 int16 gyro_angle_start;
 int16 gyro_angle_end;
+
+uint16 Ring_time = 0;
 
 /* 进环的次数 */
 int8 Left_time = 0;
@@ -62,7 +60,6 @@ uint8 r_con,l_con;
 uint8 ring_preMeet_flag=0;
 
 uint8 Ring_in_local_flag = 0;
-uint16 Ring_time = 10;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     找左圆环
@@ -74,7 +71,7 @@ uint16 Ring_time = 10;
 void Find_Left_Ring(void)
 {
     /* 判断是否为圆环 */
-    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num))
+    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num) && Ring_time < 2)
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
 			&& (Right_dowm_Patch == 0 || Right_dowm_Patch == 20) && (Left_local_LostNums >= 15) 
@@ -105,7 +102,6 @@ void Find_Left_Ring(void)
             gyro_angle_start = 0;
             gyro_angle_end = 0;
 			Ring_in_local_flag = 0;
-			Ring_time = 0;
 //			Left_Patch_Init();
         }
 //        else
@@ -140,35 +136,6 @@ void Find_Left_Ring(void)
 				//关闭蜂鸣器
 				Buzzer_OFF();
 			}
-//			else if(Left_Lost_Line_count <= 10)
-//			{
-//				Ring_in_local_flag = 1;
-//			}
-//			if(Ring_in_local_flag == 1)
-//			{
-//				all_on();
-//				Ring_time++;
-//			}
-//			if(Ring_time >= Left_time_In)
-//			{
-//				//标志位更新
-//				Find_Left_FLAG = Left_2;
-
-//				//编码器积分标志位置0
-//				Encoder_jifen_flag = 0;
-
-//				//陀螺仪积分标志位置1
-//				gyro_jifen_flag = 1;
-//				
-//				Ring_time = 0;
-
-//				//关闭蜂鸣器
-//				Buzzer_OFF();
-//			}
-//			else
-//			{
-//				Left_Patch_Init();
-//			}
 		}
 		else if(Left_dowm_Patch < 40)
 		{
@@ -187,35 +154,6 @@ void Find_Left_Ring(void)
 				//关闭蜂鸣器
 			}
 			all_off();
-//			else if(Left_Lost_Line_count <= 10)
-//			{
-//				Ring_in_local_flag = 1;
-//			}
-//			if(Ring_in_local_flag == 1)
-//			{
-//				all_on();
-//				Ring_time++;
-//			}
-//			if(Ring_time >= Left_time_In)
-//			{
-//				//标志位更新
-//				Find_Left_FLAG = Left_2;
-
-//				//编码器积分标志位置0
-//				Encoder_jifen_flag = 0;
-
-//				//陀螺仪积分标志位置1
-//				gyro_jifen_flag = 1;
-//				
-//				Ring_time = 0;
-
-//				//关闭蜂鸣器
-//				Buzzer_OFF();
-//			}
-//			else
-//			{
-//				Left_Patch_Init();
-//			}
 		}
     }
     /* 状态二 */
@@ -347,6 +285,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_6)
      {
          /* 蜂鸣器响起 */
+		 Ring_time = 50;
           Buzzer_ON();
 //		 all_on();
 
@@ -387,7 +326,7 @@ void Find_Left_Ring(void)
 void Find_Right_Ring(void)
 {
     /* 判断是否为圆环 */
-    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num))
+    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num) && Ring_time < 2)
     {
         if((Right_dowm_Patch >= 20) 
 			&& (Left_dowm_Patch == 0) && (Right_local_LostNums >= 15) 
@@ -642,6 +581,7 @@ void Find_Right_Ring(void)
 //		 COM_QY = 0;
          /* 蜂鸣器响起 */
           Buzzer_ON();
+		 Ring_time = 50;
 //		 all_on();
 
          //当左右轮积分大于1500时
@@ -680,6 +620,10 @@ void Find_Right_Ring(void)
 //------------------------------------------------------------------------------------------------------------------
 void Find_Ring(void)
 {
+	if(Ring_time > 0)
+	{
+		Ring_time --;
+	}
 //    if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
 //    {
 		r_con=Right_ContinueLine();
@@ -702,12 +646,10 @@ void Find_Ring(void)
         Right_local_LostNums = Count_Right_Lost(110,50);//40 25
 
         //避免十字误判圆环
-        Left_dowm_Patch = Find_left_dowm_point(100,20);
-        Right_dowm_Patch = Find_Right_dowm_point(100,20);//58 20
+        Left_dowm_Patch = Find_left_dowm_point(110,20);
+        Right_dowm_Patch = Find_Right_dowm_point(110,20);//58 20
 //    }
 	
 	Find_Right_Ring();
 	Find_Left_Ring();
-//    if(Diswitch_Key_1 == 1) Find_Left_Ring();   //环岛
-//    if(Diswitch_Key_2 == 1) Find_Right_Ring();
 }

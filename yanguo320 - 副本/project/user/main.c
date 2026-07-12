@@ -63,8 +63,8 @@ void main(void)
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170  220
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：35  90
 //	Ring_T_KP = 55;
-	W_T_KP = 25;
-	T_KP = 44;//40 44
+	W_T_KP = 35;
+	T_KP = 50;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;
@@ -196,7 +196,7 @@ void main(void)
 //			Extract_Road_Features();
 			if(count1 > 0)
 			{
-				Black_counts_weight(80);      //丢线保护
+				Black_counts_weight(100);      //丢线保护
 			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);

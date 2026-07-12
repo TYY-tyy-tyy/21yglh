@@ -43,15 +43,15 @@ void Find_Crossroads(void)
 //	}
 //	return;
 	
-	if(Left_Lost_Line_count >= 15 && Right_Lost_Line_count >= 15)
+	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
 		/* 找左上下角点 */
         Left_up_Patch = Find_left_up_point(30,110);
-        Left_dowm_Patch = Find_left_dowm_point(110,40);
+//        Left_dowm_Patch = Find_left_dowm_point(110,40);
 
         /* 找右上下角点 */
         Right_up_Patch = Find_Right_up_point(30,110);
-        Right_dowm_Patch = Find_Right_dowm_point(110,40);
+//        Right_dowm_Patch = Find_Right_dowm_point(110,40);
 
         /* 第二级优先级判断十字情况 */
         //若四个点都存在
