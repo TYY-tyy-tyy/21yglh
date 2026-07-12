@@ -328,7 +328,7 @@ void Find_Right_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num) && Ring_time < 2)
     {
         if((Right_dowm_Patch >= 20) 
-			&& (Left_dowm_Patch == 0||Left_dowm_Patch == 20) && (Right_local_LostNums >= 15) 
+			&& (Left_dowm_Patch == 0) && (Right_local_LostNums >= 15) 
 			&& (Right_Lost_Line_count <= 40) && (Left_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
