@@ -7,7 +7,7 @@
 #define SEARCH_IMAGE_W      Image_W             //搜线的宽度
 #define SEARCH_IMAGE_H      Image_H        //搜线的高度
 #define BLACKPOINT          50             //必是黑点值
-#define WHITEPOINT          220             //必是黑点值
+#define WHITEPOINT          190             //必是白点值
 #define WHITEMAXMUL         125             //参考点的最大白点百分比
 #define WHITEMINMUL         75              //参考点的最小白点百分比
 
