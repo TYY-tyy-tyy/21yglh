@@ -38,6 +38,6 @@ uint8 Get_Key_2(void);
 uint8 Get_Key_3(void);
 uint8 Get_Key_4(void);
 uint8 Get_Key_5(void);
-void Key_DecisionMaking(void);
+void Get_Diswitch_Key(void);
 
 #endif /* CODE_KEY_KEY_H_ */

@@ -115,60 +115,61 @@ void main(void)
 		
 		if(COM_QY == 0)
 		{
-			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
-			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
-			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
-			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
-			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
-			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
-			tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
-			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
-			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
-			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
-			tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
-			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
-			tft180_show_int16(0,MT9V03X_H / 2,T_KP);
-			tft180_show_int16(0,MT9V03X_H / 2 + 16,T_KP1);
-			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
-			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
+			menu_all();
+//			tft180_show_int16(MT9V03X_W / 2,0,Image_error);
+//			tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
+//			tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
+//			tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
+//			tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
+//			tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
+//			tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
+//			tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
+//			tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
+//			tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);
+//			tft180_show_int16(48,MT9V03X_H / 2 + 32,Encoder_jifen_L);
+//			tft180_show_int16(48,MT9V03X_H / 2 + 48,White_Nums);
+//			tft180_show_int16(0,MT9V03X_H / 2,T_KP);
+//			tft180_show_int16(0,MT9V03X_H / 2 + 16,T_KP1);
+//			tft180_show_int16(0,MT9V03X_H / 2 + 32,T_GKD);
+//			tft180_show_int16(0,MT9V03X_H / 2 + 48,angle_ringR);
 		}
-		if(Get_Key_3())
-		{
-			if(COM_QY == 0)
-			{
-				COM_QY = 1;
-				time = 0;
-			}
-			else if(COM_QY != 0)
-			{
-				pid.Speed_All_Error_L = 0;
-				pid.Speed_All_Error_R = 0;
-				my_Speed = 200 ;
-				COM_QY = 0; 
-			}
-		}
-		if(Get_Key_4())
-		{
-			my_Speed += 20;
-			if(my_Speed > 350)
-			{
-				my_Speed = 50;
-			}
-		}
-		if(Get_Key_5())
-		{
-			T_GKD += 1;
-		}
-		if(Get_Key_1())
-		{
-//			T_KP += 1;
-			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
-		}
-		if(Get_Key_2())
-		{
-//			T_KP1 += 1;
-			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
-		}
+//		if(Get_Key_3())
+//		{
+//			if(COM_QY == 0)
+//			{
+//				COM_QY = 1;
+//				time = 0;
+//			}
+//			else if(COM_QY != 0)
+//			{
+//				pid.Speed_All_Error_L = 0;
+//				pid.Speed_All_Error_R = 0;
+//				my_Speed = 200 ;
+//				COM_QY = 0; 
+//			}
+//		}
+//		if(Get_Key_4())
+//		{
+//			my_Speed += 20;
+//			if(my_Speed > 350)
+//			{
+//				my_Speed = 50;
+//			}
+//		}
+//		if(Get_Key_5())
+//		{
+//			T_GKD += 1;
+//		}
+//		if(Get_Key_1())
+//		{
+////			T_KP += 1;
+//			pid.Speed_KI_L = pid.Speed_KI_R = pid.Speed_KI_R + 1;
+//		}
+//		if(Get_Key_2())
+//		{
+////			T_KP1 += 1;
+//			pid.Speed_KP_L = pid.Speed_KP_R = pid.Speed_KP_R + 2;
+//		}
 	
 		/* Í¼Ïñ´¦Àí */
 		if(mt9v03x_finish_flag)
@@ -191,10 +192,10 @@ void main(void)
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 //			printf("%d\n",qy_time1);
-			if(COM_QY == 0)
-			{
-				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
-			}
+//			if(COM_QY == 0)
+//			{
+//				tft180_show_gray_image(0,0, image_copy_out[0], MT9V03X_W, MT9V03X_H, MT9V03X_W / 2, MT9V03X_H / 2, 0);
+//			}
 			mt9v03x_finish_flag = 0;
 //			printf("%d\n",qy_time);
 //			printf("%d,%d\n",Image_error,White_Column_MID);

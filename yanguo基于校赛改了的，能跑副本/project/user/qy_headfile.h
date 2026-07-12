@@ -32,6 +32,7 @@
 #include "Target.h"
 #include "Coordinates.h"
 #include "Road_Feature.h"
+#include "memu.h"
 //=====================================================”√ªß≤„======================================================
 
 #endif 

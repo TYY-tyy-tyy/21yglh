@@ -6,6 +6,7 @@ void menu_all(void)
 {
 	uint8 menu_all_num = 0;
 	Get_Key();
+	Get_Diswitch_Key();
 	if(Diswitch_Key_1)
 	{
 		if(COM_QY == 0)
@@ -67,9 +68,9 @@ void menu_0(void)
 	}
 	if(menu_all_num < 0)
 	{
-		menu_all_num = 2;
+		menu_all_num = 3;
 	}
-	else if(menu_all_num > 2)
+	else if(menu_all_num > 3)
 	{
 		menu_all_num = 0;
 	}
@@ -80,17 +81,17 @@ void menu_0(void)
 	tft180_show_string(8,MT9V03X_H / 2,"speed");
 	tft180_show_string(8,MT9V03X_H / 2 + 16,"img");
 	tft180_show_string(8,MT9V03X_H / 2 + 32,"PID");
-	tft180_show_string(8,MT9V03X_H / 2 + 32,"run");
+	tft180_show_string(8,MT9V03X_H / 2 + 48,"run");
 }
 
 void menu_1(void)//speed
 {
-	uint8 menu_all_num = 0;
-	if(Key_3)
+	static uint8 menu_all_num = 0;
+	if(Key_1)
 	{
 		menu_all_num ++;
 	}
-	else if(Key_4)
+	else if(Key_2)
 	{
 		menu_all_num --;
 	}
@@ -147,13 +148,13 @@ void menu_1(void)//speed
 
 void menu_2(void)//img
 {
-	uint8 menu_all_num = 0;
+	static uint8 menu_all_num = 0;
 	uint16 set_time = 500;
-	if(Key_3)
+	if(Key_1)
 	{
 		menu_all_num ++;
 	}
-	else if(Key_4)
+	else if(Key_2)
 	{
 		menu_all_num --;
 	}
@@ -219,12 +220,12 @@ void menu_2(void)//img
 
 void menu_3(void)//PID
 {
-	uint8 menu_all_num = 0;
-	if(Key_3)
+	static uint8 menu_all_num = 0;
+	if(Key_1)
 	{
 		menu_all_num ++;
 	}
-	else if(Key_4)
+	else if(Key_2)
 	{
 		menu_all_num --;
 	}
