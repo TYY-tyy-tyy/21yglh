@@ -76,7 +76,7 @@ void main(void)
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)Image_error);
+		wireless_uart_send_byte((uint8)g_track_feature.type);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
 		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
@@ -117,7 +117,7 @@ void main(void)
 			get_reference_point();      //获取图像差比和参考点
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //找边界搜线
-//			Extract_Road_Features();
+			Extract_Road_Features();
 			if(count1 > 0)
 			{
 				Black_counts_weight(100);      //丢线保护

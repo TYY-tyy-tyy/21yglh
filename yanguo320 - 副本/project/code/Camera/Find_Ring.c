@@ -77,7 +77,7 @@ void Find_Left_Ring(void)
 			&& (Right_dowm_Patch == 0 || Right_dowm_Patch == 20) && (Left_local_LostNums >= 15) 
 			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
-//			&& (Image_error > -30) && (Image_error < 30) 
+			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
 //			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 120))
         {
@@ -119,7 +119,7 @@ void Find_Left_Ring(void)
     else if(Find_Left_FLAG == Left_1)
     {
         //当左右轮积分大于1500时
-		if((Image_error < -20) || (Image_error > 20))
+		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
 		{
 			Find_Left_FLAG = Left_0;
 		}
@@ -331,7 +331,7 @@ void Find_Right_Ring(void)
 			&& (Left_dowm_Patch == 0||Left_dowm_Patch == 20) && (Right_local_LostNums >= 15) 
 			&& (Right_Lost_Line_count <= 40) && (Left_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
-//			&& (Image_error > -30) && (Image_error < 30) 
+			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
 //			&& (ring_preMeet_flag == 1)
 			&& (White_Column_MID >= 100) && (White_Nums > 120))
         {
@@ -360,7 +360,7 @@ void Find_Right_Ring(void)
     {
 //		COM_QY = 0;
         //当左右轮积分大于1500时
-		if((Image_error < -20) || (Image_error > 20))
+		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
 		{
 			Find_Right_FLAG = Right_0;
 			Buzzer_OFF();
@@ -596,6 +596,6 @@ void Find_Ring(void)
         Right_dowm_Patch = Find_Right_dowm_point(110,20);//58 20
 //    }
 	
-	Find_Right_Ring();
-	Find_Left_Ring();
+//	Find_Right_Ring();
+//	Find_Left_Ring();
 }
