@@ -51,7 +51,6 @@ void Interrupt_CCU60_CH0(void)
 //	Test_Speed();
 //	return;
 	nowtargetSpeed = my_Speed;
-	T_KP = get_y(Image_error);//40 44
 	/* 时间变量自增 */
 	if(time <= 15000) 
 	{
@@ -151,16 +150,17 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = Ring_T_KP;//44 47
         nowtargetSpeed = my_Speed/10*9;
     }
-    
 	else if(White_Column_MID > 110 )
     {
-        pid.Turn_KP = W_T_KP;//20
+//        pid.Turn_KP = W_T_KP;//20
+		pid.Turn_KP = LinearMap(T_KP,W_T_KP,Image_error,50);//40 44
         nowtargetSpeed = my_Speed;
     }
-	 else if((White_Column_MID > 110) && (Image_error<=-10 || Image_error>=10))
+	 else if((White_Column_MID < 110) || (Image_error<=-10 || Image_error>=10))
     {
-        pid.Turn_KP = 76;//20
-        nowtargetSpeed = my_Speed *0.9;
+//        pid.Turn_KP = 76;//20
+		pid.Turn_KP = LinearMap(T_KP,W_T_KP,Image_error,50);//40 44
+        nowtargetSpeed = my_Speed /10*9;
 		
     }
 //	else if(ring_preMeet_flag == 1
@@ -176,61 +176,35 @@ void Speed_DecisionMaking(void)
 //	}
     else
     {
-        pid.Turn_KP = T_KP;     
-        pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed *0.9;
+		pid.Turn_KP = LinearMap(T_KP,W_T_KP,Image_error,50);//40 44 
+		nowtargetSpeed = my_Speed *0.9;
     }
 }
 
-//==================== 图像下方菜单 ====================
-void show_menu(void)
+/**
+ * @brief 误差线性映射输出
+ * @param max_val 输出最大值
+ * @param min_val 输出最小值
+ * @param err     当前误差
+ * @param err_limit 误差最大绝对值（误差超过该值按极值算）
+ * @return 线性映射后输出值
+ */
+int16 LinearMap(int16 max_val, int16 min_val, int16 err, int16 err_limit)
 {
-    tft180_show_string(0, 65, "Plan:");
-    
-    if(menu_cursor == 0)
-        tft180_show_string(40, 65, ">1");
-    else
-        tft180_show_string(40, 65, " 1");
-        
-    if(menu_cursor == 1)
-        tft180_show_string(60, 65, ">2");
-    else
-        tft180_show_string(60, 65, " 2");
+	int16 range,temp,out;
+    // 取误差绝对值
+    int16 abs_err = abs(err);
+    // 误差限幅
+    if (abs_err > err_limit)
+        abs_err = err_limit;
 
-    tft180_show_string(0, 80, "Speed:");
-    tft180_show_string(0, 95, "KP:");
-    tft180_show_string(MT9V03X_W / 2, 0, "GKD:");
+    // 整数定点运算，放大1000消除小数丢失
+    range = max_val - min_val;
+    temp = (int16)abs_err * range * 100 / err_limit;
+    out = min_val + temp / 100;
 
-    if(select_plan == 1)
-    {
-        tft180_show_int16(45, 80, TargetSpeed_1);
-        tft180_show_float(24, 95, Turn_KP_1, 2, 2);
-		tft180_show_float(MT9V03X_W / 2, 16, Turn_GKD_1, 1, 3);
-    }
-    else
-    {
-        tft180_show_int16(45, 80, TargetSpeed_2);
-        tft180_show_float(24, 95, Turn_KP_2, 2, 2);
-        tft180_show_float(MT9V03X_W / 2, 16, Turn_GKD_2, 1, 3);
-    }
-
-    if(COM_QY == 1)
-        tft180_show_string(0, 110, "RUN");
-    else
-        tft180_show_string(0, 110, "STOP");
-}
-
-int clamp_x(int16 x)
-{
-    if (x < -52) return -52;
-    if (x > 52)  return 52;
-    return x;
-}
-int get_y(int16 x)
-{
-    int16 x_val = clamp_x(x);
-    int16 abs_x = abs(x_val);
-    // 整数计算：y = 46 + (3 \* |x|) / 52
-    int16 y = 66+ (12 * abs_x) / 52;//48 
-    return y;
+    // 输出兜底限幅
+    if (out > max_val) out = max_val;
+    if (out < min_val) out = min_val;
+    return out;
 }

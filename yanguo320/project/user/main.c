@@ -64,7 +64,7 @@ void main(void)
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：35  90
 	Ring_T_KP = 47;
 	W_T_KP = 20;
-//	T_KP = 40;//40 44
+	T_KP = 40;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
 	T_GKD =0;
@@ -224,7 +224,17 @@ void Interrupt(void)
 	
 	Mid_Error_Processing();
 	Interrupt_CCU60_CH0();
-	Open_Blds();
+	if(Diswitch_Key_2)
+	{
+		Open_Blds();
+	}
+	else
+	{
+		if(COM_QY == 1)
+		{
+			COM_QY = 2;
+		}
+	}
 	if(COM_QY == 2)
 	{
 		count1++;

@@ -294,6 +294,7 @@ void menu_4(void)//RUN
 {
 	if(Key_3)
 	{
+		menu_num = 0;
 		if(COM_QY == 0)
 		{
 			COM_QY = 1;

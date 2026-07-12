@@ -39,6 +39,5 @@ extern uint16 time;
 void Interrupt_CCU60_CH0(void);
 void Speed_DecisionMaking(void);
 void show_menu(void);
-int clamp_x(int16 x);
-int get_y(int16 x);
+int16 LinearMap(int16 max_val, int16 min_val, int16 err, int16 err_limit);
 #endif /* CODE_INTERRUPT_CONTROL_INTERRUPT_CONTROL_H_ */
