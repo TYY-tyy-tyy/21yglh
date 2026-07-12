@@ -147,7 +147,7 @@ void search_reference_col(void)
 		{
 			for(row = MT9V03X_H - 10; row > 10; row -= 2)
 			{
-				v_diff = my_abs((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
+				v_diff = MY_ABS((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
 				if(v_diff > GRADIENT_THRESHOLD)
 				{
 					remote_distance[col] = (uint8)row;
@@ -162,7 +162,7 @@ void search_reference_col(void)
 		{
 			for(row = MT9V03X_H - 10; row > 10; row -= 2)
 			{
-				v_diff = my_abs((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
+				v_diff = MY_ABS((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
 				if(v_diff > GRADIENT_THRESHOLD)
 				{
 					remote_distance[col] = (uint8)row;
@@ -178,7 +178,7 @@ void search_reference_col(void)
 		{
 			for(row = MT9V03X_H - 10; row > 10; row -= 2)
 			{
-				v_diff = my_abs((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
+				v_diff = MY_ABS((int16)image_copy_out[row][col] - (int16)image_copy_out[row-4][col]);
 				if(v_diff > GRADIENT_THRESHOLD)
 				{
 					remote_distance[col] = (uint8)row;

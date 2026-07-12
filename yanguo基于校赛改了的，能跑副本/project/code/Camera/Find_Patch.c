@@ -221,7 +221,7 @@ int16 White_counts_h(int16 p)
         if(h == 0)
         {
             // Ѱ�ҵ�һ�����ɣ���������(����->�ڵ�)
-            if(my_abs(v_diff) > GRADIENT_THRESHOLD && v_diff > 0)
+            if(MY_ABS(v_diff) > GRADIENT_THRESHOLD && v_diff > 0)
             {
                 h = 1;
                 break;
@@ -230,7 +230,7 @@ int16 White_counts_h(int16 p)
         else
         {
             // Ѱ�ҵڶ������ɣ��ɰ�����(�ڵ�->����)
-            if(my_abs(v_diff) > GRADIENT_THRESHOLD && v_diff < 0)
+            if(MY_ABS(v_diff) > GRADIENT_THRESHOLD && v_diff < 0)
             {
                 h = 2;
                 return h;
@@ -262,7 +262,7 @@ void Black_counts_weight(int p)
     for (i = 4; i < MT9V03X_W-4; i+=2)
     {
         g = get_gradient_x(p, i);
-        if(my_abs(g) > GRADIENT_THRESHOLD)
+        if(MY_ABS(g) > GRADIENT_THRESHOLD)
         {
             Black_counts++;
             continue;

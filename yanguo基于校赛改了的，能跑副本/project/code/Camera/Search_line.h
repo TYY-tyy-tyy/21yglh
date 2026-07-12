@@ -17,6 +17,8 @@
 #define CONTRASTOFFSET      1              //���߶Ա�ƫ��
 extern int16 REFERENCE_CONTRAST;            //�ο��Աȶ�
 
+#define MY_ABS(x)  ((x) < 0 ? -(x) : (x))   //�ڹ����ֵ
+
 #define GRADIENT_THRESHOLD_DEF 200          //Ĭ���ݶ���ֵ
 extern int16 GRADIENT_THRESHOLD;            //Sobel�ݶȼ���ֵ
 

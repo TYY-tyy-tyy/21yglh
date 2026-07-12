@@ -26,7 +26,7 @@ void Find_Target1(void)
 
 			// �ݶȼ��: �����ҵ�ǿ�Ҷȱ仯(Ŀ��߽�)
 			v_diff = (int16)image_copy_out[row][col] - (int16)image_copy_out[row-2][col];
-			if(my_abs(v_diff) > TARGET_GRADIENT_THRESHOLD)
+			if(MY_ABS(v_diff) > TARGET_GRADIENT_THRESHOLD)
 			{
 				remote_target[j] = (uint8)MT9V03X_H - row - 6;
 				image_copy_out[row][col] = 255;
@@ -81,7 +81,7 @@ void Find_Target1(void)
 			v_diff = (int16)image_copy_out[row][laser_eer] - (int16)image_copy_out[row-1][laser_eer];
 
 			// �ݶȼ��: ǿ�Ҷȱ仯 = Ŀ��
-			if(my_abs(v_diff) > TARGET_GRADIENT_THRESHOLD)
+			if(MY_ABS(v_diff) > TARGET_GRADIENT_THRESHOLD)
 			{
 				image_copy_out[row][laser_eer] = 255;
 				Target_NUM ++;
@@ -142,7 +142,7 @@ void Find_Target2(int p1,int p2)
 		for(i=l_edge;i<r_edge;i+=1)
 		{
 			g = get_gradient_x(p, i);
-			if(my_abs(g) > TARGET_GRADIENT_THRESHOLD)
+			if(MY_ABS(g) > TARGET_GRADIENT_THRESHOLD)
 			{
 				remote_target[k][j] = i;
 				j++;
@@ -155,7 +155,7 @@ void Find_Target2(int p1,int p2)
 		for(i=r_edge;i>l_edge;i-=1)
 		{
 			g = get_gradient_x(p, i);
-			if(my_abs(g) > TARGET_GRADIENT_THRESHOLD)
+			if(MY_ABS(g) > TARGET_GRADIENT_THRESHOLD)
 			{
 				remote_target[k][j] = i;
 				j++;
