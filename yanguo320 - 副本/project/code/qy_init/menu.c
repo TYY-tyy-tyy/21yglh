@@ -311,12 +311,12 @@ void menu_4(void)//RUN
 		}
 	}
 	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
-	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
-	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
-	tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
-	tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
+	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);//10
+	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);
+	tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);//34
+	tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);
 	tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
-	tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
+	tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);//29
 	tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
 	tft180_show_int16(48,MT9V03X_H / 2,Find_Right_FLAG);
 	tft180_show_int16(48,MT9V03X_H / 2 + 16,Find_Left_FLAG);

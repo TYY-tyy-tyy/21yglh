@@ -89,7 +89,7 @@ void Patch_line_Right_Init(int16 start, int16 end)
 	int16 t;
 	int16 y;
 	//自动调整位置
-    if (start < end)
+    if (start > end)
     {
         t = start;
         start = end;
@@ -120,7 +120,7 @@ void Patch_line_Left_Init(int16 start, int16 end)
 	int16 t;
 	int16 y;
 	//自动调整位置
-    if (start < end)
+    if (start > end)
     {
         t = start;
         start = end;

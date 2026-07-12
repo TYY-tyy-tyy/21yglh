@@ -85,14 +85,6 @@ void Find_Crossroads(void)
             Patch_line_Left(bot_L, top_L);
             Patch_line_Right(bot_R, top_R);
         }
-		else if(Right_Lost_Line_count > 10 && Right_local_LostNums < 10 && Left_Lost_Line_count < 10)
-		{
-			Patch_line_Right_Init(10,90);
-		}
-		else if(Left_Lost_Line_count > 10 && Left_local_LostNums < 10 && Right_Lost_Line_count < 10)
-		{
-			Patch_line_Left_Init(10,90);
-		}
 //        //若上面两个角点存在
 //        else if((Left_up_Patch != 0) && (Right_up_Patch != 0))
 //        {
@@ -161,9 +153,13 @@ void Find_Crossroads(void)
 //			}
 //		}
     }
-	else
+	else if(Right_Lost_Line_count > 5 && Right_local_LostNums < 5 && Left_Lost_Line_count < 15)
 	{
-		Crossroads_FLAG = 0;
+		Patch_line_Right_Init(10,90);
+	}
+	else if(Left_Lost_Line_count > 5 && Left_local_LostNums < 5 && Right_Lost_Line_count < 15)
+	{
+		Patch_line_Left_Init(10,90);
 	}
 //	else
 //	{

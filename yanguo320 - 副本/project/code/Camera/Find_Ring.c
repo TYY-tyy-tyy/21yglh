@@ -79,7 +79,7 @@ void Find_Left_Ring(void)
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
 //			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 120))
+			&& (White_Column_MID >= 100) && (White_Nums > 85))
         {
             //若是，则进入圆环标志位1
 //			COM_QY = 0;
@@ -119,10 +119,10 @@ void Find_Left_Ring(void)
     else if(Find_Left_FLAG == Left_1)
     {
         //当左右轮积分大于1500时
-		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
-		{
-			Find_Left_FLAG = Left_0;
-		}
+//		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
+//		{
+//			Find_Left_FLAG = Left_0;
+//		}
 		if(Left_dowm_Patch >= 40)
 		{
 			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*12)
@@ -333,7 +333,7 @@ void Find_Right_Ring(void)
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
 //			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 120))
+			&& (White_Column_MID >= 100) && (White_Nums > 85))
         {
 //			COM_QY = 0;
             //若是，则进入圆环标志位1
@@ -360,11 +360,11 @@ void Find_Right_Ring(void)
     {
 //		COM_QY = 0;
         //当左右轮积分大于1500时
-		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
-		{
-			Find_Right_FLAG = Right_0;
-			Buzzer_OFF();
-		}
+//		if((pid.Turn_last_error < -20) || (pid.Turn_last_error > 20))
+//		{
+//			Find_Right_FLAG = Right_0;
+//			Buzzer_OFF();
+//		}
 		if(Right_dowm_Patch >= 40)
 		{
 			if(((Encoder_jifen_L + Encoder_jifen_R)/2 > Right_Enc_In/10*12))
