@@ -150,7 +150,7 @@ void Find_Target1(void)
 	}
 }
 
-void Find_Target2(int p1,int p2)
+void Find_Target2(int16 p1,int16 p2)
 {
 	static int8 Find_Target_time = 0;
 	uint8 remote_target[4][5] = {0};

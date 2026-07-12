@@ -228,11 +228,11 @@ void Interrupt(void)
 	Interrupt_CCU60_CH0();
 	if(COM_QY == 1)
 	{
-	count1++;
+		count1++;
 	}
 	else
 	{
-	count1=0;
+		count1=0;
 	}
 }
 

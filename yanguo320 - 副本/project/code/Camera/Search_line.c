@@ -29,79 +29,30 @@ void get_reference_point(void)
 	int W;
     uint16 reference_point_Num = 0;     //统计点的总数量
     uint16 reference_point_Sum[2] = {0};     //统计点的合
+    //计算总数量
+    reference_point_Num = REFRENCE_ROW * 54;
     //60~56
-    for(H = MT9V03X_H-5; H > (MT9V03X_H - 5 - REFRENCE_ROW); H-=1)
+    for(H = MT9V03X_H-15; H > (MT9V03X_H - 15 - REFRENCE_ROW*2); H-=2)
     {
         //20~74
-//		if((Left_Lost_Line_count < 10 && Right_Lost_Line_count < 10) || (Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10))
-//		{
-			for(W = 85; W < 103; W+=1)
+        for(W = 40; W < 148; W+=2)
+        {
+            reference_point_Sum[0] +=  image_copy_out[H][W];
+			if(reference_point_Sum[0] > 10000)
 			{
-				if(image_copy_out[H][W] > WHITEPOINT)
-				{
-					image_copy_out[H][W] = WHITEPOINT;
-				}
-				else if(image_copy_out[H][W] < BLACKPOINT)
-				{
-					break;
-				}
-				reference_point_Sum[0] +=  image_copy_out[H][W];
-				if(reference_point_Sum[0] > 10000)
-				{
-					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
-					reference_point_Sum[1] += 1;
-				}
-				reference_point_Num ++ ;
+				reference_point_Sum[0] = reference_point_Sum[0] - 10000;
+				reference_point_Sum[1] += 1;
 			}
-//		}
-//		else if((Left_Lost_Line_count < 10 && Right_Lost_Line_count >= 10))
-//		{
-//			for(W = 110; W < 138; W+=1)
-//			{
-//				reference_point_Sum[0] +=  image_copy_out[H][W];
-//				if(reference_point_Sum[0] > 10000)
-//				{
-//					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
-//					reference_point_Sum[1] += 1;
-//				}
-//			}
-//		}
-//		else if((Left_Lost_Line_count >= 10 && Right_Lost_Line_count < 10))
-//		{
-//			for(W = 50; W < 78; W+=1)
-//			{
-//				reference_point_Sum[0] +=  image_copy_out[H][W];
-//				if(reference_point_Sum[0] > 10000)
-//				{
-//					reference_point_Sum[0] = reference_point_Sum[0] - 10000;
-//					reference_point_Sum[1] += 1;
-//				}
-//			}
-//		}
+        }
     }
     //求平均值
-    reference_point[0] = (uint8) (reference_point_Sum[0] / (reference_point_Num + 1));
-	reference_point[1] = (uint8) (reference_point_Sum[1]*1000 / (reference_point_Num *10) + 1);
+    reference_point[0] = (uint8) (reference_point_Sum[0] / reference_point_Num);
+	reference_point[1] = (uint8) (reference_point_Sum[1]*1000 / reference_point_Num *10);
 	reference_point[2] = reference_point[0] + reference_point[1];
     //限幅
-    white_max_point = (uint8)((uint16)reference_point[2] * WHITEMAXMUL / 100); //平均值 * 130%
-    white_min_point = (uint8)((uint16)reference_point[2] * WHITEMINMUL / 100); //平均值 * 70%
-	if(white_max_point > WHITEPOINT)
-	{
-		white_max_point = WHITEPOINT;
-	}
-	else if(white_max_point < BLACKPOINT)
-	{
-		white_max_point = BLACKPOINT;
-	}
-	if(white_min_point > WHITEPOINT)
-	{
-		white_min_point = WHITEPOINT;
-	}
-	else if(white_min_point < BLACKPOINT)
-	{
-		white_min_point = BLACKPOINT;
-	}
+    white_max_point = (uint8)func_limit_ab((uint16)reference_point[2] * WHITEMAXMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 130%
+    white_min_point = (uint8)func_limit_ab((uint16)reference_point[2] * WHITEMINMUL / 100, BLACKPOINT, WHITEPOINT); //平均值 * 70%
+
 }
 
 //-------------------------------------------------------------------------------------------------------------------

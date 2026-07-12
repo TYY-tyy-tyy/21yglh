@@ -194,14 +194,14 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i+1];
-//			if(gray_point_1 < white_min_point)
-//			{
-//				remote_target[k][j] = i;
-//				j++;
-//				Black_counts[k]++;
-//				image_copy_out[p][i] = 255;
-//				break;
-//			}
+			if(gray_point_1 < white_min_point)
+			{
+				remote_target[k][j] = i;
+				j++;
+				Black_counts[k]++;
+				image_copy_out[p][i] = 255;
+				break;
+			}
 			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
 			if(compare_value > Target_REFERENCE_CONTRAST)
 			{
@@ -217,14 +217,14 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i-1];
-//			if(gray_point_1 < white_min_point && i - remote_target[k][0] < Target_num[k])
-//			{
-//				remote_target[k][j] = i;
-//				j++;
-//				Black_counts[k]++;
-//				image_copy_out[p][i] = 255;
-//				break;
-//			}
+			if(gray_point_1 < white_min_point && i - remote_target[k][0] < Target_num[k])
+			{
+				remote_target[k][j] = i;
+				j++;
+				Black_counts[k]++;
+				image_copy_out[p][i] = 255;
+				break;
+			}
 			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
 			if(compare_value > Target_REFERENCE_CONTRAST && i - remote_target[k][0] < Target_num[k])
 			{
@@ -259,19 +259,19 @@ void Find_Target2(int p1,int p2)
 				{
 					Find_Target_oad[k] = 3;
 				}
-				else if(tar_eer[k] >= Left_Line[p]+8 && tar_eer[k] <= Left_Line[p]+Target_num[k]*18/10)
+				else if(tar_eer[k] <= Left_Line[p]+Target_num[k]*12/10)
 				{
 					Find_Target_oad[k] = 1;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*18/10 && tar_eer[p] <= Right_Line[p]-8)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*12/10)
 				{
 					Find_Target_oad[k] = 5;
 				}
-				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*18/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*2)
+				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*12/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*2)
 				{
 					Find_Target_oad[k] = 2;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*18/10)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*12/10)
 				{
 					Find_Target_oad[k] = 4;
 				}
