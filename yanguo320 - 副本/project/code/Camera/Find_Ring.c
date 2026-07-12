@@ -216,10 +216,10 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 340 && Right_Lost_Line_count < 5)
+        if (angle_ringR > 320)
         {
 //			COM_QY = 0;
-            Find_Left_FLAG = Left_6;
+            Find_Left_FLAG = Left_5;
 
             //蜂鸣器响起
 			Buzzer_ON();
@@ -231,12 +231,12 @@ void Find_Left_Ring(void)
             gyro_jifen_flag = 1;
 			
 			/* 编码器积分标志位置1 */
-             Encoder_jifen_flag = 1;
+             Encoder_jifen_flag = 0;
         }
         else
         {
             /* 拉线进环 */
-			Left_Patch_Init();
+//			Left_Patch_Init();
 
             //蜂鸣器关闭
 //             Buzzer_OFF();
@@ -246,36 +246,33 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_5)
      {
          //转向够角度后停止拉线
-         if (gyro_angle_dif > Gyro_Out_Left)
+         if (Right_Lost_Line_count < 5)
          {
-             Find_Left_FLAG = Left_6;
+            Find_Left_FLAG = Left_6;
 
-             /* 数据清零 */
-             gyro_angle_dif = 0;
+            //蜂鸣器响起
+			Buzzer_OFF();
 
-             /* 陀螺仪标志位置0 */
-              gyro_jifen_flag = 0;
+            /* 变量清零 */
+            gyro_angle_dif = 0;
 
-             /* 编码器积分标志位置1 */
+            /* 陀螺仪标志位置1 */
+            gyro_jifen_flag = 1;
+			
+			/* 编码器积分标志位置1 */
              Encoder_jifen_flag = 1;
-
-             //蜂鸣器关闭
-             Buzzer_OFF();
          }
          else
          {
              /* 拉线出环 */
-			 Right_Patch_Init();
-//             bot[0] = 158;
-//             bot[1] = 110;
+             bot[0] = Right_Coordinates[110];
+             bot[1] = 110;
 
-//             top[0] = 2;
-//             top[1] = 10;
+             top[0] = Right_Coordinates[10];
+             top[1] = 10;
 
-//             Patch_line_Right(bot, top);
+             Patch_line_Right(bot, top);
 
-             /* 计算角度差值 */
-             gyro_angle_dif = get_gyro_dif(gyro_angle_start,gyro_angle_end);
              //蜂鸣器响起
              Buzzer_ON();
 //			 all_on();
@@ -286,8 +283,7 @@ void Find_Left_Ring(void)
      {
          /* 蜂鸣器响起 */
 		 Ring_time = 50;
-          Buzzer_ON();
-//		 all_on();
+         Buzzer_ON();
 
          //当左右轮积分大于1500时
          if(((Encoder_jifen_L + Encoder_jifen_R)/2) > Left_Enc_Out)
@@ -302,17 +298,16 @@ void Find_Left_Ring(void)
              //关闭蜂鸣器
              Buzzer_OFF();
          }
-         else
-         {
-//			 Left_Patch_Init();
-//             bot[0] = 30;
-//             bot[1] = 118;
+//		 else
+//		 {
+//			 /* 拉线出环 */
+//             bot[0] = Left_Coordinates[110];
+//             bot[1] = 110;
 
-//             top[0] = 80;
-//             top[1] = 2;
-
-//             Patch_line_Left(bot, top);
-         }
+//             top[0] = Left_Coordinates[10];
+//             top[1] = 10;
+//			 Patch_line_Left(bot, top);
+//		 }
      }
 }
 

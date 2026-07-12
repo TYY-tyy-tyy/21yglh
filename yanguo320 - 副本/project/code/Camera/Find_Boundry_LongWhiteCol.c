@@ -377,7 +377,7 @@ void Find_Boundry_LongWhiteCol(void)
 			}
 		}
 	}
-	else if((Find_Left_FLAG == Left_1) || (Find_Left_FLAG == Left_6))
+	else if((Find_Left_FLAG == Left_1))
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
@@ -392,7 +392,7 @@ void Find_Boundry_LongWhiteCol(void)
 			image_copy_out[i][reference_col] = 0;
 		}
 	}
-	else if((Find_Right_FLAG == Right_1) || (Find_Right_FLAG == Right_6))
+	else if((Find_Right_FLAG == Right_1))
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
