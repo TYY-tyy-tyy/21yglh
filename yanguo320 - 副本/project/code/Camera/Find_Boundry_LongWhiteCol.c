@@ -397,14 +397,14 @@ void Find_Boundry_LongWhiteCol(void)
 		}
 		if(COM_QY == 0)
 		{
-			image_copy_out[i  ][right_border] = 255;
-			image_copy_out[i-1][right_border] = 255;
-			image_copy_out[i  ][right_border+1] = 255;
-			image_copy_out[i-1][right_border+1] = 255;
-			image_copy_out[i  ][left_border] = 0;
-			image_copy_out[i-1][left_border] = 0;
-			image_copy_out[i  ][left_border-1] = 0;
-			image_copy_out[i-1][left_border-1] = 0;
+//			image_copy_out[i  ][right_border] = 255;
+//			image_copy_out[i-1][right_border] = 255;
+//			image_copy_out[i  ][right_border+1] = 255;
+//			image_copy_out[i-1][right_border+1] = 255;
+//			image_copy_out[i  ][left_border] = 0;
+//			image_copy_out[i-1][left_border] = 0;
+//			image_copy_out[i  ][left_border-1] = 0;
+//			image_copy_out[i-1][left_border-1] = 0;
 		}
 		//存放每行的边界
 		Left_Line [i  ] = left_border ;		//左边线线数组
@@ -416,7 +416,7 @@ void Find_Boundry_LongWhiteCol(void)
 	/* 元素部分 */
     if((White_Column_MID >= 100) && (Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
     {
-        Find_Target2(65, 80);
+        Find_Target2(45, 60);
     }
     Find_Ring();
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0))
@@ -440,8 +440,8 @@ void Find_Boundry_LongWhiteCol(void)
 			{
 //				image_copy_out[i+1][last_mid+1] = 0; // i是第几行，mid是第几列
 //				image_copy_out[i][last_mid+1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
 //				image_copy_out[i+1][last_mid-1] = 0; // i是第几行，mid是第几列
 //				image_copy_out[i][last_mid-1] = 0; // i是第几行，mid是第几列
 //				image_copy_out[i+1][reference_col+1] = 0; // i是第几行，mid是第几列

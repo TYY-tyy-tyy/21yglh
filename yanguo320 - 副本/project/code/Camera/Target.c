@@ -8,8 +8,8 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 TARGET_BLACK_WIDTH_MAX = 30;
-int16 TARGET_CENTER_DIFF_MAX = 10;
+int16 TARGET_BLACK_WIDTH_MAX = 15;
+int16 TARGET_CENTER_DIFF_MAX = 5;
 
 void Find_Target1(void)
 {
@@ -229,7 +229,7 @@ void Find_Target2(int p1,int p2)
 				remote_target[k][j] = i;
 				j++;
 				Black_counts[k]++;
-				image_copy_out[p][i] = 255;
+				image_copy_out[p][i] = 0;
 				break;
 			}
 			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
@@ -239,7 +239,7 @@ void Find_Target2(int p1,int p2)
 				remote_target[k][j] = i;
 				j++;
 				Black_counts[k]++;
-				image_copy_out[p][i] = 255;
+				image_copy_out[p][i] = 0;
 				break;
 			}
 		}
