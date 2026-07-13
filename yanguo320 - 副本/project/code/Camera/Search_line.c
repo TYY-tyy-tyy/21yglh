@@ -10,7 +10,7 @@ uint8 reference_col_line[MT9V03X_H] = {0};
 uint8 white_max_point = 0;
 uint8 white_min_point = 0;
 
-int16 REFERENCE_CONTRAST = 5;
+int16 REFERENCE_CONTRAST = 10;
 
 /* 存放每列最远端的数组 */
 //uint8 remote_distance[MT9V03X_W] = {0};

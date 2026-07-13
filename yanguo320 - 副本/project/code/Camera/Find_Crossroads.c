@@ -20,6 +20,7 @@ uint8 Crossroads_FLAG = 0;
 void Find_Crossroads(void)
 {
 	uint8 i = 0;
+	uint16 Left_LostNums_Crossroads,Right_LostNums_Crossroads;
 //	if(r_con == 0 && l_con != 0 && 
 //		Right_Lost_Line_count <= 23 && Left_Lost_Line_count <= 5 && 
 //			Right_Lost_Line_count >= 23 && Left_Lost_Line_count >= 5)
@@ -45,7 +46,9 @@ void Find_Crossroads(void)
 //		Lost_connection_left(40,110);
 //	}
 //	return;
-	
+	//统计局部的丢线数量
+	Left_LostNums_Crossroads = Count_Left_Lost(110,80);
+	Right_LostNums_Crossroads = Count_Right_Lost(110,80);//40 25
 	if(Left_Lost_Line_count >= 10 && Right_Lost_Line_count >= 10)
 	{
 		if(!Crossroads_FLAG)
@@ -153,11 +156,11 @@ void Find_Crossroads(void)
 //			}
 //		}
     }
-	else if(Right_Lost_Line_count > 5 && Right_local_LostNums < 5 && Left_Lost_Line_count < 15)
+	else if(Right_Lost_Line_count > 5 && Right_LostNums_Crossroads < 5 && Left_Lost_Line_count < 15)
 	{
 		Patch_line_Right_Init(10,90);
 	}
-	else if(Left_Lost_Line_count > 5 && Left_local_LostNums < 5 && Right_Lost_Line_count < 15)
+	else if(Left_Lost_Line_count > 5 && Left_LostNums_Crossroads < 5 && Right_Lost_Line_count < 15)
 	{
 		Patch_line_Left_Init(10,90);
 	}

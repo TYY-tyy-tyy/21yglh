@@ -80,8 +80,8 @@ void Find_Boundry_LongWhiteCol(void)
 				}
 				//若当前点是黑点，则直接找到最远端的距离
 				if(gray_point_1 < white_min_point 
-//					&& gray_point_2 < white_min_point 
-//					&& gray_point_3 < white_min_point
+					&& gray_point_2 < white_min_point 
+					&& gray_point_3 < white_min_point
 					&& gray_point_4 < white_min_point)
 				{
 //					image_copy_out[i][j] = 0;
@@ -90,12 +90,12 @@ void Find_Boundry_LongWhiteCol(void)
 					break;
 				}
 				compare_value1 = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
-//				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
-//				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
+				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
+				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 				compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 				if(compare_value1 > REFERENCE_CONTRAST 
-//					&& compare_value2 > REFERENCE_CONTRAST 
-//					&& compare_value3 > REFERENCE_CONTRAST
+					&& compare_value2 > REFERENCE_CONTRAST 
+					&& compare_value3 > REFERENCE_CONTRAST
 					&& compare_value4 < REFERENCE_CONTRAST)
 				{
 //					image_copy_out[i][j] = 0;
@@ -136,8 +136,8 @@ void Find_Boundry_LongWhiteCol(void)
 					}
 					//若当前点是黑点，则直接找到最远端的距离
 					if(gray_point_1 < white_min_point 
-//						&& gray_point_2 < white_min_point 
-//						&& gray_point_3 < white_min_point
+						&& gray_point_2 < white_min_point 
+						&& gray_point_3 < white_min_point
 						&& gray_point_4 < white_min_point)
 					{
 //						image_copy_out[i][j] = 0;
@@ -146,12 +146,12 @@ void Find_Boundry_LongWhiteCol(void)
 						break;
 					}
 					compare_value1 = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
-//					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
-//					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
+					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
+					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 					if(compare_value1 > REFERENCE_CONTRAST 
-//						&& compare_value2 > REFERENCE_CONTRAST 
-//						&& compare_value3 > REFERENCE_CONTRAST
+						&& compare_value2 > REFERENCE_CONTRAST 
+						&& compare_value3 > REFERENCE_CONTRAST
 						&& compare_value4 < REFERENCE_CONTRAST)
 					{
 //						image_copy_out[i][j] = 0;
@@ -185,8 +185,8 @@ void Find_Boundry_LongWhiteCol(void)
 					}
 					//若当前点是黑点，则直接找到最远端的距离
 					if(gray_point_1 < white_min_point 
-//						&& gray_point_2 < white_min_point 
-//						&& gray_point_3 < white_min_point
+						&& gray_point_2 < white_min_point 
+						&& gray_point_3 < white_min_point
 						&& gray_point_4 < white_min_point)
 					{
 //						image_copy_out[i][j] = 0;
@@ -195,12 +195,12 @@ void Find_Boundry_LongWhiteCol(void)
 						break;
 					}
 					compare_value1 = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
-//					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
-//					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
+					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
+					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 					if(compare_value1 > REFERENCE_CONTRAST 
-//						&& compare_value2 > REFERENCE_CONTRAST 
-//						&& compare_value3 > REFERENCE_CONTRAST
+						&& compare_value2 > REFERENCE_CONTRAST 
+						&& compare_value3 > REFERENCE_CONTRAST
 						&& compare_value4 < REFERENCE_CONTRAST)
 					{
 //						image_copy_out[i][j] = 0;
@@ -236,8 +236,8 @@ void Find_Boundry_LongWhiteCol(void)
 				}
 				//若当前点是黑点，则直接找到最远端的距离
 				if(gray_point_1 < white_min_point 
-//					&& gray_point_2 < white_min_point 
-//					&& gray_point_3 < white_min_point
+					&& gray_point_2 < white_min_point 
+					&& gray_point_3 < white_min_point
 					&& gray_point_4 < white_min_point)
 				{
 //					image_copy_out[i][j] = 0;
@@ -246,12 +246,12 @@ void Find_Boundry_LongWhiteCol(void)
 					break;
 				}
 				compare_value1 = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
-//				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
-//				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
+				compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
+				compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 				compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 				if(compare_value1 > REFERENCE_CONTRAST 
-//					&& compare_value2 > REFERENCE_CONTRAST 
-//					&& compare_value3 > REFERENCE_CONTRAST
+					&& compare_value2 > REFERENCE_CONTRAST 
+					&& compare_value3 > REFERENCE_CONTRAST
 					&& compare_value4 < REFERENCE_CONTRAST)
 				{
 //					image_copy_out[i][j] = 0;
@@ -292,8 +292,8 @@ void Find_Boundry_LongWhiteCol(void)
 					}
 					//若当前点是黑点，则直接找到最远端的距离
 					if(gray_point_1 < white_min_point 
-//						&& gray_point_2 < white_min_point 
-//						&& gray_point_3 < white_min_point
+						&& gray_point_2 < white_min_point 
+						&& gray_point_3 < white_min_point
 						&& gray_point_4 < white_min_point)
 					{
 //						image_copy_out[i][j] = 0;
@@ -302,12 +302,12 @@ void Find_Boundry_LongWhiteCol(void)
 						break;
 					}
 					compare_value1 = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
-//					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
-//					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
+					compare_value2 = (gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3 + 1);
+					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 					if(compare_value1 > REFERENCE_CONTRAST 
-//						&& compare_value2 > REFERENCE_CONTRAST 
-//						&& compare_value3 > REFERENCE_CONTRAST
+						&& compare_value2 > REFERENCE_CONTRAST 
+						&& compare_value3 > REFERENCE_CONTRAST
 						&& compare_value4 < REFERENCE_CONTRAST)
 					{
 //						image_copy_out[i][j] = 0;
@@ -341,8 +341,8 @@ void Find_Boundry_LongWhiteCol(void)
 					}
 					//若当前点是黑点，则直接找到最远端的距离
 					if(gray_point_1 < white_min_point 
-//						&& gray_point_2 < white_min_point 
-//						&& gray_point_3 < white_min_point
+						&& gray_point_2 < white_min_point 
+						&& gray_point_3 < white_min_point
 						&& gray_point_4 < white_min_point)
 					{
 //						image_copy_out[i][j] = 0;
@@ -355,8 +355,8 @@ void Find_Boundry_LongWhiteCol(void)
 					compare_value3 = (gray_point_1 - gray_point_4) * 200 / (gray_point_1 + gray_point_4 + 1);
 					compare_value4 = (gray_point_3 - gray_point_4) * 200 / (gray_point_3 + gray_point_4 + 1);
 					if(compare_value1 > REFERENCE_CONTRAST 
-//						&& compare_value2 > REFERENCE_CONTRAST 
-//						&& compare_value3 > REFERENCE_CONTRAST
+						&& compare_value2 > REFERENCE_CONTRAST 
+						&& compare_value3 > REFERENCE_CONTRAST
 						&& compare_value4 < REFERENCE_CONTRAST)
 					{
 //						image_copy_out[i][j] = 0;
