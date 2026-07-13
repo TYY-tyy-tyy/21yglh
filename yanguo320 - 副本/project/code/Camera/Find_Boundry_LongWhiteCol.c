@@ -20,6 +20,8 @@ uint8 reference_col = 0;
 /* 参考列的最远端 */
 uint8 reference_col_farthest = 0;
 
+uint16 ALL_reference_col_farthest,ALL_White_Column_MID;
+
 
 void Find_Boundry_LongWhiteCol(void)
 {
@@ -40,6 +42,8 @@ void Find_Boundry_LongWhiteCol(void)
 
 	/* 计算最长白列数量 */
 	White_Column_MID = MT9V03X_H - reference_col_farthest;
+	
+	ALL_White_Column_MID = MT9V03X_H - ALL_reference_col_farthest;
 
 	/* 左右边界数组初始化 */
 	for(H = MT9V03X_H - 1; H >= 0; H--)

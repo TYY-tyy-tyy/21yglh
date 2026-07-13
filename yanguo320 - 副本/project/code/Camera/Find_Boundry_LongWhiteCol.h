@@ -10,6 +10,8 @@ extern int16 Left_Lost_Line_count;
 /* 最长白列白点数量 */
 extern int16 White_Column_MID;
 
+extern uint16 ALL_reference_col_farthest,ALL_White_Column_MID;
+
 /* 边界相关变量声明 */
 extern int16 Left_Line[MT9V03X_H];
 extern int16 Right_Line[MT9V03X_H];

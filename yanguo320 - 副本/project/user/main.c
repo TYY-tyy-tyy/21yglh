@@ -63,7 +63,7 @@ void main(void)
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//正常值：125；一次超调值：170  220
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//正常值：25；一次超调值：35  90
 //	Ring_T_KP = 55;
-	W_T_KP = 15;
+	W_T_KP = 10;
 	T_KP = 50;//40 44
 	T_KP1 =0;
 	pid.Turn_KD =0;
@@ -76,7 +76,7 @@ void main(void)
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)g_track_feature.type);
+		wireless_uart_send_byte((uint8)ALL_White_Column_MID);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
 		wireless_uart_send_byte((uint8)Right_Lost_Line_count);

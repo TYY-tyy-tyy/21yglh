@@ -29,6 +29,5 @@ extern uint8 reference_col_line[MT9V03X_H];
 
 void get_reference_point(void);
 void search_reference_col(void);
-uint8 find_extreme_Value(uint8* arr, uint8 start, uint8 end, int mode);
 
 #endif /* CODE_CAMERA_SEARCH_LINE_ZF_SEARCH_LINE_H_ */
