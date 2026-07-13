@@ -157,7 +157,7 @@ void Find_Target2(int p1,int p2)
 	static int8 Find_Target_time = 0;
 	uint8 remote_target[4][5] = {0};
 	
-	int16 gray_point_1 = 0, gray_point_2 = 0,compare_value = 0;
+	int16 gray_point_1 = 0, gray_point_2 = 0, gray_point_3 = 0,compare_value1 = 0,compare_value2 = 0;
 	
 	int16 p,eer_p = 0;
 	
@@ -194,7 +194,8 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i+1];
-			if(gray_point_1 < white_min_point)
+			gray_point_3 = image_copy_out[p][i+2];
+			if(gray_point_1 < white_min_point && gray_point_2 < white_min_point)
 			{
 				remote_target[k][j] = i;
 				j++;
@@ -202,8 +203,9 @@ void Find_Target2(int p1,int p2)
 				image_copy_out[p][i] = 255;
 				break;
 			}
-			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
-			if(compare_value > Target_REFERENCE_CONTRAST)
+			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
+			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
+			if(compare_value1 > Target_REFERENCE_CONTRAST && compare_value2 > Target_REFERENCE_CONTRAST)
 			{
 				remote_target[k][j] = i;
 				j++;
@@ -217,7 +219,8 @@ void Find_Target2(int p1,int p2)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i-1];
-			if(gray_point_1 < white_min_point && i - remote_target[k][0] < Target_num[k])
+			gray_point_3 = image_copy_out[p][i-2];
+			if(gray_point_1 < white_min_point && gray_point_2 < white_min_point)
 			{
 				remote_target[k][j] = i;
 				j++;
@@ -225,13 +228,13 @@ void Find_Target2(int p1,int p2)
 				image_copy_out[p][i] = 255;
 				break;
 			}
-			compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
-			if(compare_value > Target_REFERENCE_CONTRAST && i - remote_target[k][0] < Target_num[k])
+			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
+			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
+			if(compare_value1 > Target_REFERENCE_CONTRAST && compare_value2 > Target_REFERENCE_CONTRAST)
 			{
 				remote_target[k][j] = i;
 				j++;
 				Black_counts[k]++;
-				i+=4;
 				image_copy_out[p][i] = 255;
 				break;
 			}
@@ -279,20 +282,87 @@ void Find_Target2(int p1,int p2)
 		}
 		if(Find_Target_time >= 0)
 		{
-			/* count votes from 4 scan lines per position */
 			uint8 pos_votes[6] = {0};
+			uint8 win_pos = 0;
 			for(k = 0; k < 4; k++)
 			{
 				if(Find_Target_oad[k] >= 1 && Find_Target_oad[k] <= 5)
 					pos_votes[Find_Target_oad[k]]++;
 			}
-			/* priority: 3(mid) > 2(L-mid) > 4(R-mid) > 1(L) > 5(R) */
-			if(pos_votes[3] >= 2)           { all_off(); laser_on(LASER_PIN_3); late_laser = 3;}
-			else if(pos_votes[1] >= 2)      { all_off(); laser_on(LASER_PIN_1); late_laser = 1;}
-			else if(pos_votes[5] >= 2)      { all_off(); laser_on(LASER_PIN_5); late_laser = 5;}
-			else if(pos_votes[2] >= 2)      { all_off(); laser_on(LASER_PIN_2); late_laser = 2;}
-			else if(pos_votes[4] >= 2)      { all_off(); laser_on(LASER_PIN_4); late_laser = 4;}
-			else { all_off(); late_laser = 0;}
+			if(pos_votes[3] >= 2)           win_pos = 3;
+			else if(pos_votes[1] >= 2)      win_pos = 1;
+			else if(pos_votes[5] >= 2)      win_pos = 5;
+			else if(pos_votes[2] >= 2)      win_pos = 2;
+			else if(pos_votes[4] >= 2)      win_pos = 4;
+
+			if(win_pos > 0)
+			{
+				uint16 sum_center = 0;
+				uint8  cnt_center = 0;
+				uint8  avg_center;
+				uint8  all_pass = 1;
+				uint8  row_p;
+
+				for(k = 0; k < 4; k++)
+				{
+					if(Find_Target_oad[k] == win_pos)
+					{
+						sum_center += tar_eer[k];
+						cnt_center++;
+					}
+				}
+				avg_center = (uint8)(sum_center / cnt_center);
+
+				for(k = 0; k < 4; k++)
+				{
+					if(Find_Target_oad[k] != win_pos) continue;
+
+					row_p = p1 + k * eer_p;
+
+					if(win_pos == 3)
+					{
+						if(!(avg_center >= Left_Line[row_p] + Target_num[k]*2
+							&& avg_center <= Right_Line[row_p] - Target_num[k]*2))
+							all_pass = 0;
+					}
+					else if(win_pos == 1)
+					{
+						if(!(avg_center <= Left_Line[row_p] + Target_num[k]*12/10))
+							all_pass = 0;
+					}
+					else if(win_pos == 5)
+					{
+						if(!(avg_center >= Right_Line[row_p] - Target_num[k]*12/10))
+							all_pass = 0;
+					}
+					else if(win_pos == 2)
+					{
+						if(!(avg_center >= Left_Line[row_p] + Target_num[k]*12/10
+							&& avg_center <= Left_Line[row_p] + Target_num[k]*2))
+							all_pass = 0;
+					}
+					else if(win_pos == 4)
+					{
+						if(!(avg_center >= Right_Line[row_p] - Target_num[k]*2
+							&& avg_center <= Right_Line[row_p] - Target_num[k]*12/10))
+							all_pass = 0;
+					}
+
+					if(!all_pass) break;
+				}
+
+				if(all_pass)
+				{
+					all_off();
+					if(win_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
+					else if(win_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
+					else if(win_pos == 5) { laser_on(LASER_PIN_5); late_laser = 5; }
+					else if(win_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
+					else if(win_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
+				}
+				else { all_off(); late_laser = 0; }
+			}
+			else { all_off(); late_laser = 0; }
 		}
 	}
 	else

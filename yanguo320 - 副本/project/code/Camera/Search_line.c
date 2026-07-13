@@ -52,7 +52,7 @@ void get_reference_point(void)
 			}
         }
     }
-	if(BLACKPOINT_num > 100 && (Find_Right_FLAG == Right_0 && Find_Left_FLAG == Left_0))
+	if(BLACKPOINT_num > REFRENCE_ROW * 54/2 && (Find_Right_FLAG == Right_0 && Find_Left_FLAG == Left_0))
 	{
 		COM_QY = 0;
 	}
