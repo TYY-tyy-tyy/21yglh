@@ -187,7 +187,7 @@ void Find_Target2(int p1,int p2)
 		p2 = p;
 	}
 	eer_p = (p2-p1)/3;
-	for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
+	for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k +=2)
 	{
 		Target_num[k] = (Right_Line[p] - Left_Line[p])/5;
 		l_edge=Left_Line[p]+4;
