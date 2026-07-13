@@ -13,10 +13,10 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 5000;
-uint16 Left_Enc_Out = 1200;
-uint16 Right_Enc_In = 5000;
-uint16 Right_Enc_Out = 1200;
+uint16 Left_Enc_In = 6000;
+uint16 Left_Enc_Out = 4000;
+uint16 Right_Enc_In = 6000;
+uint16 Right_Enc_Out = 4000;
 
 /* ------------------------------------------------ */
 
@@ -163,7 +163,6 @@ void Find_Left_Ring(void)
 				//关闭蜂鸣器
 				Buzzer_ON();
 			}
-			all_off();
 		}
     }
     /* 状态二 */
@@ -222,15 +221,15 @@ void Find_Left_Ring(void)
         {
 //			Find_Left_FLAG = Left_0;
             /* 拉线进环 */
-			Right_Patch_Init();
+//			Right_Patch_Init();
 			/* 拉线进环 */
-//			bot[0] = Right_Coordinates[110];
-//            bot[1] = 110;
+			bot[0] = Right_Coordinates[110];
+            bot[1] = 110;
 
-//            top[0] = Right_Coordinates[1];
-//            top[1] = 1;
+            top[0] = 80;
+            top[1] = 1;
 
-//            Patch_line_Right(bot, top);
+            Patch_line_Right(bot, top);
 
             //蜂鸣器响起
             Buzzer_ON();
@@ -293,8 +292,8 @@ void Find_Left_Ring(void)
              bot[0] = Right_Coordinates[110];
              bot[1] = 110;
 
-             top[0] = Right_Coordinates[10];
-             top[1] = 40;
+             top[0] = 80;
+             top[1] = 1;
 
              Patch_line_Right(bot, top);
 
@@ -330,7 +329,7 @@ void Find_Left_Ring(void)
              bot[1] = 110;
 
              top[0] = Left_Coordinates[10];
-             top[1] = 10;
+             top[1] = 40;
 			 Patch_line_Left(bot, top);
 		 }
      }
