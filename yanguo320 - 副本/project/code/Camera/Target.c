@@ -8,8 +8,6 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-uint8 TARGET_BLACK_WIDTH_MAX = 20;
-
 void Find_Target1(void)
 {
 	int col,row,b_num = 0;
@@ -157,7 +155,7 @@ void Find_Target1(void)
 void Find_Target2(int p1,int p2)
 {
 	static int8 Find_Target_time = 0;
-	uint8 remote_target[4][10] = {0};
+	uint8 remote_target[4][5] = {0};
 	
 	int16 gray_point_1 = 0, gray_point_2 = 0, gray_point_3 = 0,compare_value1 = 0,compare_value2 = 0;
 	
@@ -178,8 +176,6 @@ void Find_Target2(int p1,int p2)
 	uint8 l_edge;
 	uint8 r_edge;
 	
-	int16 left_edge = 0, right_edge = 0;
-	
 	if(p1>p2)
 	{
 		p = p1;
@@ -190,11 +186,11 @@ void Find_Target2(int p1,int p2)
 	for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
 	{
 		Target_num[k] = (Right_Line[p] - Left_Line[p])/5;
-		l_edge=Left_Line[p]+6;
-		r_edge=Right_Line[p]-6;
+		l_edge=Left_Line[p]+4;
+		r_edge=Right_Line[p]-4;
 		j = 0;
 		//从左向右
-		for(i=l_edge;i<r_edge,j < 10;i+=1)
+		for(i=l_edge;i<r_edge;i+=1)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i+1];
@@ -205,6 +201,7 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
+				break;
 			}
 			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
 			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
@@ -214,11 +211,11 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
+				break;
 			}
 		}
-		left_edge = i;
 		//从右向左
-		for(i=r_edge;i>left_edge,j < 10;i-=1)
+		for(i=r_edge;i>l_edge;i-=1)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i-1];
@@ -229,6 +226,7 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
+				break;
 			}
 			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
 			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
@@ -238,16 +236,9 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
+				break;
 			}
 		}
-		right_edge = i;
-//		/* 这一行黑边的水平宽度不能超过阈值 */
-//        if(right_edge - left_edge > TARGET_BLACK_WIDTH_MAX)
-//		{
-//			remote_target[k][0] = 0;
-//			remote_target[k][1] = 0;
-//			Black_counts[k]-=j;
-//		}
 	}
 	
 	for(p = 0;p < 4;p++)
@@ -266,13 +257,7 @@ void Find_Target2(int p1,int p2)
 		{
 			if(Black_p[k] != 0)
 			{
-				tar_eer[k] = 0;
-				i = 0;
-				for(;remote_target[k][i]>0;i++)
-				{
-					tar_eer[k] += remote_target[k][i];
-				}
-				tar_eer[k] = tar_eer[k]/i;
+				tar_eer[k] = (remote_target[k][0] + remote_target[k][1])/2;
 				if(tar_eer[k] >= Left_Line[p]+Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*2)
 				{
 					Find_Target_oad[k] = 3;
