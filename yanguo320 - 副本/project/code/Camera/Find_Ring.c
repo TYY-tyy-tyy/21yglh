@@ -129,7 +129,7 @@ void Find_Left_Ring(void)
 //		}
 		if(Left_dowm_Patch >= 40)
 		{
-			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*12)
+			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*11)
 			{
 //				COM_QY = 0;
 				//标志位更新
@@ -237,7 +237,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_4)
      {
          //转向够角度后停止拉线,且左丢线数小于10时
-        if (angle_ringR > 317)
+        if (angle_ringR > 270 && Right_Lost_Line_count > 5)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_5;
@@ -319,16 +319,16 @@ void Find_Left_Ring(void)
              //关闭蜂鸣器
              Buzzer_OFF();
          }
-//		 else
-//		 {
-//			 /* 拉线出环 */
-//             bot[0] = Left_Coordinates[110];
-//             bot[1] = 110;
+		 else
+		 {
+			 /* 拉线出环 */
+             bot[0] = Left_Coordinates[110];
+             bot[1] = 110;
 
-//             top[0] = Left_Coordinates[10];
-//             top[1] = 10;
-//			 Patch_line_Left(bot, top);
-//		 }
+             top[0] = Left_Coordinates[10];
+             top[1] = 10;
+			 Patch_line_Left(bot, top);
+		 }
      }
 }
 
