@@ -438,18 +438,18 @@ void Find_Boundry_LongWhiteCol(void)
 			//把中线像素点输出到图像
 			if(COM_QY == 0)
 			{
-				image_copy_out[i+1][last_mid+1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][last_mid+1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][last_mid+1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][last_mid+1] = 0; // i是第几行，mid是第几列
 				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
 				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-				image_copy_out[i+1][last_mid-1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][last_mid-1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i+1][reference_col+1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][reference_col+1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i+1][reference_col] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][reference_col] = 0; // i是第几行，mid是第几列
-				image_copy_out[i+1][reference_col-1] = 0; // i是第几行，mid是第几列
-				image_copy_out[i][reference_col-1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][last_mid-1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][last_mid-1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][reference_col+1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col+1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][reference_col] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i+1][reference_col-1] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col-1] = 0; // i是第几行，mid是第几列
 			}
 		}
 	}
