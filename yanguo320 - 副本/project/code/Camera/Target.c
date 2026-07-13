@@ -306,25 +306,60 @@ void Find_Target2(int p1,int p2)
 				if(avg_center >= Left_Line[ref_p] + Target_num[mid_k]*2
 				&& avg_center <= Right_Line[ref_p] - Target_num[mid_k]*2)
 				{
-					laser_on(LASER_PIN_3); late_laser = 3;
+					if(late_laser == 3)
+					{
+						laser_on(LASER_PIN_4); late_laser = 3;
+					}
+					else
+					{
+						late_laser = 3;
+					}
 				}
 				else if(avg_center <= Left_Line[ref_p] + Target_num[mid_k]*12/10)
 				{
-					laser_on(LASER_PIN_1); late_laser = 1;
+					if(late_laser == 1)
+					{
+						laser_on(LASER_PIN_1); late_laser = 1;
+					}
+					else
+					{
+						late_laser = 1;
+					}
 				}
 				else if(avg_center >= Right_Line[ref_p] - Target_num[mid_k]*12/10)
 				{
-					laser_on(LASER_PIN_5); late_laser = 5;
+					if(late_laser == 5)
+					{
+						laser_on(LASER_PIN_5); late_laser = 5;
+					}
+					else
+					{
+						late_laser = 5;
+					}
 				}
 				else if(avg_center >= Left_Line[ref_p] + Target_num[mid_k]*12/10
 					 && avg_center <= Left_Line[ref_p] + Target_num[mid_k]*2)
 				{
-					laser_on(LASER_PIN_2); late_laser = 2;
+					if(late_laser == 2)
+					{
+						laser_on(LASER_PIN_2); late_laser = 2;
+					}
+					else
+					{
+						late_laser = 2;
+					}
 				}
 				else if(avg_center >= Right_Line[ref_p] - Target_num[mid_k]*2
 					 && avg_center <= Right_Line[ref_p] - Target_num[mid_k]*12/10)
 				{
-					laser_on(LASER_PIN_4); late_laser = 4;
+					if(late_laser == 4)
+					{
+						laser_on(LASER_PIN_4); late_laser = 4;
+					}
+					else
+					{
+						late_laser = 4;
+					}
 				}
 				else { late_laser = 0; }
 			}
@@ -480,3 +515,6 @@ void LowerCameraExposure(void)
 		}
 	}
 }
+
+
+
