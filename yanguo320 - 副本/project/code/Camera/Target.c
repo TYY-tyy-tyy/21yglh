@@ -379,6 +379,7 @@ void Find_Target2(int p1,int p2)
                     /* ===== ⑧ 三重确认：cur_pos==win_pos + 连续两帧一致 ===== */
                     if(cur_pos > 0 && cur_pos == win_pos && cur_pos == confirmed_pos)
                     {
+						
                         all_off();
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
