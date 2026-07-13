@@ -147,8 +147,8 @@ void Speed_DecisionMaking(void)
 {
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = 55;//44 47
-        nowtargetSpeed = my_Speed/10*9;
+        pid.Turn_KP = 43;//44 47
+        nowtargetSpeed = my_Speed;
     }
     else if(White_Column_MID > 110 && Image_error > -5 && Image_error < 5)
     {
@@ -159,7 +159,7 @@ void Speed_DecisionMaking(void)
     {
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed/10*8;
+        nowtargetSpeed = my_Speed;
     }
 }
 
