@@ -112,7 +112,7 @@ void search_reference_col(void)
 					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
-						remote_distance[col] = (uint8)row+1;
+						remote_distance[col] = (uint8)row;
 						qqy = 1;
 						break;
 					}
@@ -155,7 +155,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}
@@ -191,7 +191,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}
@@ -235,7 +235,7 @@ void search_reference_col(void)
 					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
-						remote_distance[col] = (uint8)row+1;
+						remote_distance[col] = (uint8)row;
 						qqy = 1;
 						break;
 					}
@@ -278,7 +278,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}
@@ -314,7 +314,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}
@@ -359,7 +359,7 @@ void search_reference_col(void)
 					if(compare_value > REFERENCE_CONTRAST)
 					{
 //						image_copy_out[row][col] = 0;
-						remote_distance[col] = (uint8)row+1;
+						remote_distance[col] = (uint8)row;
 						qqy = 1;
 						break;
 					}
@@ -402,7 +402,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}
@@ -438,7 +438,7 @@ void search_reference_col(void)
 						if(compare_value > REFERENCE_CONTRAST)
 						{
 //							image_copy_out[row][col] = 0;
-							remote_distance[col] = (uint8)row+1;
+							remote_distance[col] = (uint8)row;
 							qqy = 1;
 							break;
 						}

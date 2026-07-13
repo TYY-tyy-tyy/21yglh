@@ -93,9 +93,9 @@ void Mid_Error_Processing(void)
 		{
 			Image_error = -Image_error;
 		}
-		if(Image_error < 5)
+		if(Image_error < 15)
 		{
-			Image_error = 5;
+			Image_error = 15;
 		}
 	}
 	if(Find_Right_FLAG > Right_2 && Find_Right_FLAG < Right_6)
@@ -104,9 +104,9 @@ void Mid_Error_Processing(void)
 		{
 			Image_error = -Image_error;
 		}
-		if(Image_error > -5)
+		if(Image_error > -15)
 		{
-			Image_error = -5;
+			Image_error = -15;
 		}
 	}
 //	if(Find_Left_FLAG >= Left_2 && Find_Left_FLAG < Left_6)

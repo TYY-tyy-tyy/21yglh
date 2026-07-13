@@ -56,6 +56,8 @@ void Find_Boundry_LongWhiteCol(void)
 	/* 根据参考列扫线 */
 	for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 	{
+		right_border = MT9V03X_W - 8;
+		left_border = 8;
 		//中线往右边扫
 		if(r_qqy == 0)
 		{
@@ -373,6 +375,25 @@ void Find_Boundry_LongWhiteCol(void)
 				}
 				l_last_col = left_border;
 			}
+		}
+		if(left_border > right_border)
+		{
+			if(left_border > 94)
+			{
+				left_border = 8;
+			}
+			else if(right_border < 94)
+			{
+				right_border = MT9V03X_W - 8;
+			}
+		}
+		else if(left_border > 168 || left_border < 0)
+		{
+			left_border = 8;
+		}
+		else if(right_border < 20 || right_border < 0)
+		{
+			right_border = MT9V03X_W - 8;
 		}
 		if(COM_QY == 0)
 		{
