@@ -13,9 +13,9 @@ int16 Left_Ring_num = 5;
 int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
-uint16 Left_Enc_In = 3400;
+uint16 Left_Enc_In = 6000;
 uint16 Left_Enc_Out = 1000;
-uint16 Right_Enc_In = 3400;
+uint16 Right_Enc_In = 6000;
 uint16 Right_Enc_Out = 1200;
 
 /* ------------------------------------------------ */
@@ -127,6 +127,7 @@ void Find_Left_Ring(void)
 //		{
 //			Find_Left_FLAG = Left_0;
 //		}
+		Buzzer_OFF();
 		if(Left_dowm_Patch >= 40)
 		{
 			if(((Encoder_jifen_L + Encoder_jifen_R) / 2) > Left_Enc_In/10*11)
@@ -142,7 +143,7 @@ void Find_Left_Ring(void)
 				gyro_jifen_flag = 1;
 
 				//关闭蜂鸣器
-				Buzzer_OFF();
+				Buzzer_ON();
 			}
 		}
 		else if(Left_dowm_Patch < 40)
@@ -160,6 +161,7 @@ void Find_Left_Ring(void)
 				gyro_jifen_flag = 1;
 
 				//关闭蜂鸣器
+				Buzzer_ON();
 			}
 			all_off();
 		}
@@ -167,6 +169,7 @@ void Find_Left_Ring(void)
     /* 状态二 */
     else if(Find_Left_FLAG == Left_2)
     {
+		Buzzer_OFF();
         White_Nums = White_counts_weight(80);
         if (White_Nums > 135)
         {
@@ -178,6 +181,7 @@ void Find_Left_Ring(void)
 
             //重新启动编码器积分用于直行延时
             Encoder_jifen_flag = 1;
+			Buzzer_ON();
         }
     }
     /* 状态三 */
@@ -345,7 +349,7 @@ void Find_Right_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Right_time < Right_Ring_num) && Ring_time < 2)
     {
         if((Right_dowm_Patch >= 20) 
-			&& (Left_dowm_Patch == 0) && (Right_local_LostNums >= 15) 
+			&& (Left_dowm_Patch == 0) && (Right_local_LostNums >= 13) 
 			&& (Right_Lost_Line_count <= 40) && (Left_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
@@ -382,9 +386,10 @@ void Find_Right_Ring(void)
 //			Find_Right_FLAG = Right_0;
 //			Buzzer_OFF();
 //		}
+		Buzzer_OFF();
 		if(Right_dowm_Patch >= 40)
 		{
-			if(((Encoder_jifen_L + Encoder_jifen_R)/2 > Right_Enc_In/10*12))
+			if(((Encoder_jifen_L + Encoder_jifen_R)/2 > Right_Enc_In/10*11))
 			{
 					//标志位更新
 					Find_Right_FLAG = Right_2;
@@ -396,7 +401,7 @@ void Find_Right_Ring(void)
 					gyro_jifen_flag = 1;
 
 					//关闭蜂鸣器
-					Buzzer_OFF();
+					Buzzer_ON();
 			}
 		}
 		else if(Right_dowm_Patch < 40)
@@ -413,7 +418,7 @@ void Find_Right_Ring(void)
 					gyro_jifen_flag = 1;
 
 					//关闭蜂鸣器
-					Buzzer_OFF();
+					Buzzer_ON();
 			}
 		}
 
@@ -421,14 +426,17 @@ void Find_Right_Ring(void)
     /* 状态二 */
     else if(Find_Right_FLAG == Right_2)
     {
-		COM_QY = 0;
+//		COM_QY = 0;
+		Buzzer_OFF();
         White_Nums = White_counts_weight(80);
         if (White_Nums > 135)
         {
             Find_Right_FLAG = Right_3;
 
-            //陀螺仪积分标志位置2
-            gyro_jifen_flag = 2;
+            //
+            Encoder_jifen_flag = 1;
+			
+			Buzzer_ON();
 
             //数据清零
             White_Nums = 0;
@@ -479,13 +487,13 @@ void Find_Right_Ring(void)
      else if(Find_Right_FLAG == Right_4)
      {
 //		 COM_QY = 0;
-		if (angle_ringR < -320)
+		if (angle_ringR < -240 && Left_Lost_Line_count > 5)
 		{
 //			COM_QY = 0;
 			Find_Right_FLAG = Right_5;
 
 			/* 蜂鸣器关闭 */
-			Buzzer_OFF();
+			Buzzer_ON();
 
 			/* 变量清零 */
 			gyro_angle_dif = 0;
@@ -506,12 +514,12 @@ void Find_Right_Ring(void)
      {
 //		 COM_QY = 0;
          //转向够角度后停止拉线
-         if (Right_Lost_Line_count < 5)
+         if (Left_Lost_Line_count < 5)
          {
 			Find_Right_FLAG = Right_6;
 
 			/* 蜂鸣器关闭 */
-			Buzzer_ON();
+			Buzzer_OFF();
 
 			/* 变量清零 */
 			gyro_angle_dif = 0;
@@ -531,7 +539,7 @@ void Find_Right_Ring(void)
              bot[1] = 110;
 
              top[0] = Left_Coordinates[10];
-             top[1] = 10;
+             top[1] = 40;
 
              Patch_line_Left(bot, top);
 
@@ -560,17 +568,17 @@ void Find_Right_Ring(void)
              //关闭蜂鸣器
              Buzzer_OFF();
          }
-//         else
-//         {
-//			 Right_Patch_Init();
-//             bot[0] = 158;
-//             bot[1] = 118;
+         else
+         {
+//			Right_Patch_Init();
+			bot[0] = Right_Coordinates[110];
+			bot[1] = 110;
 
-//             top[0] = 108;
-//             top[1] = 2;
+			top[0] = Right_Coordinates[10];
+			top[1] = 10;
 
-//             Patch_line_Right(bot, top);
-//         }
+             Patch_line_Right(bot, top);
+         }
      }
 }
 

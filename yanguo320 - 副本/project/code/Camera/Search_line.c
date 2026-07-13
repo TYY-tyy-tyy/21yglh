@@ -15,6 +15,8 @@ int16 REFERENCE_CONTRAST = 10;
 /* 存放每列最远端的数组 */
 //uint8 remote_distance[MT9V03X_W] = {0};
 
+uint16 BLACKPOINT_num = 0;
+
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     获取参考点位
 // 参数说明     image
@@ -32,11 +34,16 @@ void get_reference_point(void)
     //计算总数量
     reference_point_Num = REFRENCE_ROW * 54;
     //60~56
+	BLACKPOINT_num = 0;
     for(H = MT9V03X_H-15; H > (MT9V03X_H - 15 - REFRENCE_ROW*2); H-=2)
     {
         //20~74
         for(W = 40; W < 148; W+=2)
         {
+			if(image_copy_out[H][W] < BLACKPOINT)
+			{
+				BLACKPOINT_num ++;
+			}
             reference_point_Sum[0] +=  image_copy_out[H][W];
 			if(reference_point_Sum[0] > 10000)
 			{
@@ -45,6 +52,10 @@ void get_reference_point(void)
 			}
         }
     }
+	if(BLACKPOINT_num > 100 && (Find_Right_FLAG == Right_0 && Find_Left_FLAG == Left_0))
+	{
+		COM_QY = 0;
+	}
     //求平均值
     reference_point[0] = (uint8) (reference_point_Sum[0] / reference_point_Num);
 	reference_point[1] = (uint8) (reference_point_Sum[1]*1000 / reference_point_Num *10);
