@@ -14,7 +14,7 @@ int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
 uint16 Left_Enc_In = 3400;
-uint16 Left_Enc_Out = 1200;
+uint16 Left_Enc_Out = 1000;
 uint16 Right_Enc_In = 3400;
 uint16 Right_Enc_Out = 1200;
 
@@ -78,7 +78,7 @@ void Find_Left_Ring(void)
     if((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0) && (Left_time < Left_Ring_num) && Ring_time < 2)
     {
         if((Left_dowm_Patch >= 20)//(Left_dowm_Patch >= 20)
-			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 15) 
+			&& (Right_dowm_Patch == 0) && (Left_local_LostNums >= 13) 
 			&& (Left_Lost_Line_count <= 40) && (Right_Lost_Line_count <= 10) 
 //			&& (Right_Lost_Line_count == Right_local_LostNums)
 			&& (pid.Turn_last_error > -30) && (pid.Turn_last_error < 30) 
@@ -319,16 +319,16 @@ void Find_Left_Ring(void)
              //关闭蜂鸣器
              Buzzer_OFF();
          }
-		 else
-		 {
-			 /* 拉线出环 */
-             bot[0] = Left_Coordinates[110];
-             bot[1] = 110;
+//		 else
+//		 {
+//			 /* 拉线出环 */
+//             bot[0] = Left_Coordinates[110];
+//             bot[1] = 110;
 
-             top[0] = Left_Coordinates[10];
-             top[1] = 10;
-			 Patch_line_Left(bot, top);
-		 }
+//             top[0] = Left_Coordinates[10];
+//             top[1] = 10;
+//			 Patch_line_Left(bot, top);
+//		 }
      }
 }
 
@@ -508,7 +508,7 @@ void Find_Right_Ring(void)
          //转向够角度后停止拉线
          if (Right_Lost_Line_count < 5)
          {
-			Find_Right_FLAG = Right_5;
+			Find_Right_FLAG = Right_6;
 
 			/* 蜂鸣器关闭 */
 			Buzzer_ON();
