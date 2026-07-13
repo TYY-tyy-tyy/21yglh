@@ -68,6 +68,7 @@ void Find_Boundry_LongWhiteCol(void)
 				gray_point_3 = image_copy_out[i][j+2];
 				gray_point_4 = image_copy_out[i][j+3];
 //				image_copy_out[i][j] = 255;
+				right_border = j;
 				if(j == MT9V03X_W - 8)
 				{
 					right_border = j;
@@ -100,7 +101,7 @@ void Find_Boundry_LongWhiteCol(void)
 				{
 //					image_copy_out[i][j] = 0;
 					r_qqy = 1;
-					right_border = j+2;
+					right_border = j;
 					break;
 				}
 			}
@@ -124,6 +125,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_3 = image_copy_out[i][j+2];
 					gray_point_4 = image_copy_out[i][j+3];
 //					image_copy_out[i][j] = 255;
+					right_border = j;
 					if(j == MT9V03X_W - 8)
 					{
 						right_border = j;
@@ -156,7 +158,7 @@ void Find_Boundry_LongWhiteCol(void)
 					{
 //						image_copy_out[i][j] = 0;
 						r_qqy = 1;
-						right_border = j+2;
+						right_border = j;
 						break;
 					}
 				}
@@ -172,6 +174,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_2 = image_copy_out[i][j+1];
 					gray_point_3 = image_copy_out[i][j+2];
 					gray_point_4 = image_copy_out[i][j+3];
+					right_border = j;
 //					image_copy_out[i][j] = 255;
 					if(j == MT9V03X_W - 8)
 					{
@@ -205,7 +208,7 @@ void Find_Boundry_LongWhiteCol(void)
 					{
 //						image_copy_out[i][j] = 0;
 						r_qqy = 1;
-						right_border = j+2;
+						right_border = j;
 						break;
 					}
 				}
@@ -224,6 +227,7 @@ void Find_Boundry_LongWhiteCol(void)
 				gray_point_3 = image_copy_out[i][j-2];
 				gray_point_4 = image_copy_out[i][j-3];
 //				image_copy_out[i][j] = 255;
+				left_border = j;
 				if(j == 8)
 				{
 					left_border = j;
@@ -256,7 +260,7 @@ void Find_Boundry_LongWhiteCol(void)
 				{
 //					image_copy_out[i][j] = 0;
 					l_qqy = 1;
-					left_border = j-2;
+					left_border = j;
 					break;
 				}
 			}
@@ -280,6 +284,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_3 = image_copy_out[i][j-2];
 					gray_point_4 = image_copy_out[i][j-3];
 //					image_copy_out[i][j] = 255;
+					left_border = j;
 					if(j == 8)
 					{
 						left_border = j;
@@ -312,7 +317,7 @@ void Find_Boundry_LongWhiteCol(void)
 					{
 //						image_copy_out[i][j] = 0;
 						l_qqy = 1;
-						left_border = j-2;
+						left_border = j;
 						break;
 					}
 				}
@@ -329,6 +334,7 @@ void Find_Boundry_LongWhiteCol(void)
 					gray_point_3 = image_copy_out[i][j-2];
 					gray_point_4 = image_copy_out[i][j-3];
 //					image_copy_out[i][j] = 255;
+					left_border = j;
 					if(j == 8)
 					{
 						left_border = j;
@@ -361,7 +367,7 @@ void Find_Boundry_LongWhiteCol(void)
 					{
 //						image_copy_out[i][j] = 0;
 						l_qqy = 1;
-						left_border = j-2;
+						left_border = j;
 						break;
 					}
 				}
@@ -407,7 +413,9 @@ void Find_Boundry_LongWhiteCol(void)
 			//把中线像素点输出到图像
 			if(COM_QY == 0)
 			{
+				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
 				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
 			}
 		}
 	}
@@ -421,9 +429,12 @@ void Find_Boundry_LongWhiteCol(void)
 			last_mid = 94 - Road_Wide[i];
 
 			//把中线像素点输出到图像
-			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-			
-			image_copy_out[i][reference_col] = 0;
+			if(COM_QY == 0)
+			{
+				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
+				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
+			}
 		}
 	}
 	else if((Find_Right_FLAG == Right_1))
@@ -436,9 +447,12 @@ void Find_Boundry_LongWhiteCol(void)
 			last_mid = 94 - Road_Wide[i];
 
 			//把中线像素点输出到图像
-			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-			
-			image_copy_out[i][reference_col] = 0;
+			if(COM_QY == 0)
+			{
+				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
+				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
+			}
 		}
 	}
 //	else if((Find_Left_FLAG == Left_4))
@@ -451,9 +465,12 @@ void Find_Boundry_LongWhiteCol(void)
 //			last_mid = 94 - Road_Wide[i];
 
 //			//把中线像素点输出到图像
-//			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-//			
-//			image_copy_out[i][reference_col] = 0;
+//			if(COM_QY == 0)
+//			{
+//				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
+//			}
 //		}
 //	}
 //	else if((Find_Right_FLAG == Right_4))
@@ -466,9 +483,12 @@ void Find_Boundry_LongWhiteCol(void)
 //			last_mid = 94 - Road_Wide[i];
 
 //			//把中线像素点输出到图像
-//			image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
-//			
-//			image_copy_out[i][reference_col] = 0;
+//			if(COM_QY == 0)
+//			{
+//				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
+//			}
 //		}
 //	}
 	else
@@ -484,7 +504,9 @@ void Find_Boundry_LongWhiteCol(void)
 			//把中线像素点输出到图像
 			if(COM_QY == 0)
 			{
+				image_copy_out[i+1][last_mid] = 0; // i是第几行，mid是第几列
 				image_copy_out[i][last_mid] = 0; // i是第几行，mid是第几列
+//				image_copy_out[i][reference_col] = 0;
 			}
 		}
 	}
