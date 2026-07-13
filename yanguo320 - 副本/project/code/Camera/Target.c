@@ -282,92 +282,57 @@ void Find_Target2(int p1,int p2)
 		}
 		if(Find_Target_time >= 0)
 		{
-			uint8 pos_votes[6] = {0};
-			uint8 win_pos = 0;
+			uint16 sum_center = 0;
+			uint8  cnt_center = 0;
+			uint8  avg_center;
+
 			for(k = 0; k < 4; k++)
 			{
-				if(Find_Target_oad[k] >= 1 && Find_Target_oad[k] <= 5)
-					pos_votes[Find_Target_oad[k]]++;
+				if(Black_p[k] != 0)
+				{
+					sum_center += tar_eer[k];
+					cnt_center++;
+				}
 			}
-			if(pos_votes[3] >= 2)           win_pos = 3;
-			else if(pos_votes[1] >= 2)      win_pos = 1;
-			else if(pos_votes[5] >= 2)      win_pos = 5;
-			else if(pos_votes[2] >= 2)      win_pos = 2;
-			else if(pos_votes[4] >= 2)      win_pos = 4;
+			avg_center = (uint8)(sum_center / cnt_center);
 
-			if(win_pos > 0)
+			all_off();
+
+			/* 用所有行的平均中心点，以中间那条扫描线的边界为准 */
 			{
-				uint16 sum_center = 0;
-				uint8  cnt_center = 0;
-				uint8  avg_center;
-				uint8  all_pass = 1;
-				uint8  row_p;
+				uint8 mid_k = 1;  // 或 2，最中间的那条线
+				uint8 ref_p = p1 + mid_k * eer_p;
 
-				for(k = 0; k < 4; k++)
+				if(avg_center >= Left_Line[ref_p] + Target_num[mid_k]*2
+				&& avg_center <= Right_Line[ref_p] - Target_num[mid_k]*2)
 				{
-					if(Find_Target_oad[k] == win_pos)
-					{
-						sum_center += tar_eer[k];
-						cnt_center++;
-					}
+					laser_on(LASER_PIN_3); late_laser = 3;
 				}
-				avg_center = (uint8)(sum_center / cnt_center);
-
-				for(k = 0; k < 4; k++)
+				else if(avg_center <= Left_Line[ref_p] + Target_num[mid_k]*12/10)
 				{
-					if(Find_Target_oad[k] != win_pos) continue;
-
-					row_p = p1 + k * eer_p;
-
-					if(win_pos == 3)
-					{
-						if(!(avg_center >= Left_Line[row_p] + Target_num[k]*2
-							&& avg_center <= Right_Line[row_p] - Target_num[k]*2))
-							all_pass = 0;
-					}
-					else if(win_pos == 1)
-					{
-						if(!(avg_center <= Left_Line[row_p] + Target_num[k]*12/10))
-							all_pass = 0;
-					}
-					else if(win_pos == 5)
-					{
-						if(!(avg_center >= Right_Line[row_p] - Target_num[k]*12/10))
-							all_pass = 0;
-					}
-					else if(win_pos == 2)
-					{
-						if(!(avg_center >= Left_Line[row_p] + Target_num[k]*12/10
-							&& avg_center <= Left_Line[row_p] + Target_num[k]*2))
-							all_pass = 0;
-					}
-					else if(win_pos == 4)
-					{
-						if(!(avg_center >= Right_Line[row_p] - Target_num[k]*2
-							&& avg_center <= Right_Line[row_p] - Target_num[k]*12/10))
-							all_pass = 0;
-					}
-
-					if(!all_pass) break;
+					laser_on(LASER_PIN_1); late_laser = 1;
 				}
-
-				if(all_pass)
+				else if(avg_center >= Right_Line[ref_p] - Target_num[mid_k]*12/10)
 				{
-					all_off();
-					if(win_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
-					else if(win_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
-					else if(win_pos == 5) { laser_on(LASER_PIN_5); late_laser = 5; }
-					else if(win_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
-					else if(win_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
+					laser_on(LASER_PIN_5); late_laser = 5;
 				}
-				else { all_off(); late_laser = 0; }
+				else if(avg_center >= Left_Line[ref_p] + Target_num[mid_k]*12/10
+					 && avg_center <= Left_Line[ref_p] + Target_num[mid_k]*2)
+				{
+					laser_on(LASER_PIN_2); late_laser = 2;
+				}
+				else if(avg_center >= Right_Line[ref_p] - Target_num[mid_k]*2
+					 && avg_center <= Right_Line[ref_p] - Target_num[mid_k]*12/10)
+				{
+					laser_on(LASER_PIN_4); late_laser = 4;
+				}
+				else { late_laser = 0; }
 			}
-			else { all_off(); late_laser = 0; }
 		}
 	}
 	else
 	{
-		Find_Target_time = -3;
+		Find_Target_time = -1;
 		all_off();
 		late_laser = 0;
 	}
