@@ -328,8 +328,8 @@ void Find_Left_Ring(void)
              bot[0] = Left_Coordinates[110];
              bot[1] = 110;
 
-             top[0] = Left_Coordinates[10];
-             top[1] = 40;
+             top[0] = 90;
+             top[1] = 20;
 			 Patch_line_Left(bot, top);
 		 }
      }
