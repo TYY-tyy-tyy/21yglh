@@ -14,7 +14,7 @@ int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
 uint16 Left_Enc_In = 3400;
-uint16 Left_Enc_Out = 1500;
+uint16 Left_Enc_Out = 1000;
 uint16 Right_Enc_In = 3400;
 uint16 Right_Enc_Out = 1200;
 
