@@ -262,23 +262,23 @@ void Find_Target2(int p1,int p2)
 			if(Black_p[k] != 0)
 			{
 				tar_eer[k] = (remote_target[k][0] + remote_target[k][1])/2;
-				if(tar_eer[k] >= Left_Line[p]+Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*2)
+				if(tar_eer[k] >= Left_Line[p]+Target_num[k]*22/10 && tar_eer[k] <= Right_Line[p]-Target_num[k]*22/10)
 				{
 					Find_Target_oad[k] = 3;
 				}
-				else if(tar_eer[k] <= Left_Line[p]+Target_num[k]*12/10)
+				else if(tar_eer[k] <= Left_Line[p]+Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 1;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*12/10)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 5;
 				}
-				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*12/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*2)
+				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*18/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*22/10)
 				{
 					Find_Target_oad[k] = 2;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*12/10)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*22/10 && tar_eer[k] <= Right_Line[p]-Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 4;
 				}
@@ -314,7 +314,7 @@ void Find_Target2(int p1,int p2)
             /* ===== ⑥ 空心靶验证 + 横向扫边界修正中心 + 一致性校验 ===== */
             if(verify_hollow_target_by_column(avg_center))
             {
-                uint8 mid_k = 1;
+                uint8 mid_k = 2;
                 uint8 ref_p = p1 + mid_k * eer_p;
                 int16 left_edge, right_edge;
 				
@@ -349,7 +349,27 @@ void Find_Target2(int p1,int p2)
                 {
                     /* ===== ⑦ 用修正中心分位置 ===== */
                     uint8 cur_pos = 0;
-					if(COM_QY == 0)
+					
+                    if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*22/10
+                    && new_center <= Right_Line[ref_p] - Target_num[mid_k]*22/10)
+                        cur_pos = 3;
+                    else if(new_center <= Left_Line[ref_p] + Target_num[mid_k]*18/10)
+                        cur_pos = 1;
+                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*18/10)
+                        cur_pos = 5;
+                    else if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*18/10
+                          && new_center <= Left_Line[ref_p] + Target_num[mid_k]*22/10)
+                        cur_pos = 2;
+                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*22/10
+                          && new_center <= Right_Line[ref_p] - Target_num[mid_k]*18/10)
+                        cur_pos = 4;
+
+                    /* ===== ⑧ 三重确认：cur_pos==win_pos + 连续两帧一致 ===== */
+                    if(cur_pos > 0 && cur_pos == win_pos 
+//						&& cur_pos == confirmed_pos
+					)
+                    {
+						if(COM_QY == 0)
 					{
 						uint16 col = (p1 + p2)/2;
 						image_copy_out[col-1][new_center-1] = 0;
@@ -362,24 +382,6 @@ void Find_Target2(int p1,int p2)
 						image_copy_out[col+1][new_center] = 0;
 						image_copy_out[col+1][new_center+1] = 0;
 					}
-                    if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*2
-                    && new_center <= Right_Line[ref_p] - Target_num[mid_k]*2)
-                        cur_pos = 3;
-                    else if(new_center <= Left_Line[ref_p] + Target_num[mid_k]*12/10)
-                        cur_pos = 1;
-                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*12/10)
-                        cur_pos = 5;
-                    else if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*12/10
-                          && new_center <= Left_Line[ref_p] + Target_num[mid_k]*2)
-                        cur_pos = 2;
-                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*2
-                          && new_center <= Right_Line[ref_p] - Target_num[mid_k]*12/10)
-                        cur_pos = 4;
-
-                    /* ===== ⑧ 三重确认：cur_pos==win_pos + 连续两帧一致 ===== */
-                    if(cur_pos > 0 && cur_pos == win_pos && cur_pos == confirmed_pos)
-                    {
-						
                         all_off();
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
@@ -390,9 +392,17 @@ void Find_Target2(int p1,int p2)
                     else { all_off(); late_laser = 0; }
                     confirmed_pos = cur_pos;
                 }
-                else { all_off(); late_laser = 0; confirmed_pos = 0; }
+                else 
+				{ 
+					all_off(); late_laser = 0; 
+//					confirmed_pos = 0; 
+				}
             }
-            else { all_off(); late_laser = 0; confirmed_pos = 0; }
+            else 
+			{
+				all_off(); late_laser = 0; 
+//				confirmed_pos = 0; 
+			}
         }
     }
     else
