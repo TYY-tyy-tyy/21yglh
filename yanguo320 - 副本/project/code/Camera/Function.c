@@ -105,6 +105,7 @@ uint8 find_extreme_Value(uint8* arr, uint8 start, uint8 end, int mode)
 	uint8 extremeValue;
 	uint8 extremeIndex = (uint8)start;
 	uint8 i;
+	uint8 all_reference_num = 0;
 	ALL_reference_col_farthest = 0;
 	// 查找最小值
 	if (mode == 0)
@@ -112,14 +113,18 @@ uint8 find_extreme_Value(uint8* arr, uint8 start, uint8 end, int mode)
 		extremeValue = MT9V03X_H;
 		for (i = start; i < end; i ++)
 		{
-			ALL_reference_col_farthest += arr[i];
+			if(arr[i] != MT9V03X_H - 1)
+			{
+				all_reference_num ++;
+				ALL_reference_col_farthest += arr[i];
+			}
 			if (arr[i] < extremeValue)
 			{
 				 extremeValue = arr[i];
 				 extremeIndex = i;
 			}
 		}
-		ALL_reference_col_farthest = ALL_reference_col_farthest/(end-start);
+		ALL_reference_col_farthest = ALL_reference_col_farthest/all_reference_num;
 	}
 	// 查找最大值
 	else if (mode == 1)
