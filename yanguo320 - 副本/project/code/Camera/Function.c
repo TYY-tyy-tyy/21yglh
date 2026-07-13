@@ -132,7 +132,11 @@ uint8 find_extreme_Value(uint8* arr, uint8 start, uint8 end, int mode)
 		extremeValue = 0;
 		for (i = start; i < end; i ++)
 		{
-			ALL_reference_col_farthest += arr[i];
+			if(arr[i] != MT9V03X_H - 1)
+			{
+				all_reference_num ++;
+				ALL_reference_col_farthest += arr[i];
+			}
 			if (arr[i] > extremeValue)
 			{
 				 extremeValue = arr[i];

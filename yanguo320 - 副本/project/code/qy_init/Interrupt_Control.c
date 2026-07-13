@@ -152,7 +152,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_GKD = 0;
         nowtargetSpeed = my_Speed/10*9;
     }
-    else if(White_Column_MID > 110 && ALL_White_Column_MID > 13
+    else if(White_Column_MID > 110 && ALL_White_Column_MID > 60
 //		&& Image_error > -10 && Image_error < 10 
 		&& Right_Lost_Line_count < 5 && Left_Lost_Line_count < 5
 	)

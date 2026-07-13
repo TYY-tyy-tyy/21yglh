@@ -87,6 +87,7 @@ void main(void)
 		wireless_uart_send_byte((uint8)Left_local_LostNums);
 		wireless_uart_send_byte((uint8)Find_Right_FLAG);
 		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+		wireless_uart_send_byte((uint8)angle_ringR);
 		wireless_uart_send_byte(0xFF);
 		
 		if(COM_QY == 0)
