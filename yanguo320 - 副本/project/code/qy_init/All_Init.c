@@ -45,7 +45,7 @@ void All_Init(void)
 //	system_delay_ms(500);
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
 	seekfree_assistant_camera_information_config(SEEKFREE_ASSISTANT_MT9V03X, image_copy_out[0], MT9V03X_W, MT9V03X_H);
-	 
+	
     /* 陀螺仪初始化 */
     //陀螺仪初始化
     #if IMU_TYPE

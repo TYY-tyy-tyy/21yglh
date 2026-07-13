@@ -8,6 +8,8 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
+uint8 TARGET_BLACK_WIDTH_MAX = 20;
+
 void Find_Target1(void)
 {
 	int col,row,b_num = 0;
@@ -155,7 +157,7 @@ void Find_Target1(void)
 void Find_Target2(int p1,int p2)
 {
 	static int8 Find_Target_time = 0;
-	uint8 remote_target[4][5] = {0};
+	uint8 remote_target[4][10] = {0};
 	
 	int16 gray_point_1 = 0, gray_point_2 = 0, gray_point_3 = 0,compare_value1 = 0,compare_value2 = 0;
 	
@@ -176,6 +178,8 @@ void Find_Target2(int p1,int p2)
 	uint8 l_edge;
 	uint8 r_edge;
 	
+	int16 left_edge = 0, right_edge = 0;
+	
 	if(p1>p2)
 	{
 		p = p1;
@@ -186,11 +190,11 @@ void Find_Target2(int p1,int p2)
 	for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
 	{
 		Target_num[k] = (Right_Line[p] - Left_Line[p])/5;
-		l_edge=Left_Line[p]+4;
-		r_edge=Right_Line[p]-4;
+		l_edge=Left_Line[p]+6;
+		r_edge=Right_Line[p]-6;
 		j = 0;
 		//从左向右
-		for(i=l_edge;i<r_edge;i+=1)
+		for(i=l_edge;i<r_edge,j < 10;i+=1)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i+1];
@@ -201,7 +205,6 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
-				break;
 			}
 			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
 			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
@@ -211,11 +214,11 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
-				break;
 			}
 		}
+		left_edge = i;
 		//从右向左
-		for(i=r_edge;i>l_edge;i-=1)
+		for(i=r_edge;i>left_edge,j < 10;i-=1)
 		{
 			gray_point_1 = image_copy_out[p][i];
 			gray_point_2 = image_copy_out[p][i-1];
@@ -226,7 +229,6 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
-				break;
 			}
 			compare_value1 = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2+1);
 			compare_value2 = (int16)(gray_point_1 - gray_point_3) * 200 / (gray_point_1 + gray_point_3+1);
@@ -236,9 +238,16 @@ void Find_Target2(int p1,int p2)
 				j++;
 				Black_counts[k]++;
 				image_copy_out[p][i] = 255;
-				break;
 			}
 		}
+		right_edge = i;
+//		/* 这一行黑边的水平宽度不能超过阈值 */
+//        if(right_edge - left_edge > TARGET_BLACK_WIDTH_MAX)
+//		{
+//			remote_target[k][0] = 0;
+//			remote_target[k][1] = 0;
+//			Black_counts[k]-=j;
+//		}
 	}
 	
 	for(p = 0;p < 4;p++)
@@ -257,7 +266,13 @@ void Find_Target2(int p1,int p2)
 		{
 			if(Black_p[k] != 0)
 			{
-				tar_eer[k] = (remote_target[k][0] + remote_target[k][1])/2;
+				tar_eer[k] = 0;
+				i = 0;
+				for(;remote_target[k][i]>0;i++)
+				{
+					tar_eer[k] += remote_target[k][i];
+				}
+				tar_eer[k] = tar_eer[k]/i;
 				if(tar_eer[k] >= Left_Line[p]+Target_num[k]*2 && tar_eer[k] <= Right_Line[p]-Target_num[k]*2)
 				{
 					Find_Target_oad[k] = 3;
@@ -297,7 +312,8 @@ void Find_Target2(int p1,int p2)
 			avg_center = (uint8)(sum_center / cnt_center);
 
 			all_off();
-
+			
+			if(verify_hollow_target_by_column(avg_center))
 			/* 用所有行的平均中心点，以中间那条扫描线的边界为准 */
 			{
 				uint8 mid_k = 1;  // 或 2，最中间的那条线
@@ -516,5 +532,46 @@ void LowerCameraExposure(void)
 	}
 }
 
+uint8 verify_hollow_target_by_column(uint8 col)
+{
+    uint8 row;
+    uint8 state = 0;
+    /* state: 0=等第一段黑, 1=在黑里等白（进入空心）, 2=在空心白里等第二段黑, 3=在黑里等白（离开靶） */
+    int16 gray_point_1, gray_point_2, compare_value;
 
+    for(row = MT9V03X_H - 10; row > reference_col_farthest + 10; row -= 2)
+    {
+        gray_point_1 = image_copy_out[row][col];
+        gray_point_2 = image_copy_out[row - 1][col];
+
+        if(gray_point_1 + gray_point_2 == 0) continue;
+        compare_value = (int16)(gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
+
+        if(state == 0)
+        {
+            /* 找白到黑的跳变：进入第一段黑（近边框） */
+            if(gray_point_1 < white_min_point || compare_value > Target_REFERENCE_CONTRAST)
+                state = 1;
+        }
+        else if(state == 1)
+        {
+            /* 找黑到白的跳变：离开边框，进入空心内部 */
+            if(gray_point_1 > white_min_point || compare_value < -Target_REFERENCE_CONTRAST)
+                state = 2;
+        }
+        else if(state == 2)
+        {
+            /* 找白到黑的跳变：进入第二段黑（远边框） */
+            if(gray_point_1 < white_min_point || compare_value > Target_REFERENCE_CONTRAST)
+                state = 3;
+        }
+        else /* state == 3 */
+        {
+            /* 找黑到白的跳变：离开靶 */
+            if(gray_point_1 > white_min_point || compare_value < -Target_REFERENCE_CONTRAST)
+                return 1;  /* 四段全找到：白→黑→白→黑→白，确认是空心靶 */
+        }
+    }
+    return 0;  /* 没找齐四段 */
+}
 
