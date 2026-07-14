@@ -277,7 +277,7 @@ void menu_3(void)//PID
 	{
 		menu_all_num = 3;
 	}
-	else if(menu_all_num > 3)
+	else if(menu_all_num > 4)
 	{
 		menu_all_num = 0;
 	}

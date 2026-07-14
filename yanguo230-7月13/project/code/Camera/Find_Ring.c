@@ -287,7 +287,7 @@ void Find_Left_Ring(void)
          else
          {
              /* 拉线出环 */
-             bot[0] = Right_Coordinates[80];
+             bot[0] = Right_Coordinates[70];
              bot[1] = 110;
 
              top[0] = 70;
@@ -543,7 +543,7 @@ void Find_Right_Ring(void)
              /* 拉线出环 */
 //			 Left_Patch_Init();
 			 
-             bot[0] = Left_Coordinates[80];
+             bot[0] = Left_Coordinates[70];
              bot[1] = 110;
 
              top[0] = 118;

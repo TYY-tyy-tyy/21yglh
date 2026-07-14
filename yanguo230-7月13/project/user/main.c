@@ -62,10 +62,10 @@ void main(void)
 	
 	pid.Speed_KP_L = pid.Speed_KP_R = 170;//����ֵ��125��һ�γ���ֵ��170  220
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//����ֵ��25��һ�γ���ֵ��35  90
-	Ring_T_KP = 55;
+	Ring_T_KP = 70;
 	W_T_KP = 35;
-	T_KP = 50;//40 44
-	T_KP1 =2;
+	T_KP = 62;//40 44
+	T_KP1 = 2;
 	pid.Turn_KD = 0;
 	T_GKD = -8;
 	while(1)

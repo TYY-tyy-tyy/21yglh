@@ -290,7 +290,7 @@ void Find_Left_Ring(void)
              bot[0] = Right_Coordinates[70];
              bot[1] = 110;
 
-             top[0] = 80;
+             top[0] = 70;
              top[1] = 1;
 
              Patch_line_Right(bot, top);
@@ -546,7 +546,7 @@ void Find_Right_Ring(void)
              bot[0] = Left_Coordinates[70];
              bot[1] = 110;
 
-             top[0] = 108;
+             top[0] = 118;
              top[1] = 1;
 
              Patch_line_Left(bot, top);
