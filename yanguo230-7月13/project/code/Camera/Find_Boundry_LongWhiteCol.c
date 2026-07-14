@@ -376,25 +376,6 @@ void Find_Boundry_LongWhiteCol(void)
 				l_last_col = left_border;
 			}
 		}
-		if(left_border > right_border - 10)
-		{
-			if(left_border > 94)
-			{
-				left_border = 8;
-			}
-			else if(right_border < 94)
-			{
-				right_border = MT9V03X_W - 8;
-			}
-		}
-		else if(left_border > 168 || left_border < 0)
-		{
-			left_border = 8;
-		}
-		else if(right_border < 10 || right_border < 0)
-		{
-			right_border = MT9V03X_W - 8;
-		}
 		if(COM_QY == 0)
 		{
 			image_copy_out[i  ][right_border] = 255;
@@ -429,6 +410,25 @@ void Find_Boundry_LongWhiteCol(void)
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
+			if(Left_Line [i] > Right_Line[i] - 10)
+			{
+				if(Left_Line [i] > 94)
+				{
+					Left_Line [i] = 8;
+				}
+				else if(Right_Line[i] < 94)
+				{
+					Right_Line[i] = MT9V03X_W - 8;
+				}
+			}
+			else if(Left_Line [i] > 168 || Left_Line [i] < 0)
+			{
+				Left_Line [i] = 8;
+			}
+			else if(Right_Line[i] < 10 || Right_Line[i] < 0)
+			{
+				Right_Line[i] = MT9V03X_W - 8;
+			}
 			mid = (Left_Line [i] + Right_Line[i]) / 2.0;                                                                //中线坐标
 			last_mid = mid;
 
@@ -537,6 +537,25 @@ void Find_Boundry_LongWhiteCol(void)
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
+			if(Left_Line [i] > Right_Line[i] - 10)
+			{
+				if(Left_Line [i] > 94)
+				{
+					Left_Line [i] = 8;
+				}
+				else if(Right_Line[i] < 94)
+				{
+					Right_Line[i] = MT9V03X_W - 8;
+				}
+			}
+			else if(Left_Line [i] > 168 || Left_Line [i] < 0)
+			{
+				Left_Line [i] = 8;
+			}
+			else if(Right_Line[i] < 10 || Right_Line[i] < 0)
+			{
+				Right_Line[i] = MT9V03X_W - 8;
+			}
 			mid = (Left_Line [i] + Right_Line[i]) / 2.0;                                                                //中线坐标
 			last_mid = mid;
 
