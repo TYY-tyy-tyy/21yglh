@@ -382,6 +382,7 @@ void Find_Target2(int p1,int p2)
 						image_copy_out[col+1][new_center] = 0;
 						image_copy_out[col+1][new_center+1] = 0;
 					}
+						Buzzer_ON();
                         all_off();
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
@@ -389,17 +390,19 @@ void Find_Target2(int p1,int p2)
                         else if(cur_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
                         else if(cur_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
                     }
-                    else { all_off(); late_laser = 0; }
+                    else { Buzzer_OFF(); all_off(); late_laser = 0; }
                     confirmed_pos = cur_pos;
                 }
                 else 
-				{ 
+				{
+					Buzzer_OFF();
 					all_off(); late_laser = 0; 
 //					confirmed_pos = 0; 
 				}
             }
             else 
 			{
+				Buzzer_OFF();
 				all_off(); late_laser = 0; 
 //				confirmed_pos = 0; 
 			}
