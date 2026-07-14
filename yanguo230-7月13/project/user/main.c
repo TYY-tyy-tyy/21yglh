@@ -38,7 +38,7 @@ uint16 use_time,i = 0;       //��ʱ����     3ms�ദ��һ֡
 
 uint8 COM_QY = 0;
 
-int16 my_Speed = 260;//220 260 290
+int16 my_Speed = 290;//220 260 290
 
 uint16 qy_time = 0;
 uint16 qy_time1 = 0;
@@ -80,6 +80,10 @@ void main(void)
 		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error 低字节
 		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out 高字节
 		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out 低字节
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Left >> 8));      // 左轮编码器 高字节
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Left & 0xFF));    // 左轮编码器 低字节
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Right >> 8));     // 右轮编码器 高字节
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Right & 0xFF));   // 右轮编码器 低字节
 		wireless_uart_send_byte((uint8)avl_gyro_z);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
