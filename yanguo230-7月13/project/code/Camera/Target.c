@@ -256,7 +256,8 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 3) Find_Target_time ++;
+		if(Find_Target_time < 4) Find_Target_time ++;
+		else Find_Target_time = -10;
 		for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
 		{
 			if(Black_p[k] != 0)
@@ -407,18 +408,17 @@ void Find_Target2(int p1,int p2)
 //				confirmed_pos = 0; 
 			}
         }
-		if(Find_Target_time >= 3)
-		{
-			Find_Target_time = -5;
-		}
     }
     else
     {
-		Buzzer_OFF();
-        Find_Target_time = -1;
-        all_off();
-        confirmed_pos = 0;
-        late_laser = 0;
+		if(Find_Target_time > 0)
+            Find_Target_time--;        // 丢靶消抖，逐渐降
+        else
+            Find_Target_time = -3;     // 降到 0 后才重置
+			Buzzer_OFF();
+			all_off();
+			confirmed_pos = 0;
+			late_laser = 0;
     }
 }
 
