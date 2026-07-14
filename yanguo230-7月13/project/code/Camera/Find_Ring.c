@@ -81,7 +81,7 @@ void Find_Left_Ring(void)
 			&& (Left_Lost_Line_count <= 37) && (Right_Lost_Line_count <= 5)
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 //			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 130)  && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 110)  && (White_Nums < 150))
 		{
         //若是，则进入圆环标志位1
 //			COM_QY = 0;
@@ -287,7 +287,7 @@ void Find_Left_Ring(void)
          else
          {
              /* 拉线出环 */
-             bot[0] = Right_Coordinates[100];
+             bot[0] = Right_Coordinates[80];
              bot[1] = 110;
 
              top[0] = 70;
@@ -350,7 +350,7 @@ void Find_Right_Ring(void)
 			&& (Right_Lost_Line_count <= 37) && (Left_Lost_Line_count <= 5) 
 			&& (pid.Turn_last_error > -45) && (pid.Turn_last_error < 45) 
 //			&& (ring_preMeet_flag == 1)
-			&& (White_Column_MID >= 100) && (White_Nums > 130) && (White_Nums < 150))
+			&& (White_Column_MID >= 100) && (White_Nums > 110) && (White_Nums < 150))
         {
 //			COM_QY = 0;
             //若是，则进入圆环标志位1
@@ -543,7 +543,7 @@ void Find_Right_Ring(void)
              /* 拉线出环 */
 //			 Left_Patch_Init();
 			 
-             bot[0] = Left_Coordinates[100];
+             bot[0] = Left_Coordinates[80];
              bot[1] = 110;
 
              top[0] = 118;

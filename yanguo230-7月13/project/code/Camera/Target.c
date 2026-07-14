@@ -284,7 +284,7 @@ void Find_Target2(int p1,int p2)
 				}
 			}
 		}
-		if(Find_Target_time >= 0)
+		if(Find_Target_time >= 0 && Find_Target_time < 4)
         {
             /* ===== ¢Ü Í¶Æ± ===== */
             uint8 pos_votes[6] = {0};
@@ -407,11 +407,15 @@ void Find_Target2(int p1,int p2)
 //				confirmed_pos = 0; 
 			}
         }
+		if(Find_Target_time >= 3)
+		{
+			Find_Target_time = -5;
+		}
     }
     else
     {
 		Buzzer_OFF();
-        Find_Target_time = -3;
+        Find_Target_time = -1;
         all_off();
         confirmed_pos = 0;
         late_laser = 0;

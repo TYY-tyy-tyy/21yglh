@@ -552,7 +552,7 @@ void Find_Boundry_LongWhiteCol(void)
 			{
 				Left_Line [i] = 8;
 			}
-			else if(Right_Line[i] < 10 || Right_Line[i] < 0)
+			else if(Right_Line[i] < 10 || Right_Line[i] > 188)
 			{
 				Right_Line[i] = MT9V03X_W - 8;
 			}
