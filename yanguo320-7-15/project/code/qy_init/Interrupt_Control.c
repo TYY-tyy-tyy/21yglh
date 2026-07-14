@@ -183,7 +183,7 @@ void Speed_DecisionMaking(void)
 		{
 			pid.Turn_KP = W_T_KP;//20
 			pid.Turn_KP1 = 0;
-			nowtargetSpeed = my_Speed/10*11;
+			nowtargetSpeed = my_Speed/10*10.5;
 			pid.Turn_GKD = T_GKD;
 			pid.Turn_KD = W_T_KD;
 			speed_mode = 1;   // Ö±µÀ
