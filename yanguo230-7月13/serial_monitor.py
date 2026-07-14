@@ -4,11 +4,11 @@
 串口数据监控工具 - 用于 PID 调参
 无线串口，自动检测跑次 + 导出 CSV 供分析
 
-数据协议 (22字节/包):
+数据协议 (23字节/包):
   0xAA | ImgErr_H | ImgErr_L | TurnOut_H | TurnOut_L |
   EncL_H | EncL_L | EncR_H | EncR_L | gyro_z |
   R_Patch | L_Patch | R_Lost | L_Lost | White_MID | White_Nums |
-  R_Local | L_Local | R_RingFlag | L_RingFlag | angle_ringR | 0xFF
+  R_Local | L_Local | R_RingFlag | L_RingFlag | angle_ringR | speed_mode | 0xFF
 """
 
 import serial
@@ -23,10 +23,13 @@ IDLE_TIMEOUT = 2.0       # 连续无数据超过此秒 → 判定本次跑车结
 LOG_DIR = "log"          # CSV 保存目录
 # ==============================================
 
-PACKET_LEN = 22
+PACKET_LEN = 23
 run_count = 0
+
+SPEED_MODE_NAMES = {0: "弯道", 1: "直道", 2: "环岛"}
+
 CSV_HEADER = (
-    "timestamp,mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
+    "timestamp,speed_mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
     "gyro_z,r_patch,l_patch,r_lost,l_lost,white_mid,white_nums,"
     "r_local,l_local,r_ring_flag,l_ring_flag,angle_ring\n"
 )
@@ -41,7 +44,7 @@ def clear_screen():
 
 
 def parse_packet(data):
-    if data[0] != 0xAA or data[21] != 0xFF:
+    if data[0] != 0xAA or data[22] != 0xFF:
         return None
 
     def to_int16(h, l):
@@ -66,12 +69,14 @@ def parse_packet(data):
     r_ring_flag  = data[18]
     l_ring_flag  = data[19]
     angle_ring   = data[20]
+    speed_mode   = data[21]   # 0=弯道 1=直道 2=环岛
     enc_diff     = enc_left - enc_right
 
-    mode = "环岛" if (l_ring_flag != 0 or r_ring_flag != 0) else "普通"
+    mode = SPEED_MODE_NAMES.get(speed_mode, "???")
 
     return {
-        "mode": mode, "image_error": image_error, "turn_out": turn_out,
+        "mode": mode, "speed_mode": speed_mode,
+        "image_error": image_error, "turn_out": turn_out,
         "enc_left": enc_left, "enc_right": enc_right, "enc_diff": enc_diff,
         "gyro_z": gyro_z, "r_patch": r_patch, "l_patch": l_patch,
         "r_lost": r_lost, "l_lost": l_lost, "white_mid": white_mid,
@@ -104,7 +109,7 @@ def format_line(p):
 def format_csv(p):
     return (
         f"{datetime.now().strftime('%H:%M:%S.%f')[:-3]},"
-        f"{p['mode']},"
+        f"{p['speed_mode']},"
         f"{p['image_error']},{p['turn_out']},"
         f"{p['enc_left']},{p['enc_right']},{p['enc_diff']},"
         f"{p['gyro_z']},"
@@ -140,6 +145,7 @@ def main():
     print(f"  串口监控工具 — {PORT} @ {BAUD} (无线串口)")
     print(f"  自动检测跑次 + 导出 CSV 到 {LOG_DIR}/")
     print(f"  {IDLE_TIMEOUT}s 无数据 = 结束, 再来数据 = 新跑次 + 清屏")
+    print(f"  模式: 直道 / 弯道 / 环岛 (由 MCU side 判断)")
     print(f"  Ctrl+C 退出\n")
 
     ser = serial.Serial(PORT, BAUD, timeout=0.5)

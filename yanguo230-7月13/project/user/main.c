@@ -60,8 +60,8 @@ void main(void)
 	/* ���й��ܳ�ʼ�� */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 170;//����ֵ��125��һ�γ���ֵ��170  220
-	pid.Speed_KI_L = pid.Speed_KI_R = 35;//����ֵ��25��һ�γ���ֵ��35  90
+	pid.Speed_KP_L = pid.Speed_KP_R = 200;//����ֵ��125��һ�γ���ֵ��170  220
+	pid.Speed_KI_L = pid.Speed_KI_R = 40;//����ֵ��25��һ�γ���ֵ��35  90
 	Ring_T_KP = 70;
 	W_T_KP = 35;
 	T_KP = 62;//40 44
@@ -96,6 +96,7 @@ void main(void)
 		wireless_uart_send_byte((uint8)Find_Right_FLAG);
 		wireless_uart_send_byte((uint8)Find_Left_FLAG);
 		wireless_uart_send_byte((uint8)angle_ringR);
+		wireless_uart_send_byte(speed_mode);               // 0=弯道 1=直道 2=环岛
 		wireless_uart_send_byte(0xFF);
 		
 		if(COM_QY == 0)

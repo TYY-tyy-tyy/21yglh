@@ -3,20 +3,21 @@
 
 #include "qy_headfile.h"
 
-/* ×ªÏò»·PIDÊä³öÖµ */
+/* ×ªï¿½ï¿½PIDï¿½ï¿½ï¿½Öµ */
 extern int16 Turn_Out;
 extern int16 Turn_Out_MAX;
 extern int16 Speed_Out;
-extern int16 Speed_Left_Out;                    //ËÙ¶È»·Êä³ö
+extern int16 Speed_Left_Out;                    //ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿½
 extern int16 Speed_Right_Out;
 extern int16 Speed_Out;
 extern int16 nowtargetSpeed;
-/* ¼ÆÊ±±äÁ¿ */
+/* ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ */
 extern uint16 use_time;
 
 extern double img_data;
 
 extern uint8 COM_QY;
+extern uint8 speed_mode;
 
 extern uint16 count1;
 
