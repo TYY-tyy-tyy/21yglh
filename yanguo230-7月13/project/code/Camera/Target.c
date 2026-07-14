@@ -411,7 +411,7 @@ void Find_Target2(int p1,int p2)
     else
     {
 		Buzzer_OFF();
-        Find_Target_time = -3;
+        Find_Target_time = -2;
         all_off();
         confirmed_pos = 0;
         late_laser = 0;
