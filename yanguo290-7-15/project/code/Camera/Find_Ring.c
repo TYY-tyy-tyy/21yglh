@@ -287,10 +287,10 @@ void Find_Left_Ring(void)
          else
          {
              /* 拉线出环 */
-             bot[0] = Right_Coordinates[65];
+             bot[0] = Right_Coordinates[70];
              bot[1] = 110;
 
-             top[0] = 65;
+             top[0] = 70;
              top[1] = 1;
 
              Patch_line_Right(bot, top);
