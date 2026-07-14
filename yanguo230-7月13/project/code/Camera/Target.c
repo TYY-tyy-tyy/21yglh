@@ -414,7 +414,7 @@ void Find_Target2(int p1,int p2)
 		if(Find_Target_time > 0)
             Find_Target_time--;        // 丢靶消抖，逐渐降
         else
-            Find_Target_time = -3;     // 降到 0 后才重置
+            Find_Target_time = -1;     // 降到 0 后才重置
 			Buzzer_OFF();
 			all_off();
 			confirmed_pos = 0;

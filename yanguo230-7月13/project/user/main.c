@@ -49,7 +49,7 @@ uint16 count1 = 0;
 
 uint8 data_buffer[21];
 
-int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI,Ring_T_KP,W_T_KP;
+int16 SP_KP,SP_KI,T_KP,Ring_T_KP,W_T_KP,T_KP1,T_GKD,T_KD,Ring_T_KD,W_T_KD;
 
 void main(void)
 {
@@ -66,7 +66,10 @@ void main(void)
 	W_T_KP = 35;
 	T_KP = 62;//40 44
 	T_KP1 = 2;
-	pid.Turn_KD = 100;
+	T_KD = 70;
+	Ring_T_KD = 50;
+	W_T_KD = 40;
+//	pid.Turn_KD = 70;
 	T_GKD = -8;
 	while(1)
 	{

@@ -128,7 +128,10 @@ void Interrupt_CCU60_CH0(void)
 	
 	/* ï¿½ï¿½ï¿½ï¿½ ------------------------------------------------------------*/
 	/* ï¿½ï¿½ï¿½ */
-	pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
+	if(COM_QY == 2)
+	{
+		pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
+	}
 	
 	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	Left_Motor_Speed(Left_Out);
@@ -154,6 +157,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed /10*9;
 		pid.Turn_GKD = 0;
+		pid.Turn_KD = Ring_T_KD;
 		speed_mode = 2;   // »·µº
     }
     else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
@@ -162,6 +166,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KP1 = 0;
         nowtargetSpeed = my_Speed*11/10;
 		pid.Turn_GKD = T_GKD;
+		pid.Turn_KD = W_T_KD;
 		speed_mode = 1;   // Ö±µÀ
     }
     else
@@ -170,6 +175,7 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed/10*9;
 		pid.Turn_GKD = T_GKD/2;
+		pid.Turn_KD = T_KD;
 		speed_mode = 0;   // ÍäµÀ
     }
 }

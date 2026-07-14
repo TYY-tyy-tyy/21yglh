@@ -22,7 +22,7 @@ extern uint8 speed_mode;
 extern uint16 count1;
 
 extern int16 my_Speed;
-extern int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI,Ring_T_KP,W_T_KP;
+extern int16 SP_KP,SP_KI,T_KP,Ring_T_KP,W_T_KP,T_KP1,T_GKD,T_KD,Ring_T_KD,W_T_KD;
 
 extern uint8 far image_copy[MT9V03X_H][MT9V03X_W];
 extern uint8 far image_copy_out[MT9V03X_H][MT9V03X_W];
