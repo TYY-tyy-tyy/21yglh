@@ -54,15 +54,15 @@ void Mid_Error_Processing(void)
 			Image_error += Image_Weight3[j] * Road_Wide[i];
 			count += Image_Weight3[j];
 		}
-		else if(White_Column_MID > 100)
+		else if(White_Column_MID > 110)
+		{
+			Image_error += Image_Weight1[j] * Road_Wide[i];
+			count += Image_Weight1[j];
+		}
+        else if(White_Column_MID > 100)
 		{
 			Image_error += Image_Weight2[j] * Road_Wide[i];
 			count += Image_Weight2[j];
-		}
-        else if(White_Column_MID > 60)
-		{
-			Image_error += Image_Weight3[j] * Road_Wide[i];
-			count += Image_Weight3[j];
 		}
 		else
 		{
