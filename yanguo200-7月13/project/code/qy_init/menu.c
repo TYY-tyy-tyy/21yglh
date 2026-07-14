@@ -149,7 +149,7 @@ void menu_1(void)//speed
 void menu_2(void)//img
 {
 	static int8 menu_all_num = 0;
-	static uint16 set_time = 510;
+	static uint16 set_time = 200;
 	if(Key_1)
 	{
 		menu_all_num ++;
