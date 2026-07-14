@@ -65,9 +65,9 @@ void main(void)
 //	Ring_T_KP = 55;
 	W_T_KP = 35;
 	T_KP = 48;//40 44
-	T_KP1 =0;
+	T_KP1 =2;
 	pid.Turn_KD = 0;
-	T_GKD = -20;
+	T_GKD = -10;
 	while(1)
 	{
 //		printf("%f,%f,%f\n",imu.acc.angle[imu_X],imu.acc.angle[imu_Y],imu.gyro.angle[imu_Z]);
