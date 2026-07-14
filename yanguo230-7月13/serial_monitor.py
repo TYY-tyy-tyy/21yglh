@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 串口数据监控工具 - 用于 PID 调参
-无线串口，自动检测跑次：长时间无数据后重新来数据 = 新跑次 + 自动清屏
+无线串口，自动检测跑次 + 导出 CSV 供分析
 
 数据协议 (22字节/包):
   0xAA | ImgErr_H | ImgErr_L | TurnOut_H | TurnOut_L |
@@ -20,10 +20,20 @@ from datetime import datetime
 PORT = "COM12"
 BAUD = 115200
 IDLE_TIMEOUT = 2.0       # 连续无数据超过此秒 → 判定本次跑车结束
+LOG_DIR = "log"          # CSV 保存目录
 # ==============================================
 
 PACKET_LEN = 22
 run_count = 0
+CSV_HEADER = (
+    "timestamp,mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
+    "gyro_z,r_patch,l_patch,r_lost,l_lost,white_mid,white_nums,"
+    "r_local,l_local,r_ring_flag,l_ring_flag,angle_ring\n"
+)
+
+
+def ensure_log_dir():
+    os.makedirs(LOG_DIR, exist_ok=True)
 
 
 def clear_screen():
@@ -91,23 +101,45 @@ def format_line(p):
     )
 
 
+def format_csv(p):
+    return (
+        f"{datetime.now().strftime('%H:%M:%S.%f')[:-3]},"
+        f"{p['mode']},"
+        f"{p['image_error']},{p['turn_out']},"
+        f"{p['enc_left']},{p['enc_right']},{p['enc_diff']},"
+        f"{p['gyro_z']},"
+        f"{p['r_patch']},{p['l_patch']},"
+        f"{p['r_lost']},{p['l_lost']},"
+        f"{p['white_mid']},{p['white_nums']},"
+        f"{p['r_local']},{p['l_local']},"
+        f"{p['r_ring_flag']},{p['l_ring_flag']},"
+        f"{p['angle_ring']}\n"
+    )
+
+
 def start_new_run():
     global run_count
     run_count += 1
     clear_screen()
     ts = datetime.now().strftime("%H:%M:%S")
+    fname = datetime.now().strftime("run_%m%d_%H%M%S.csv")
+    csv_path = os.path.join(LOG_DIR, fname)
     print(f"\n  ╔══════════════════════════════════════════════════════════╗")
-    print(f"  ║  第 {run_count} 次跑车  |  开始: {ts}                      ║")
+    print(f"  ║  第 {run_count} 次跑车  |  开始: {ts}  ║")
+    print(f"  ║  保存: {csv_path}  ║")
     print(f"  ╚══════════════════════════════════════════════════════════╝")
     print_header()
+    return csv_path
 
 
 def main():
     global run_count
 
+    ensure_log_dir()
     clear_screen()
     print(f"  串口监控工具 — {PORT} @ {BAUD} (无线串口)")
-    print(f"  自动检测跑次: {IDLE_TIMEOUT}s 无数据 = 结束, 再来数据 = 新跑次 + 清屏")
+    print(f"  自动检测跑次 + 导出 CSV 到 {LOG_DIR}/")
+    print(f"  {IDLE_TIMEOUT}s 无数据 = 结束, 再来数据 = 新跑次 + 清屏")
     print(f"  Ctrl+C 退出\n")
 
     ser = serial.Serial(PORT, BAUD, timeout=0.5)
@@ -115,6 +147,8 @@ def main():
     count = 0
     last_pkt_time = 0
     in_run = False
+    csv_fh = None
+    csv_path = None
 
     while True:
         try:
@@ -137,19 +171,26 @@ def main():
                 if pkt is None:
                     continue
 
-                # 之前空闲了很久 → 新跑次
                 gap = now - last_pkt_time
                 if in_run and gap > IDLE_TIMEOUT:
                     print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包) <<<")
+                    if csv_fh:
+                        csv_fh.close()
+                        csv_fh = None
                     in_run = False
 
                 if not in_run:
-                    start_new_run()
+                    csv_path = start_new_run()
+                    csv_fh = open(csv_path, "w", encoding="utf-8")
+                    csv_fh.write(CSV_HEADER)
                     in_run = True
                     count = 0
 
                 last_pkt_time = now
                 count += 1
+
+                if csv_fh:
+                    csv_fh.write(format_csv(pkt))
 
                 if count % 15 == 1 and count > 1:
                     print_header()
@@ -158,13 +199,17 @@ def main():
             else:
                 buf.pop(0)
 
-        # 运行中，超时无数据 → 结束
         if in_run and now - last_pkt_time > IDLE_TIMEOUT:
             print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包) <<<")
+            if csv_fh:
+                csv_fh.close()
+                csv_fh = None
             in_run = False
 
         time.sleep(0.001)
 
+    if csv_fh:
+        csv_fh.close()
     print(f"\n  退出。")
     ser.close()
 
