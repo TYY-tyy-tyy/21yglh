@@ -221,10 +221,10 @@ void Find_Left_Ring(void)
             /* 拉线进环 */
 //			Right_Patch_Init();
 			/* 拉线进环 */
-			bot[0] = Right_Coordinates[110];
+			bot[0] = Right_Coordinates[100];
             bot[1] = 110;
 
-            top[0] = 80;
+            top[0] = 70;
             top[1] = 1;
 
             Patch_line_Right(bot, top);
@@ -287,10 +287,10 @@ void Find_Left_Ring(void)
          else
          {
              /* 拉线出环 */
-             bot[0] = Right_Coordinates[110];
+             bot[0] = Right_Coordinates[100];
              bot[1] = 110;
 
-             top[0] = 80;
+             top[0] = 70;
              top[1] = 1;
 
              Patch_line_Right(bot, top);
