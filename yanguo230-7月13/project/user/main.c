@@ -65,7 +65,7 @@ void main(void)
 //	Ring_T_KP = 55;
 	W_T_KP = 20;
 	T_KP = 45;//40 44
-	T_KP1 =0;
+	T_KP1 =2;
 	pid.Turn_KD = 0;
 	T_GKD = 0;
 	while(1)
