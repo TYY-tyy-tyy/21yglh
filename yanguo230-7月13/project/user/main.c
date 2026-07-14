@@ -66,7 +66,7 @@ void main(void)
 	W_T_KP = 35;
 	T_KP = 62;//40 44
 	T_KP1 = 2;
-	pid.Turn_KD = 0;
+	pid.Turn_KD = 100;
 	T_GKD = -8;
 	while(1)
 	{
@@ -76,14 +76,14 @@ void main(void)
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error é«˜å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error ä½å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out é«˜å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out ä½å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Left >> 8));      // å·¦è½®ç¼–ç å™¨ é«˜å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Left & 0xFF));    // å·¦è½®ç¼–ç å™¨ ä½å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Right >> 8));     // å³è½®ç¼–ç å™¨ é«˜å­—èŠ‚
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Right & 0xFF));   // å³è½®ç¼–ç å™¨ ä½å­—èŠ‚
+		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error ¸ß×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error µÍ×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out ¸ß×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out µÍ×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Left >> 8));      // ×óÂÖ±àÂëÆ÷ ¸ß×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Left & 0xFF));    // ×óÂÖ±àÂëÆ÷ µÍ×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Right >> 8));     // ÓÒÂÖ±àÂëÆ÷ ¸ß×Ö½Ú
+		wireless_uart_send_byte((uint8)((uint16)Encoder_Right & 0xFF));   // ÓÒÂÖ±àÂëÆ÷ µÍ×Ö½Ú
 		wireless_uart_send_byte((uint8)avl_gyro_z);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
@@ -96,7 +96,7 @@ void main(void)
 		wireless_uart_send_byte((uint8)Find_Right_FLAG);
 		wireless_uart_send_byte((uint8)Find_Left_FLAG);
 		wireless_uart_send_byte((uint8)angle_ringR);
-		wireless_uart_send_byte(speed_mode);               // 0=å¼¯é“ 1=ç›´é“ 2=ç¯å²›
+		wireless_uart_send_byte((uint8)speed_mode);               // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
 		wireless_uart_send_byte(0xFF);
 		
 		if(COM_QY == 0)

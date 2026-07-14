@@ -12,9 +12,6 @@
 /* 转向环 */
 #define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
 
-/* 速度模式 */
-extern uint8 Speed_Mode;     //速度模式--1为线性，2为匀速
-
 /* 中点误差 */
 extern int16 Image_error;
 

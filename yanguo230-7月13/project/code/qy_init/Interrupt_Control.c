@@ -18,10 +18,7 @@ int16 targetSpeed_min ;    //ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
 int16 Speed_Left_Out;                    //ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿½
 int16 Speed_Right_Out;
 
-/* ï¿½Ù¶ï¿½Ä£Ê½ */
-uint8 Speed_Mode = 2;     //é€Ÿåº¦æ¨¡å¼--1ä¸ºçº¿æ€§ï¼Œ2ä¸ºæ›²çº¿
-
-uint8 speed_mode = 0;        // 0=å¼¯é“ 1=ç›´é“ 2=ç¯å²›
+uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
 
 uint16 time = 0;
 // ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
@@ -157,7 +154,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed /10*9;
 		pid.Turn_GKD = 0;
-		speed_mode = 2;   // ç¯å²›
+		speed_mode = 2;   // »·µº
     }
     else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
     {
@@ -165,7 +162,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KP1 = 0;
         nowtargetSpeed = my_Speed*11/10;
 		pid.Turn_GKD = T_GKD;
-		speed_mode = 1;   // ç›´é“
+		speed_mode = 1;   // Ö±µÀ
     }
     else
     {
@@ -173,7 +170,7 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed/10*9;
 		pid.Turn_GKD = T_GKD/2;
-		speed_mode = 0;   // å¼¯é“
+		speed_mode = 0;   // ÍäµÀ
     }
 }
 
