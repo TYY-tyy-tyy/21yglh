@@ -78,6 +78,7 @@ void main(void)
 //		printf("%d,%d,%d,%d,%f,%f\n",Image_error,Turn_Out,nowtargetSpeed,Speed_Left_Out,pid.Speed_KI_R,pid.Speed_KP_R);
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
+		//python serial_monitor.py
 		wireless_uart_send_byte(0xAA);
 		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error ¸ß×Ö½Ú
 		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error µÍ×Ö½Ú

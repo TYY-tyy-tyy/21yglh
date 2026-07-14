@@ -147,9 +147,21 @@ void Interrupt_CCU60_CH0(void)
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
-	// ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	int16 mid_near = (Left_Line[110] + Right_Line[110]) / 2;
-	int16 mid_far  = (Left_Line[reference_col_farthest + 5] + Right_Line[reference_col_farthest + 5]) / 2;
+	int16 i;
+    int16 sum = 0, sum_sq = 0;
+    int16 mean, variance;
+    uint8 n = 0;
+
+    // Ã¿¸ô5ÐÐ²ÉÑù Road_Wide£¬ÓÃ·½²îÅÐ¶ÏÖÐ¼äÏß±ä»¯
+    for(i = MT9V03X_H - 10; i >= reference_col_farthest + 5; i -= 5)
+    {
+        if(Left_Line[i] > 8 && Right_Line[i] < (MT9V03X_W - 8))
+        {
+            sum += Road_Wide[i];
+            sum_sq += Road_Wide[i] * Road_Wide[i];
+            n++;
+        }
+    }
 
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
@@ -160,24 +172,39 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KD = Ring_T_KD;
 		speed_mode = 2;   // »·µº
     }
-    else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 15)
+	else if(n >= 4 && White_Column_MID > 110)
     {
-        pid.Turn_KP = W_T_KP;//20
-		pid.Turn_KP1 = 0;
-        nowtargetSpeed = my_Speed*11/10;
-		pid.Turn_GKD = T_GKD;
-		pid.Turn_KD = W_T_KD;
-		speed_mode = 1;   // Ö±µÀ
-    }
-    else
-    {
-        pid.Turn_KP = T_KP;      // 11.5 12.75 14
-        pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed/10*9;
+		mean = sum / (int16)n;
+        variance = sum_sq / (int16)n - mean * mean;
+		
+		if(variance < 36)
+		{
+			pid.Turn_KP = W_T_KP;//20
+			pid.Turn_KP1 = 0;
+			nowtargetSpeed = my_Speed*11/10;
+			pid.Turn_GKD = T_GKD;
+			pid.Turn_KD = W_T_KD;
+			speed_mode = 1;   // Ö±µÀ
+		}
+		else
+		{
+			pid.Turn_KP = T_KP;      // 11.5 12.75 14
+			pid.Turn_KP1 = T_KP1;
+			nowtargetSpeed = my_Speed/10*9;
+			pid.Turn_GKD = T_GKD/2;
+			pid.Turn_KD = T_KD;
+			speed_mode = 0;   // ÍäµÀ
+		}
+	}
+	else
+	{
+		pid.Turn_KP = T_KP;      // 11.5 12.75 14
+		pid.Turn_KP1 = T_KP1;
+		nowtargetSpeed = my_Speed/10*9;
 		pid.Turn_GKD = T_GKD/2;
 		pid.Turn_KD = T_KD;
 		speed_mode = 0;   // ÍäµÀ
-    }
+	}
 }
 
 //==================== Í¼ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ëµï¿½ ====================
