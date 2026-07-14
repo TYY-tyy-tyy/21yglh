@@ -145,17 +145,22 @@ void Interrupt_CCU60_CH0(void)
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
+	// 替代原来的三个条件
+	int16 mid_near = (Left_Line[110] + Right_Line[110]) / 2;
+	int16 mid_far  = (Left_Line[reference_col_farthest + 5] + Right_Line[reference_col_farthest + 5]) / 2;
+
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = 60;//44 47
+        pid.Turn_KP = 55;//44 47
+		pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed /10*9;
 		pid.Turn_GKD = 0;
     }
-    else if(White_Column_MID > 110 && Image_error > -3 && Image_error < 3)
+    else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
     {
         pid.Turn_KP = W_T_KP;//20
 		pid.Turn_KP1 = 0;
-        nowtargetSpeed = my_Speed*12/10;
+        nowtargetSpeed = my_Speed*11/10;
 		pid.Turn_GKD = T_GKD;
     }
     else
