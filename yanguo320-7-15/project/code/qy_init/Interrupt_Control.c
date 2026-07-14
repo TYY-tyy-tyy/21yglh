@@ -183,7 +183,7 @@ void Speed_DecisionMaking(void)
 		{
 			pid.Turn_KP = W_T_KP;//20
 			pid.Turn_KP1 = 0;
-			nowtargetSpeed = my_Speed*11/10;
+			nowtargetSpeed = my_Speed*1.05;
 			pid.Turn_GKD = T_GKD;
 			pid.Turn_KD = W_T_KD;
 			speed_mode = 1;   // 直道
@@ -192,8 +192,8 @@ void Speed_DecisionMaking(void)
 		{
 			pid.Turn_KP = T_KP;      // 11.5 12.75 14
 			pid.Turn_KP1 = T_KP1;
-			nowtargetSpeed = my_Speed/10*8.5;
-			pid.Turn_GKD = T_GKD/2;
+			nowtargetSpeed = my_Speed/10*8;
+			pid.Turn_GKD = T_GKD/3*2;
 			pid.Turn_KD = T_KD;
 			speed_mode = 0;   // 弯道
 		}
@@ -202,8 +202,8 @@ void Speed_DecisionMaking(void)
 	{
 		pid.Turn_KP = T_KP;      // 11.5 12.75 14
 		pid.Turn_KP1 = T_KP1;
-		nowtargetSpeed = my_Speed/10*8.5;
-		pid.Turn_GKD = T_GKD/2;
+		nowtargetSpeed = my_Speed/10*8;
+		pid.Turn_GKD = T_GKD/3*2;
 		pid.Turn_KD = T_KD;
 		speed_mode = 0;   // 弯道
 	}
