@@ -147,20 +147,23 @@ void Speed_DecisionMaking(void)
 {
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = 45;//44 47
+        pid.Turn_KP = 55;//44 47
         nowtargetSpeed = my_Speed /10*9;
+		pid.Turn_GKD = 0;
     }
-    else if(White_Column_MID > 110 && Image_error > -2 && Image_error < 2)
+    else if(White_Column_MID > 110 && Image_error > -3 && Image_error < 3)
     {
         pid.Turn_KP = W_T_KP;//20
 		pid.Turn_KP1 = 0;
         nowtargetSpeed = my_Speed*12/10;
+		pid.Turn_GKD = T_GKD;
     }
     else
     {
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed/10*9;
+		pid.Turn_GKD = 0;
     }
 }
 

@@ -412,25 +412,11 @@ void Black_counts_weight(int16 p)
 	{
 		//获取当前灰度值
 		gray_point_1 = image_copy_out[p][i];
-		//获取对比度灰度值
-		gray_point_2 = image_copy_out[p][i+2];
-//		image_copy_out[row][col] = 255;
 		
 		//若当前点是黑点
-		if(gray_point_1 < white_min_point)
+		if(gray_point_1 < white_min_point || gray_point_1 < 100)
 		{
 			Black_counts++;
-//			image_copy_out[row][col] = 0;
-			continue;
-		}
-
-		//计算对比度
-		gray_point_2 = image_copy_out[p][i-1];
-		compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2);
-		if(abs(compare_value) > REFERENCE_CONTRAST)
-		{
-			Black_counts++;
-//			image_copy_out[row][col] = 0;
 			continue;
 		}
 	}
