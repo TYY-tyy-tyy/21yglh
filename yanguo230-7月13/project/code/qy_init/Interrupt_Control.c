@@ -160,7 +160,7 @@ void Speed_DecisionMaking(void)
 		pid.Turn_KD = Ring_T_KD;
 		speed_mode = 2;   // »·µº
     }
-    else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
+    else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 15)
     {
         pid.Turn_KP = W_T_KP;//20
 		pid.Turn_KP1 = 0;
