@@ -95,7 +95,7 @@ void Interrupt_CCU60_CH0(void)
 	/* 转向环限幅 */
 	if(Turn_PWM >= SERVO_MOTOR_L_MAX) Turn_PWM = SERVO_MOTOR_L_MAX;
 	else if(Turn_PWM <= SERVO_MOTOR_R_MAX) Turn_PWM = SERVO_MOTOR_R_MAX;
-	t = tan((Turn_PWM - 4550) * 0.001176f);
+	t = tan((Turn_PWM - SERVO_MOTOR_Mid) * 0.001176f);
     diff = ACKERMAN_COEFF * t;
 	
 	/* 速度环串转向环 -------------------------------------------------- */
