@@ -20,6 +20,8 @@ int16 Speed_Right_Out;
 
 uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
 
+int16 variance_max = 169;
+
 uint16 time = 0;
 // ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 uint8 menu_cursor = 0;         // 0=ï¿½ï¿½ï¿½ï¿½1  1=ï¿½ï¿½ï¿½ï¿½2
@@ -177,7 +179,7 @@ void Speed_DecisionMaking(void)
 		mean = sum / (int16)n;
         variance = sum_sq / (int16)n - mean * mean;
 		
-		if(variance < 36)
+		if(variance < variance_max)
 		{
 			pid.Turn_KP = W_T_KP;//20
 			pid.Turn_KP1 = 0;

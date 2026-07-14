@@ -8,6 +8,8 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
+int16 Target_time = -1;
+
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
 
@@ -414,7 +416,7 @@ void Find_Target2(int p1,int p2)
 		if(Find_Target_time > 0)
             Find_Target_time--;        // 丢靶消抖，逐渐降
         else
-            Find_Target_time = -1;     // 降到 0 后才重置
+            Find_Target_time = Target_time;     // 降到 0 后才重置
 			Buzzer_OFF();
 			all_off();
 			confirmed_pos = 0;

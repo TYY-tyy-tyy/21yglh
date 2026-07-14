@@ -30,6 +30,8 @@ extern int16 Speed_Right_Out;
 /* 转向环输出 */
 extern int16 Turn_Out;
 
+extern int16 variance_max;
+
 /* 时间 */
 extern uint16 time;
 
