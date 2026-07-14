@@ -153,14 +153,14 @@ void Speed_DecisionMaking(void)
     {
         pid.Turn_KP = Ring_T_KP;//44 47
 		pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed /10*9;
-		pid.Turn_GKD = T_GKD/2;
+        nowtargetSpeed = my_Speed/10*9;
+		pid.Turn_GKD = T_GKD/4;
     }
     else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
     {
         pid.Turn_KP = W_T_KP;//20
 		pid.Turn_KP1 = 0;
-        nowtargetSpeed = my_Speed*11/10;
+        nowtargetSpeed = my_Speed/10*11;
 		pid.Turn_GKD = T_GKD;
     }
     else
@@ -168,7 +168,7 @@ void Speed_DecisionMaking(void)
         pid.Turn_KP = T_KP;      // 11.5 12.75 14
         pid.Turn_KP1 = T_KP1;
         nowtargetSpeed = my_Speed/10*9;
-		pid.Turn_GKD = T_GKD/2;
+		pid.Turn_GKD = T_GKD/4;
     }
 }
 
