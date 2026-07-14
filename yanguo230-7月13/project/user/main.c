@@ -76,10 +76,10 @@ void main(void)
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)(Image_error >> 8));       // Image_error 高字节
-		wireless_uart_send_byte((uint8)(Image_error & 0xFF));     // Image_error 低字节
-		wireless_uart_send_byte((uint8)(Turn_Out >> 8));          // Turn_Out 高字节
-		wireless_uart_send_byte((uint8)(Turn_Out & 0xFF));        // Turn_Out 低字节
+		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error 高字节
+		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error 低字节
+		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out 高字节
+		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out 低字节
 		wireless_uart_send_byte((uint8)avl_gyro_z);
 		wireless_uart_send_byte((uint8)Right_dowm_Patch);
 		wireless_uart_send_byte((uint8)Left_dowm_Patch);
