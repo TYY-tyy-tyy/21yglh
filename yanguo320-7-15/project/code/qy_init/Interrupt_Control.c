@@ -104,9 +104,9 @@ void Interrupt_CCU60_CH0(void)
 	{
 		TargetSpeed_L = nowtargetSpeed * (1.0f - diff);
 		TargetSpeed_R = nowtargetSpeed * (1.0f + diff);
-		if(TargetSpeed_L < -(my_Speed/2))
+		if(TargetSpeed_L <0)
 		{
-			TargetSpeed_L = -(my_Speed/2);
+			TargetSpeed_L = 0;
 		}
 		else if(TargetSpeed_L > my_Speed*2)
 		{
