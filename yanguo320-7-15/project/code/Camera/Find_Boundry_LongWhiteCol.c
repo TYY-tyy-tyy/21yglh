@@ -410,7 +410,17 @@ void Find_Boundry_LongWhiteCol(void)
 	{
 		for(i = MT9V03X_H - 10; i >= reference_col_farthest; i-=2)
 		{
-			if(Left_Line [i] > Right_Line[i] - 10)
+			if(Left_Line [i] >= reference_col + 2)
+			{
+				int16 left_line_eer = Left_Line [i+4] - Left_Line [i+2];
+				Left_Line [i] = Left_Line [i+2] - left_line_eer;
+			}
+			else if(Right_Line[i] <= reference_col - 2)
+			{
+				int16 right_line_eer = Right_Line [i+4] - Right_Line [i+2];
+				Right_Line [i] = Right_Line [i+2] - right_line_eer;
+			}
+			else if(Left_Line [i] > Right_Line[i] - 10)
 			{
 				if(Left_Line [i] > 94)
 				{
