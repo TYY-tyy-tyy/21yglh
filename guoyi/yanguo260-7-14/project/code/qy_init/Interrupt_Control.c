@@ -189,21 +189,21 @@ void Speed_DecisionMaking(void)
 			tmp_KD    = 0;
 			tmp_mode  = 1;   // 直道
 		}
-		else if(variance_max< variance < variance_max2)
-		{
-			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
-			tmp_KP1   = 1;
-			tmp_Speed = my_Speed;
-			tmp_GKD   = T_GKD;
-			tmp_KD    = 0;
-			tmp_mode  = 0;   //普通弯道
-		}
+//		else if(variance_max< variance < variance_max2)
+//		{
+//			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
+//			tmp_KP1   = 1;
+//			tmp_Speed = my_Speed;
+//			tmp_GKD   = T_GKD;
+//			tmp_KD    = 0;
+//			tmp_mode  = 0;   //普通弯道
+//		}
 		else
 		{
 			tmp_KP    = T_KP;      // 11.5 12.75 14
 			tmp_KP1   = T_KP1;
 			tmp_Speed = my_Speed/10*9;
-			tmp_GKD   = T_GKD*2;
+			tmp_GKD   = T_GKD/2;
 			tmp_KD    = 0;
 			tmp_mode  = 3;   // 大弯道
 		}
@@ -213,7 +213,7 @@ void Speed_DecisionMaking(void)
 		tmp_KP    = T_KP;      // 11.5 12.75 14
 		tmp_KP1   = T_KP1;
 		tmp_Speed = my_Speed/10*9;
-		tmp_GKD   = T_GKD*2;
+		tmp_GKD   = T_GKD/2;
 		tmp_KD    = 0;
 		tmp_mode  = 3;   // 大弯道
 	}
