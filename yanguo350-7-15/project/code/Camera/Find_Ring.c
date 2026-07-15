@@ -522,7 +522,7 @@ void Find_Right_Ring(void)
      {
 //		 COM_QY = 0;
          //转向够角度后停止拉线
-         if (Left_Lost_Line_count < 5)
+         if (angle_ringR > 330 && Left_Lost_Line_count < 5)
          {
              Find_Right_FLAG = Right_6;
 
