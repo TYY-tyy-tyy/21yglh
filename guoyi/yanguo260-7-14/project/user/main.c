@@ -49,7 +49,7 @@ uint16 count1 = 0;
 
 uint8 data_buffer[21];
 
-int16 T_KP,T_KP1,T_GKD,SP_KP,SP_KI,Ring_T_KP,W_T_KP;
+int16 SP_KP,SP_KI,T_KP,Ring_T_KP,W_T_KP,T_KP1,T_GKD,T_KD,Ring_T_KD,W_T_KD;
 
 void main(void)
 {
@@ -66,7 +66,10 @@ void main(void)
 	W_T_KP = 35;
 	T_KP = 62;//40 44
 	T_KP1 = 2;
-	pid.Turn_KD = 0;
+	T_KD = 87;//电机不够热大于80，电机够热了75到80区间
+	Ring_T_KD = 50;
+	W_T_KD = 30;
+//	pid.Turn_KD = 70;
 	T_GKD = -8;
 	while(1)
 	{
@@ -76,35 +79,35 @@ void main(void)
 //		printf("%d,%d,%d,%d,%d,%d\n",
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		//python serial_monitor.py
-		wireless_uart_send_byte(0xAA);
-		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error 高字节
-		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error 低字节
-		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out 高字节
-		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out 低字节
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Left >> 8));      // 左轮编码器 高字节
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Left & 0xFF));    // 左轮编码器 低字节
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Right >> 8));     // 右轮编码器 高字节
-		wireless_uart_send_byte((uint8)((uint16)Encoder_Right & 0xFF));   // 右轮编码器 低字节
-		wireless_uart_send_byte((uint8)avl_gyro_z);
-		wireless_uart_send_byte((uint8)Right_dowm_Patch);
-		wireless_uart_send_byte((uint8)Left_dowm_Patch);
-		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
-		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
-		wireless_uart_send_byte((uint8)White_Column_MID);
-		wireless_uart_send_byte((uint8)White_Nums);
-		wireless_uart_send_byte((uint8)Right_local_LostNums);
-		wireless_uart_send_byte((uint8)Left_local_LostNums);
-		wireless_uart_send_byte((uint8)Find_Right_FLAG);
-		wireless_uart_send_byte((uint8)Find_Left_FLAG);
-		wireless_uart_send_byte((uint8)angle_ringR);
-		wireless_uart_send_byte((uint8)speed_mode);               // 0=弯道 1=直道 2=环岛
-		wireless_uart_send_byte((uint8)((uint16)nowtargetSpeed >> 8));      // ← 新增
-		wireless_uart_send_byte((uint8)((uint16)nowtargetSpeed & 0xFF));    // ← 新增
-		wireless_uart_send_byte((uint8)((uint16)Speed_Left_Out >> 8));
-		wireless_uart_send_byte((uint8)((uint16)Speed_Left_Out & 0xFF));
-		wireless_uart_send_byte((uint8)((uint16)Speed_Right_Out >> 8));
-		wireless_uart_send_byte((uint8)((uint16)Speed_Right_Out & 0xFF));
-		wireless_uart_send_byte(0xFF);
+//		wireless_uart_send_byte(0xAA);
+//		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error 高字节
+//		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error 低字节
+//		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out 高字节
+//		wireless_uart_send_byte((uint8)((uint16)Turn_Out & 0xFF));        // Turn_Out 低字节
+//		wireless_uart_send_byte((uint8)((uint16)Encoder_Left >> 8));      // 左轮编码器 高字节
+//		wireless_uart_send_byte((uint8)((uint16)Encoder_Left & 0xFF));    // 左轮编码器 低字节
+//		wireless_uart_send_byte((uint8)((uint16)Encoder_Right >> 8));     // 右轮编码器 高字节
+//		wireless_uart_send_byte((uint8)((uint16)Encoder_Right & 0xFF));   // 右轮编码器 低字节
+//		wireless_uart_send_byte((uint8)avl_gyro_z);
+//		wireless_uart_send_byte((uint8)Right_dowm_Patch);
+//		wireless_uart_send_byte((uint8)Left_dowm_Patch);
+//		wireless_uart_send_byte((uint8)Right_Lost_Line_count);
+//		wireless_uart_send_byte((uint8)Left_Lost_Line_count);
+//		wireless_uart_send_byte((uint8)White_Column_MID);
+//		wireless_uart_send_byte((uint8)White_Nums);
+//		wireless_uart_send_byte((uint8)Right_local_LostNums);
+//		wireless_uart_send_byte((uint8)Left_local_LostNums);
+//		wireless_uart_send_byte((uint8)Find_Right_FLAG);
+//		wireless_uart_send_byte((uint8)Find_Left_FLAG);
+//		wireless_uart_send_byte((uint8)angle_ringR);
+//		wireless_uart_send_byte((uint8)speed_mode);               // 0=弯道 1=直道 2=环岛
+//		wireless_uart_send_byte((uint8)((uint16)nowtargetSpeed >> 8));      // ← 新增
+//		wireless_uart_send_byte((uint8)((uint16)nowtargetSpeed & 0xFF));    // ← 新增
+//		wireless_uart_send_byte((uint8)((uint16)Speed_Left_Out >> 8));
+//		wireless_uart_send_byte((uint8)((uint16)Speed_Left_Out & 0xFF));
+//		wireless_uart_send_byte((uint8)((uint16)Speed_Right_Out >> 8));
+//		wireless_uart_send_byte((uint8)((uint16)Speed_Right_Out & 0xFF));
+//		wireless_uart_send_byte(0xFF);
 		
 		if(COM_QY == 0)
 		{

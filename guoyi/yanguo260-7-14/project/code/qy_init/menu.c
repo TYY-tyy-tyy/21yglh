@@ -150,6 +150,22 @@ void menu_2(void)//img
 {
 	static int8 menu_all_num = 0;
 	static uint16 set_time = 510;
+	int16 i;
+    int16 sum = 0, sum_sq = 0;
+    int16 mean, variance;
+    uint8 n = 0;
+	// 每隔5行采样 Road_Wide，用方差判断中间线变化
+    for(i = MT9V03X_H - 10; i >= reference_col_farthest + 5; i -= 5)
+    {
+        if(Left_Line[i] > 8 && Right_Line[i] < (MT9V03X_W - 8))
+        {
+            sum += Road_Wide[i];
+            sum_sq += Road_Wide[i] * Road_Wide[i];
+            n++;
+        }
+	}
+	mean = sum / (int16)n;
+    variance = sum_sq / (int16)n - mean * mean;
 	if(Key_1)
 	{
 		menu_all_num ++;
@@ -173,6 +189,18 @@ void menu_2(void)//img
 		{
 			Target_EER ++;
 		}
+		else if(menu_all_num == 3)
+		{
+			variance_max ++;
+		}
+		else if(menu_all_num == 4)
+		{
+			variance_max2 += 10;
+		}
+		else if(menu_all_num == 5)
+		{
+			Target_time ++;
+		}
 	}
 	else if(Key_4)
 	{
@@ -189,6 +217,18 @@ void menu_2(void)//img
 		{
 			Target_EER --;
 		}
+		else if(menu_all_num == 3)
+		{
+			variance_max --;
+		}
+		else if(menu_all_num == 4)
+		{
+			variance_max2 -= 10;
+		}
+		else if(menu_all_num == 5)
+		{
+			Target_time --;
+		}
 	}
 	else if(Key_5)
 	{
@@ -196,28 +236,40 @@ void menu_2(void)//img
 	}
 	if(menu_all_num < 0)
 	{
-		menu_all_num = 2;
+		menu_all_num = 5;
 	}
-	else if(menu_all_num > 2)
+	else if(menu_all_num > 5)
 	{
 		menu_all_num = 0;
 	}
-	tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
-	tft180_show_string(8,MT9V03X_H / 2,"dbd");
-	tft180_show_string(8,MT9V03X_H / 2 + 16,"bgsj");
-	tft180_show_string(8,MT9V03X_H / 2 + 32,"bdbd");
-//	tft180_show_string(8,MT9V03X_H / 2 + 32,"ys");
-	tft180_show_int16(40,MT9V03X_H / 2,REFERENCE_CONTRAST);
-	tft180_show_int16(40,MT9V03X_H / 2 + 16,set_time);
-	tft180_show_int16(40,MT9V03X_H / 2 + 32,Target_EER);
+	if(menu_all_num <= 3)
+	{
+		tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
+		tft180_show_string(8,MT9V03X_H / 2,"dbd");
+		tft180_show_string(8,MT9V03X_H / 2 + 16,"bgsj");
+		tft180_show_string(8,MT9V03X_H / 2 + 32,"bdbd");
+		tft180_show_string(8,MT9V03X_H / 2 + 48,"va_x");
+		tft180_show_int16(40,MT9V03X_H / 2,REFERENCE_CONTRAST);
+		tft180_show_int16(40,MT9V03X_H / 2 + 16,set_time);
+		tft180_show_int16(40,MT9V03X_H / 2 + 32,Target_EER);
+		tft180_show_int16(40,MT9V03X_H / 2 + 48,variance_max);
+	}
+	else if(menu_all_num > 3)
+	{
+		tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16-64,">");
+		tft180_show_string(8,MT9V03X_H / 2,"va_x2");
+		tft180_show_int16(40,MT9V03X_H / 2,variance_max2);
+		tft180_show_string(8,MT9V03X_H / 2 + 16,"T_t");
+		tft180_show_int16(40,MT9V03X_H / 2 + 16,Target_time);
+	}
 	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
 	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);
 	tft180_show_int16(MT9V03X_W / 2,32,Left_dowm_Patch);//22
 	tft180_show_int16(MT9V03X_W / 2,48,Right_Lost_Line_count);
 	tft180_show_int16(MT9V03X_W / 2,64,Left_Lost_Line_count);//32
 	tft180_show_int16(MT9V03X_W / 2,80,White_Column_MID);
-	tft180_show_int16(MT9V03X_W / 2,96,Right_local_LostNums);
-	tft180_show_int16(MT9V03X_W / 2,112,Left_local_LostNums);//31
+	tft180_show_int16(MT9V03X_W / 2,96,variance);
+	tft180_show_int16(MT9V03X_W / 2,112,n);
 }
 
 void menu_3(void)//PID
@@ -249,6 +301,22 @@ void menu_3(void)//PID
 		{
 			T_GKD += 1;
 		}
+		else if(menu_all_num == 4)
+		{
+			Ring_T_KP += 1;
+		}
+		else if(menu_all_num == 5)
+		{
+			W_T_KD += 1;
+		}
+		else if(menu_all_num == 6)
+		{
+			T_KD += 1;
+		}
+		else if(menu_all_num == 7)
+		{
+			Ring_T_KD += 1;
+		}
 	}
 	else if(Key_4)
 	{
@@ -268,6 +336,22 @@ void menu_3(void)//PID
 		{
 			T_GKD -= 1;
 		}
+		else if(menu_all_num == 4)
+		{
+			Ring_T_KP -= 1;
+		}
+		else if(menu_all_num == 5)
+		{
+			W_T_KD -= 1;
+		}
+		else if(menu_all_num == 6)
+		{
+			T_KD -= 1;
+		}
+		else if(menu_all_num == 7)
+		{
+			Ring_T_KD -= 1;
+		}
 	}
 	else if(Key_5)
 	{
@@ -275,21 +359,36 @@ void menu_3(void)//PID
 	}
 	if(menu_all_num < 0)
 	{
-		menu_all_num = 3;
+		menu_all_num = 7;
 	}
-	else if(menu_all_num > 4)
+	else if(menu_all_num > 7)
 	{
 		menu_all_num = 0;
 	}
-	tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
-	tft180_show_string(8,MT9V03X_H / 2,"W_T_KP");
-	tft180_show_string(8,MT9V03X_H / 2 + 16,"T_KP");
-	tft180_show_string(8,MT9V03X_H / 2 + 32,"T_KP1");
-	tft180_show_string(8,MT9V03X_H / 2 + 48,"T_GKD");
-	tft180_show_int16(56,MT9V03X_H / 2,W_T_KP);
-	tft180_show_int16(56,MT9V03X_H / 2 + 16,T_KP);
-	tft180_show_int16(56,MT9V03X_H / 2 + 32,T_KP1);
-	tft180_show_int16(56,MT9V03X_H / 2 + 48,T_GKD);
+	if(menu_all_num <= 3)
+	{
+		tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
+		tft180_show_string(8,MT9V03X_H / 2,"W_T_KP");
+		tft180_show_string(8,MT9V03X_H / 2 + 16,"T_KP");
+		tft180_show_string(8,MT9V03X_H / 2 + 32,"T_KP1");
+		tft180_show_string(8,MT9V03X_H / 2 + 48,"T_GKD");
+		tft180_show_int16(56,MT9V03X_H / 2,W_T_KP);
+		tft180_show_int16(56,MT9V03X_H / 2 + 16,T_KP);
+		tft180_show_int16(56,MT9V03X_H / 2 + 32,T_KP1);
+		tft180_show_int16(56,MT9V03X_H / 2 + 48,T_GKD);
+	}
+	else if(menu_all_num > 3)
+	{
+		tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16-64,">");
+		tft180_show_string(8,MT9V03X_H / 2,"R_T_KP");
+		tft180_show_string(8,MT9V03X_H / 2 + 16,"W_T_KD");
+		tft180_show_string(8,MT9V03X_H / 2 + 32,"T_KD");
+		tft180_show_string(8,MT9V03X_H / 2 + 48,"R_T_KD");
+		tft180_show_int16(56,MT9V03X_H / 2,Ring_T_KP);
+		tft180_show_int16(56,MT9V03X_H / 2 + 16,W_T_KD);
+		tft180_show_int16(56,MT9V03X_H / 2 + 32,T_KD);
+		tft180_show_int16(56,MT9V03X_H / 2 + 48,Ring_T_KD);
+	}
 }
 
 void menu_4(void)//RUN

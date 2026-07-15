@@ -5,6 +5,8 @@
 
 extern uint8 Target_EER;
 
+extern int16 Target_time;
+
 void Find_Target1(void);
 void Find_Target2(int16 p1,int16 p2);
 void LowerCameraExposure(void);

@@ -7,13 +7,10 @@
 #define Right_Out_Max 9000
 
 #define Start_time    200
-#define ACKERMAN_COEFF  0.380f //220 260 0.370
+#define ACKERMAN_COEFF  0.375f //220 260 0.370
 
 /* 转向环 */
 #define MID_ERROR_MAX       10     //当前权重下的最大终点误差(用于速度决策)
-
-/* 速度模式 */
-extern uint8 speed_mode;     //速度模式
 
 /* 中点误差 */
 extern int16 Image_error;
@@ -32,6 +29,11 @@ extern int16 Speed_Right_Out;
 
 /* 转向环输出 */
 extern int16 Turn_Out;
+
+extern int16 variance_max;
+extern int16 variance_max2;
+
+extern int16 mean, variance;
 
 /* 时间 */
 extern uint16 time;

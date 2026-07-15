@@ -21,7 +21,7 @@ void Test_Speed(void)
 //    else targetSpeed = 150;
     nowtargetSpeed = my_Speed;
 	
-	if(COM_QY == 1)
+	if(COM_QY == 2)
 	{
 		Speed_Left_Out = PID_Speed_Inc_L(nowtargetSpeed,Encoder_Left);
 		Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed,Encoder_Right);

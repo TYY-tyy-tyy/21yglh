@@ -1,33 +1,38 @@
 #include "Interrupt_Control.h"
  
-/* ×ªÏò»· */
-int16 Turn_PWM = 0;                   //×îÖÕ×ªÏòµÄPWM
+/* ×ªï¿½ï¿½ */
+int16 Turn_PWM = 0;                   //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½PWM
 
-/* Í£³µ±êÖ¾Î» */
+/* Í£ï¿½ï¿½ï¿½ï¿½Ö¾Î» */
 uint8 Stop_Car_flag = 0;
 
-int16 Turn_Out = 0;                 //×ªÏò»·Êä³ö
-int16 Turn_Out_MAX = 0;             //×î´ó×ªÏòÊä³ö
+int16 Turn_Out = 0;                 //×ªï¿½ï¿½ï¿½ï¿½ï¿?
+int16 Turn_Out_MAX = 0;             //ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½
 
-/* ËÙ¶È»· */
-int16 TargetSpeed = 200;           //Ä¿±êËÙ¶È  190
+/* ï¿½Ù¶È»ï¿½ */
+int16 TargetSpeed = 200;           //Ä¿ï¿½ï¿½ï¿½Ù¶ï¿½  190
 
 int16 nowtargetSpeed;
-int16 targetSpeed_min ;    //ÍäµÀËÙ¶È
+int16 targetSpeed_min ;    //ï¿½ï¿½ï¿½ï¿½Ù¶ï¿?
 
-int16 Speed_Left_Out;                    //ËÙ¶È»·Êä³ö
+int16 Speed_Left_Out;                    //ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿?
 int16 Speed_Right_Out;
 
-// ²Ëµ¥²ÎÊý
-uint8 menu_cursor = 0;         // 0=·½°¸1  1=·½°¸2
-uint8 select_plan = 0;         // µ±Ç°Ê¹ÓÃ·½°¸
+uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº 3=´óÍä
 
-// ·½°¸1
+int16 variance_max = 169;//169
+int16 variance_max2 = 225;
+uint16 time = 0;
+// ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+uint8 menu_cursor = 0;         // 0=ï¿½ï¿½ï¿½ï¿½1  1=ï¿½ï¿½ï¿½ï¿½2
+uint8 select_plan = 0;         // ï¿½ï¿½Ç°Ê¹ï¿½Ã·ï¿½ï¿½ï¿½
+
+// ï¿½ï¿½ï¿½ï¿½1
 int16  TargetSpeed_1 = 180;
 int16  Turn_KP_1    = 11;
 int16  Turn_GKD_1   = 0.005;
 
-// ·½°¸2
+// ï¿½ï¿½ï¿½ï¿½2
 int16  TargetSpeed_2 = 250;
 int16  Turn_KP_2    = 12.5;
 int16  Turn_GKD_2   = 0.005;
@@ -35,23 +40,18 @@ float t;
 int16 L = 20;
 int16 K = 15;
 float diff;
-uint8 speed_mode = 0; 
-int16 variance_max = 169;//169
-int16 variance_max2 = 225;
-uint16 time = 0;
 //-------------------------------------------------------------------------------------------------------------------
-// º¯Êý¼ò½é     CCU60_CH0ÖÐ¶Ï----¿ØÖÆÖÐ¶Ï
-// ²ÎÊýËµÃ÷
-// ·µ»Ø²ÎÊý
-// Ê¹ÓÃÊ¾Àý
-// ±¸×¢ÐÅÏ¢     ÖÐµãÎó²î´¦Àí¡¢×ªÏò»·¡¢ËÙ¶È»·¡¢µç»ú¿ØÖÆ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?    CCU60_CH0ï¿½Ð¶ï¿½----ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+// ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
+// ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½
+// Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½
+// ï¿½ï¿½×¢ï¿½ï¿½Ï¢     ï¿½Ðµï¿½ï¿½ï¿½î´¦ï¿½ï¿½ï¿½ï¿½×ªï¿½ò»·¡ï¿½ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
 //	Test_Speed();
 //	return;
-	nowtargetSpeed = my_Speed;
-	/* Ê±¼ä±äÁ¿×ÔÔö */
+	/* Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?*/
 	if(time <= 15000) 
 	{
 		time++;
@@ -60,46 +60,46 @@ void Interrupt_CCU60_CH0(void)
 	{
 		COM_QY = 0;
 	}
-	/* ×ªÏò»· ---------------------------------------------------------*/
-	/* ´¦ÀíÍÓÂÝÒÇ»ý·Ö±êÖ¾Î» */
+	/* ×ªï¿½ï¿½ ---------------------------------------------------------*/
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½Ö±ï¿½Ö¾Î» */
 	use_gyro_flag();
 
-	/* ËÙ¶È»· --------------------------------------------------------*/
-	/* ¶ÁÈ¡±àÂëÆ÷µÄÖµ */
+	/* ï¿½Ù¶È»ï¿½ --------------------------------------------------------*/
+	/* ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ */
 	Encoder_Left = Left_Encoder_Get();
 	Encoder_Right = Right_Encoder_Get();
 
-	/* Æ½¾ùÖµ */
+	/* Æ½ï¿½ï¿½Öµ */
 	Encoder_Average = (Encoder_Left + Encoder_Right) / 2;
 
-	/* ÓÃÓÚ¼ÆËãÈüµÀ³¤¶È */
+	/* ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	Count_Length();
 
-	/* ´¦Àí»ý·Ö±êÖ¾Î» */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ö¾Î» */
 	use_encoder_flag();
 
-//	/* Í£³µ×´Ì¬»ú */
+//	/* Í£ï¿½ï¿½×´Ì¬ï¿½ï¿½ */
 	Stop_Car();
 
-	/* ·ÇÍ£³µ×´Ì¬Ê±Õý³£¿ØÖÆ£¬ÈôÍ£³µ */
+	/* ï¿½ï¿½Í£ï¿½ï¿½×´Ì¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½Í£ï¿½ï¿½ */
 	if(COM_QY == 2)
 	{
-		/* ËÙ¶È¾ö²ß */
+		/* ï¿½Ù¶È¾ï¿½ï¿½ï¿½ */
 		Speed_DecisionMaking();
 	}
-	/* ×ªÏò»·Êä³ö */
-	Turn_Out = PID_Turn_Loc(Image_error);  //ÖÐµãÎó²îÈÓ½ø×ªÏò»·PID
+	/* ×ªï¿½ï¿½ï¿½ï¿½ï¿?*/
+	Turn_Out = PID_Turn_Loc(Image_error);  //ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½×ªï¿½ï¿½PID
 
-	/* µÃµ½¶æ»ú×îºóÊä³öµÄÖµ */
+	/* ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö?*/
 	Turn_PWM = Turn_Out + SERVO_MOTOR_Mid; //4200~4900
-	/* ×ªÏò»·ÏÞ·ù */
+	/* ×ªï¿½ï¿½ï¿½Þ·ï¿½ */
 	if(Turn_PWM >= SERVO_MOTOR_L_MAX) Turn_PWM = SERVO_MOTOR_L_MAX;
 	else if(Turn_PWM <= SERVO_MOTOR_R_MAX) Turn_PWM = SERVO_MOTOR_R_MAX;
 	t = tan((Turn_PWM - SERVO_MOTOR_Mid) * 0.001176f);
     diff = ACKERMAN_COEFF * t;
 	
-	/* ËÙ¶È»·´®×ªÏò»· -------------------------------------------------- */
-	/* ×óÓÒÂÖ±Õ»·Êä³ö  */
+	/* ï¿½Ù¶È»ï¿½ï¿½ï¿½×ªï¿½ï¿½ -------------------------------------------------- */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½Ö±Õ»ï¿½ï¿½ï¿½ï¿? */
 	if(COM_QY == 2)
 	{
 		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
@@ -111,37 +111,40 @@ void Interrupt_CCU60_CH0(void)
         Speed_Right_Out = 0;
     }
 
-	/* ËÙ¶È»·²¢×ªÏò»· -------------------------------------------------- */
+	/* ï¿½Ù¶È»ï¿½ï¿½ï¿½×ªï¿½ï¿½ -------------------------------------------------- */
 	Left_Out = Speed_Left_Out;
 	Right_Out = Speed_Right_Out;
 
-	/* ÏÞ·ù */
+	/* ï¿½Þ·ï¿½ */
 	if(Left_Out >= Left_Out_Max) Left_Out = Left_Out_Max;
 	else if(Left_Out <= -Left_Out_Max) Left_Out = -Left_Out_Max;
 	if(Right_Out >= Right_Out_Max) Right_Out = Right_Out_Max;
 	else if(Right_Out <= -Right_Out_Max) Right_Out = -Right_Out_Max;
 
-////	/* ÖÕµãÏßÍ£³µ */
+////	/* ï¿½Õµï¿½ï¿½ï¿½Í£ï¿½ï¿½ */
 //	End_Line_Stop_Car();
 
-////	/* ¶ªÏß±£»¤ */
+////	/* ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½ */
 //	Lost_Line_Protect();
 	
-	/* ¿ØÖÆ ------------------------------------------------------------*/
-	/* ¶æ»ú */
-	pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
+	/* ï¿½ï¿½ï¿½ï¿½ ------------------------------------------------------------*/
+	/* ï¿½ï¿½ï¿?*/
+	if(COM_QY == 2)
+	{
+		pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
+	}
 	
-	/* µç»ú¿ØÖÆ */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?*/
 	Left_Motor_Speed(Left_Out);
 	Right_Motor_Speed(Right_Out);
 }
 
 //-------------------------------------------------------------------------------------------------------------------
-// º¯Êý¼ò½é     ËÙ¶È¾ö²ß
-// ²ÎÊýËµÃ÷
-// ·µ»Ø²ÎÊý
-// Ê¹ÓÃÊ¾Àý
-// ±¸×¢ÐÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?    ï¿½Ù¶È¾ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
+// ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½
+// Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½
+// ï¿½ï¿½×¢ï¿½ï¿½Ï¢
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
@@ -169,10 +172,10 @@ void Speed_DecisionMaking(void)
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
         tmp_KP    = Ring_T_KP;//44 47
-		tmp_KP1   = T_KP1;
-        tmp_Speed = my_Speed /10*9;
+		tmp_KP1   = T_KP1-1;
+        tmp_Speed = my_Speed /10*85/10;
 		tmp_GKD   = 0;
-		tmp_KD    = 0;
+		tmp_KD    = Ring_T_KD;
 		tmp_mode  = 2;   // »·µº
     }
 	else if(n >= 4 && White_Column_MID > 110)
@@ -186,25 +189,25 @@ void Speed_DecisionMaking(void)
 			tmp_KP1   = 0;
 			tmp_Speed = my_Speed*11/10;
 			tmp_GKD   = T_GKD;
-			tmp_KD    = 0;
+			tmp_KD    = W_T_KD;
 			tmp_mode  = 1;   // Ö±µÀ
 		}
-//		else if(variance_max< variance < variance_max2)
-//		{
-//			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
-//			tmp_KP1   = 1;
-//			tmp_Speed = my_Speed;
-//			tmp_GKD   = T_GKD;
-//			tmp_KD    = 0;
-//			tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
-//		}
+		else if(variance_max< variance < variance_max2)
+		{
+			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
+			tmp_KP1   = 1;
+			tmp_Speed = my_Speed;
+			tmp_GKD   = T_GKD;
+			tmp_KD    = (T_KD+W_T_KD)/2;
+			tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
+		}
 		else
 		{
 			tmp_KP    = T_KP;      // 11.5 12.75 14
 			tmp_KP1   = T_KP1;
-			tmp_Speed = my_Speed/10*9;
-			tmp_GKD   = T_GKD/2;
-			tmp_KD    = 0;
+			tmp_Speed = my_Speed/10*85/10;
+			tmp_GKD   = T_GKD*2/3;
+			tmp_KD    = T_KD;
 			tmp_mode  = 3;   // ´óÍäµÀ
 		}
 	}
@@ -212,9 +215,9 @@ void Speed_DecisionMaking(void)
 	{
 		tmp_KP    = T_KP;      // 11.5 12.75 14
 		tmp_KP1   = T_KP1;
-		tmp_Speed = my_Speed/10*9;
-		tmp_GKD   = T_GKD/2;
-		tmp_KD    = 0;
+		tmp_Speed = my_Speed/10*88/10;
+		tmp_GKD   = T_GKD*2/3;
+		tmp_KD    = T_KD;
 		tmp_mode  = 3;   // ´óÍäµÀ
 	}
 	
@@ -239,9 +242,10 @@ void Speed_DecisionMaking(void)
         pid.Turn_GKD  = tmp_GKD;
         pid.Turn_KD   = tmp_KD;
     }
+    // Î´Âú3Ö¡ ¡ú ±£³ÖÉÏÒ»Ä£Ê½µÄ²ÎÊý²»±ä
 }
 
-//==================== Í¼ÏñÏÂ·½²Ëµ¥ ====================
+//==================== Í¼ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ëµï¿½ ====================
 void show_menu(void)
 {
     tft180_show_string(0, 65, "Plan:");
