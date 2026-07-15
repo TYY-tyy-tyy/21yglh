@@ -136,7 +136,7 @@ int16 PID_Speed_Inc_L(int16 Speed_target, int16 Speed_current)
 	pid.Speed_Prev_error_L = pid.Speed_Last_error_L;
     pid.Speed_Last_error_L = pid.Speed_current_error_L;
 	if(pid.Speed_Out_L > 30000) pid.Speed_Out_L = 30000;
-    if(pid.Speed_Out_L < 0)     pid.Speed_Out_L = 0;
+	if(pid.Speed_Out_L < -2000) pid.Speed_Out_L = -2000;
 
     
     /* 返回结果 */
@@ -157,7 +157,7 @@ int16 PID_Speed_Inc_R(int16 Speed_target, int16 Speed_current)
     pid.Speed_Last_error_R = pid.Speed_current_error_R;
 	/* 钳位防溢出 */
     if(pid.Speed_Out_R > 30000) pid.Speed_Out_R = 30000;
-    if(pid.Speed_Out_R < 0)     pid.Speed_Out_R = 0;
+	if(pid.Speed_Out_R < -2000) pid.Speed_Out_R = -2000;
 
     
     /* 返回结果 */
