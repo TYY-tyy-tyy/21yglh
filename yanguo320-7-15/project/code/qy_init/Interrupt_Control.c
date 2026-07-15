@@ -172,7 +172,7 @@ void Speed_DecisionMaking(void)
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
         tmp_KP    = Ring_T_KP;//44 47
-		tmp_KP1   = T_KP1;
+		tmp_KP1   = T_KP1-1;
         tmp_Speed = my_Speed /10*9;
 		tmp_GKD   = 0;
 		tmp_KD    = Ring_T_KD;
