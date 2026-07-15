@@ -104,17 +104,10 @@ void Interrupt_CCU60_CH0(void)
 	{
 		TargetSpeed_L = nowtargetSpeed * (1.0f - diff);
 		TargetSpeed_R = nowtargetSpeed * (1.0f + diff);
-		if(TargetSpeed_L <0)
-		{
-			TargetSpeed_L = 0;
-		}
-		else if(TargetSpeed_L > my_Speed*2)
-		{
-			TargetSpeed_L = my_Speed*2;
-		}
 		
 		Speed_Left_Out  = PID_Speed_Inc_L(TargetSpeed_L, Encoder_Left);
         Speed_Right_Out = PID_Speed_Inc_R(TargetSpeed_R, Encoder_Right);
+		
     }
     else
     {
