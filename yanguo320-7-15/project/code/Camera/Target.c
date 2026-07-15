@@ -8,7 +8,7 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 Target_time = -1;
+int16 Target_time = -2;
 
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
@@ -161,6 +161,7 @@ void Find_Target2(int p1,int p2)
 {
 	static uint8 confirmed_pos = 0;   // 专做连续帧确认
 	static int8 Find_Target_time = 0;
+	static uint8 target_hit_count = 0;   // 本靶已击打次数，最多3次（最多3帧）
 	uint8 remote_target[4][5] = {0};
 	
 	int16 gray_point_1 = 0, gray_point_2 = 0, gray_point_3 = 0,compare_value1 = 0,compare_value2 = 0;
@@ -258,8 +259,10 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 4) Find_Target_time ++;
+		if(Find_Target_time < 3) Find_Target_time ++;
 		else Find_Target_time = -10;
+		/* 首次进入有靶状态，清零击打计数 */
+		if(Find_Target_time == 0) target_hit_count = 0;
 		for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
 		{
 			if(Black_p[k] != 0)
@@ -287,7 +290,7 @@ void Find_Target2(int p1,int p2)
 				}
 			}
 		}
-		if(Find_Target_time >= 0 && Find_Target_time < 4)
+		if(Find_Target_time >= 0 && Find_Target_time < 3)
         {
             /* ===== ④ 投票 ===== */
             uint8 pos_votes[6] = {0};
@@ -368,23 +371,24 @@ void Find_Target2(int p1,int p2)
                         cur_pos = 4;
 
                     /* ===== ⑧ 三重确认：cur_pos==win_pos + 连续两帧一致 ===== */
-                    if(cur_pos > 0 && cur_pos == win_pos 
+                    if(cur_pos > 0 && cur_pos == win_pos && target_hit_count < 3
 //						&& cur_pos == confirmed_pos
 					)
                     {
+						target_hit_count++;   // 本靶击打 +1
 						if(COM_QY == 0)
-					{
-						uint16 col = (p1 + p2)/2;
-						image_copy_out[col-1][new_center-1] = 0;
-						image_copy_out[col-1][new_center] = 0;
-						image_copy_out[col-1][new_center+1] = 0;
-						image_copy_out[col][new_center-1] = 0;
-						image_copy_out[col][new_center] = 0;
-						image_copy_out[col][new_center+1] = 0;
-						image_copy_out[col+1][new_center-1] = 0;
-						image_copy_out[col+1][new_center] = 0;
-						image_copy_out[col+1][new_center+1] = 0;
-					}
+						{
+							uint16 col = (p1 + p2)/2;
+							image_copy_out[col-1][new_center-1] = 0;
+							image_copy_out[col-1][new_center] = 0;
+							image_copy_out[col-1][new_center+1] = 0;
+							image_copy_out[col][new_center-1] = 0;
+							image_copy_out[col][new_center] = 0;
+							image_copy_out[col][new_center+1] = 0;
+							image_copy_out[col+1][new_center-1] = 0;
+							image_copy_out[col+1][new_center] = 0;
+							image_copy_out[col+1][new_center+1] = 0;
+						}
 						Buzzer_ON();
                         all_off();
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }

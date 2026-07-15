@@ -20,8 +20,8 @@ int16 Speed_Right_Out;
 
 uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
 
-int16 variance_max = 169;
-
+int16 variance_max = 196;//169
+int16 variance_max2 = 144;
 uint16 time = 0;
 // ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 uint8 menu_cursor = 0;         // 0=ï¿½ï¿½ï¿½ï¿½1  1=ï¿½ï¿½ï¿½ï¿½2
@@ -179,20 +179,29 @@ void Speed_DecisionMaking(void)
 		mean = sum / (int16)n;
         variance = sum_sq / (int16)n - mean * mean;
 		
-		if(variance < variance_max)
+		if(variance < variance_max || variance > 400)
 		{
 			pid.Turn_KP = W_T_KP;//20
 			pid.Turn_KP1 = 0;
-			nowtargetSpeed = my_Speed/10*10.5;
+			nowtargetSpeed = my_Speed*11/10;
 			pid.Turn_GKD = T_GKD;
 			pid.Turn_KD = W_T_KD;
 			speed_mode = 1;   // Ö±µÀ
+		}
+		else if(variance < variance_max2)
+		{
+			pid.Turn_KP = T_KP*95/100 ;//20
+			pid.Turn_KP1 = 0;
+			nowtargetSpeed = my_Speed;
+			pid.Turn_GKD = T_GKD;
+			pid.Turn_KD = (T_KD + W_T_KD)/2;
+			speed_mode = 0;   
 		}
 		else
 		{
 			pid.Turn_KP = T_KP;      // 11.5 12.75 14
 			pid.Turn_KP1 = T_KP1;
-			nowtargetSpeed = my_Speed/10*8;
+			nowtargetSpeed = my_Speed/10*85/10;
 			pid.Turn_GKD = T_GKD/2;
 			pid.Turn_KD = T_KD;
 			speed_mode = 0;   // ÍäµÀ
@@ -202,7 +211,7 @@ void Speed_DecisionMaking(void)
 	{
 		pid.Turn_KP = T_KP;      // 11.5 12.75 14
 		pid.Turn_KP1 = T_KP1;
-		nowtargetSpeed = my_Speed/10*8;
+		nowtargetSpeed = my_Speed/10*85/10;
 		pid.Turn_GKD = T_GKD/2;
 		pid.Turn_KD = T_KD;
 		speed_mode = 0;   // ÍäµÀ

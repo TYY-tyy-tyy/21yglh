@@ -3,6 +3,8 @@
 
 #include "qy_headfile.h"
 
+extern uint8 menu_num;
+
 void menu_all(void);
 void menu_0(void);
 void menu_1(void);
