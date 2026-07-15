@@ -18,7 +18,7 @@ int16 targetSpeed_min ;    //ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
 int16 Speed_Left_Out;                    //ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿½
 int16 Speed_Right_Out;
 
-uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
+uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº 3=´óÍä
 
 int16 variance_max = 196;//169
 int16 variance_max2 = 144;
@@ -204,7 +204,7 @@ void Speed_DecisionMaking(void)
 			nowtargetSpeed = my_Speed/10*85/10;
 			pid.Turn_GKD = T_GKD/2;
 			pid.Turn_KD = T_KD;
-			speed_mode = 0;   // ÍäµÀ
+			speed_mode = 3;   // ´óÍäµÀ
 		}
 	}
 	else

@@ -26,7 +26,10 @@ LOG_DIR = "log"          # CSV 保存目录
 PACKET_LEN = 23
 run_count = 0
 
-SPEED_MODE_NAMES = {0: "弯道", 1: "直道", 2: "环岛"}
+SPEED_MODE_NAMES = {0: "弯道", 1: "直道", 2: "环岛", 3: "大弯"}
+
+# 停车段过滤: |enc| <= 此值视为停车
+PARKING_ENC_THRESHOLD = 3
 
 CSV_HEADER = (
     "timestamp,speed_mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
@@ -69,7 +72,7 @@ def parse_packet(data):
     r_ring_flag  = data[18]
     l_ring_flag  = data[19]
     angle_ring   = data[20]
-    speed_mode   = data[21]   # 0=弯道 1=直道 2=环岛
+    speed_mode   = data[21]   # 0=弯道 1=直道 2=环岛 3=大弯
     enc_diff     = enc_left - enc_right
 
     mode = SPEED_MODE_NAMES.get(speed_mode, "???")
@@ -122,6 +125,43 @@ def format_csv(p):
     )
 
 
+def filter_parking_rows(csv_path):
+    """移除编码值为0的停车行，原地覆盖"""
+    try:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except Exception:
+        return 0
+
+    header = lines[0] if lines else ""
+    kept = [header]
+    removed = 0
+
+    for line in lines[1:]:
+        parts = line.strip().split(",")
+        if len(parts) < 6:
+            removed += 1
+            continue
+        try:
+            enc_left  = int(parts[4])   # CSV 第5列
+            enc_right = int(parts[5])   # CSV 第6列
+        except ValueError:
+            removed += 1
+            continue
+
+        # 两个编码器都在停车阈值内 → 过滤掉
+        if abs(enc_left) <= PARKING_ENC_THRESHOLD and abs(enc_right) <= PARKING_ENC_THRESHOLD:
+            removed += 1
+        else:
+            kept.append(line)
+
+    if removed > 0:
+        with open(csv_path, "w", encoding="utf-8") as f:
+            f.writelines(kept)
+
+    return removed
+
+
 def start_new_run():
     global run_count
     run_count += 1
@@ -145,7 +185,7 @@ def main():
     print(f"  串口监控工具 — {PORT} @ {BAUD} (无线串口)")
     print(f"  自动检测跑次 + 导出 CSV 到 {LOG_DIR}/")
     print(f"  {IDLE_TIMEOUT}s 无数据 = 结束, 再来数据 = 新跑次 + 清屏")
-    print(f"  模式: 直道 / 弯道 / 环岛 (由 MCU side 判断)")
+    print(f"  模式: 直道 / 弯道 / 环岛 / 大弯 (由 MCU side 判断)")
     print(f"  Ctrl+C 退出\n")
 
     ser = serial.Serial(PORT, BAUD, timeout=0.5)
@@ -179,10 +219,11 @@ def main():
 
                 gap = now - last_pkt_time
                 if in_run and gap > IDLE_TIMEOUT:
-                    print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包) <<<")
                     if csv_fh:
                         csv_fh.close()
                         csv_fh = None
+                    removed = filter_parking_rows(csv_path)
+                    print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包, 过滤 {removed} 行停车数据) <<<")
                     in_run = False
 
                 if not in_run:
@@ -206,10 +247,11 @@ def main():
                 buf.pop(0)
 
         if in_run and now - last_pkt_time > IDLE_TIMEOUT:
-            print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包) <<<")
             if csv_fh:
                 csv_fh.close()
                 csv_fh = None
+            removed = filter_parking_rows(csv_path)
+            print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包, 过滤 {removed} 行停车数据) <<<")
             in_run = False
 
         time.sleep(0.001)

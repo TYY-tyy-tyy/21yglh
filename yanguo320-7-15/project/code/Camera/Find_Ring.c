@@ -268,7 +268,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_5)
      {
          //转向够角度后停止拉线
-         if (Right_Lost_Line_count < 5)
+         if (angle_ringR > 350 && Right_Lost_Line_count < 5)
          {
             Find_Left_FLAG = Left_6;
 

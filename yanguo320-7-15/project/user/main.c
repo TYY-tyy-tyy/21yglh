@@ -65,7 +65,7 @@ void main(void)
 	Ring_T_KP = 70;
 	W_T_KP = 35;
 	T_KP = 100;//40 44
-	T_KP1 = 1;
+	T_KP1 = 2;
 	T_KD = 65;//电机不够热大于80，电机够热了75到80区间
 	Ring_T_KD = 50;
 	W_T_KD = 40;
@@ -179,6 +179,10 @@ void Interrupt(void)
 	else if(COM_QY == 0)
 	{
 		count1=0;
+	}
+	if(count1 > 2000)
+	{
+		count1 = 2000;
 	}
 }
 
