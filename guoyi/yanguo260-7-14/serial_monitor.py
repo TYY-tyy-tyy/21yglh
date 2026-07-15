@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-串口数据监控工具 - 用于 PID 调参
-无线串口，自动检测跑次 + 导出 CSV 供分析
+serial monitor for PID tuning
+auto-detect runs + export CSV
 
-数据协议 (27字节/包):
+Protocol (29 bytes/packet):
   0xAA | ImgErr_H | ImgErr_L | TurnOut_H | TurnOut_L |
   EncL_H | EncL_L | EncR_H | EncR_L | gyro_z |
   R_Patch | L_Patch | R_Lost | L_Lost | White_MID | White_Nums |
   R_Local | L_Local | R_RingFlag | L_RingFlag | angle_ringR | speed_mode |
-  SpeedL_H | SpeedL_L | SpeedR_H | SpeedR_L | 0xFF
+  TargetSpeed_H | TargetSpeed_L | SpeedL_H | SpeedL_L | SpeedR_H | SpeedR_L | 0xFF
 """
 
 import serial
@@ -17,26 +17,25 @@ import time
 import os
 from datetime import datetime
 
-# ==================== 配置 ====================
+# ==================== config ====================
 PORT = "COM12"
 BAUD = 115200
-IDLE_TIMEOUT = 2.0       # 连续无数据超过此秒 → 判定本次跑车结束
-LOG_DIR = "log"          # CSV 保存目录
-# ==============================================
+IDLE_TIMEOUT = 2.0
+LOG_DIR = "log"
+# ================================================
 
-PACKET_LEN = 27
+PACKET_LEN = 29
 run_count = 0
 
-SPEED_MODE_NAMES = {0: "弯道", 1: "直道", 2: "环岛", 3: "大弯"}
+SPEED_MODE_NAMES = {0: "curve", 1: "straight", 2: "ring", 3: "big_curve"}
 
-# 停车段过滤: |enc| <= 此值视为停车
 PARKING_ENC_THRESHOLD = 3
 
 CSV_HEADER = (
     "timestamp,speed_mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
     "gyro_z,r_patch,l_patch,r_lost,l_lost,white_mid,white_nums,"
     "r_local,l_local,r_ring_flag,l_ring_flag,angle_ring,"
-    "speed_out_l,speed_out_r\n"
+    "target_speed,speed_out_l,speed_out_r\n"
 )
 
 
@@ -49,7 +48,7 @@ def clear_screen():
 
 
 def parse_packet(data):
-    if data[0] != 0xAA or data[26] != 0xFF:
+    if data[0] != 0xAA or data[28] != 0xFF:
         return None
 
     def to_int16(h, l):
@@ -74,9 +73,10 @@ def parse_packet(data):
     r_ring_flag  = data[18]
     l_ring_flag  = data[19]
     angle_ring   = data[20]
-    speed_mode   = data[21]   # 0=弯道 1=直道 2=环岛 3=大弯
-    speed_out_l  = to_int16(data[22], data[23])
-    speed_out_r  = to_int16(data[24], data[25])
+    speed_mode   = data[21]
+    target_speed = to_int16(data[22], data[23])
+    speed_out_l  = to_int16(data[24], data[25])
+    speed_out_r  = to_int16(data[26], data[27])
     enc_diff     = enc_left - enc_right
 
     mode = SPEED_MODE_NAMES.get(speed_mode, "???")
@@ -89,28 +89,66 @@ def parse_packet(data):
         "r_lost": r_lost, "l_lost": l_lost, "white_mid": white_mid,
         "white_nums": white_nums, "r_local": r_local, "l_local": l_local,
         "r_ring_flag": r_ring_flag, "l_ring_flag": l_ring_flag,
-        "angle_ring": angle_ring, "speed_out_l": speed_out_l, "speed_out_r": speed_out_r,
+        "angle_ring": angle_ring, "target_speed": target_speed,
+        "speed_out_l": speed_out_l, "speed_out_r": speed_out_r,
     }
+
+
+# ==================== info boxes ====================
+
+def print_info_boxes(p):
+    W = 52
+    sep  = "+" + "-" * W + "+"
+
+    # Box 1: target speed / encoder / pwm output
+    print(sep)
+    print("|  [Speed & PWM Output]")
+    print("|  Target: {:<6}  ENC_L: {:<6} ENC_R: {:<6}  OUT_L: {:<7} OUT_R: {:<7}".format(
+        p['target_speed'], p['enc_left'], p['enc_right'],
+        p['speed_out_l'], p['speed_out_r']))
+    print(sep)
+
+    # Box 2: image error / turn out
+    print("|  [Error & Turn]")
+    print("|  Image_error: {:<6}      Turn_Out: {:<6}".format(
+        p['image_error'], p['turn_out']))
+    print(sep)
+
+    # mode info
+    print("|  Mode: {:<8}  GyroZ: {:<4}".format(p['mode'], p['gyro_z']))
+    print(sep)
+    print()
 
 
 def print_header():
     hdr = (
-        f"{'模式':<6} {'ImgErr':>7} {'TurnOut':>7} {'EncL':>6} {'EncR':>6} {'Diff':>6} "
-        f"{'GyrZ':>4} {'RPatch':>6} {'LPatch':>6} {'RLost':>5} {'LLost':>5} "
-        f"{'WMid':>4} {'WNums':>5} {'RFlag':>5} {'LFlag':>5} {'AngR':>4} "
-        f"{'SpdL':>5} {'SpdR':>5}"
+        "{:<8} {:>7} {:>7} {:>6} {:>6} {:>6} "
+        "{:>4} {:>6} {:>6} {:>5} {:>5} "
+        "{:>4} {:>5} {:>5} {:>5} {:>4} "
+        "{:>7} {:>7}"
+    ).format(
+        "Mode", "ImgErr", "TurnOut", "EncL", "EncR", "Diff",
+        "GyrZ", "RPatch", "LPatch", "RLost", "LLost",
+        "WMid", "WNums", "RFlg", "LFlg", "AngR",
+        "SpeedL", "SpeedR"
     )
-    print(f"\n{hdr}\n{'-' * 112}")
+    print(hdr)
+    print("-" * 120)
 
 
 def format_line(p):
     return (
-        f"{p['mode']:<6} {p['image_error']:>7} {p['turn_out']:>7} "
-        f"{p['enc_left']:>6} {p['enc_right']:>6} {p['enc_diff']:>6} "
-        f"{p['gyro_z']:>4} {p['r_patch']:>6} {p['l_patch']:>6} "
-        f"{p['r_lost']:>5} {p['l_lost']:>5} {p['white_mid']:>4} "
-        f"{p['white_nums']:>5} {p['r_ring_flag']:>5} {p['l_ring_flag']:>5} "
-        f"{p['angle_ring']:>4} {p['speed_out_l']:>5} {p['speed_out_r']:>5}"
+        "{:<8} {:>7} {:>7} {:>6} {:>6} {:>6} "
+        "{:>4} {:>6} {:>6} {:>5} {:>5} "
+        "{:>4} {:>5} {:>5} {:>5} {:>4} "
+        "{:>7} {:>7}"
+    ).format(
+        p['mode'], p['image_error'], p['turn_out'],
+        p['enc_left'], p['enc_right'], p['enc_diff'],
+        p['gyro_z'], p['r_patch'], p['l_patch'],
+        p['r_lost'], p['l_lost'], p['white_mid'],
+        p['white_nums'], p['r_ring_flag'], p['l_ring_flag'],
+        p['angle_ring'], p['speed_out_l'], p['speed_out_r']
     )
 
 
@@ -127,12 +165,12 @@ def format_csv(p):
         f"{p['r_local']},{p['l_local']},"
         f"{p['r_ring_flag']},{p['l_ring_flag']},"
         f"{p['angle_ring']},"
+        f"{p['target_speed']},"
         f"{p['speed_out_l']},{p['speed_out_r']}\n"
     )
 
 
 def filter_parking_rows(csv_path):
-    """移除编码值为0的停车行，原地覆盖"""
     try:
         with open(csv_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
@@ -149,13 +187,12 @@ def filter_parking_rows(csv_path):
             removed += 1
             continue
         try:
-            enc_left  = int(parts[4])   # CSV 第5列
-            enc_right = int(parts[5])   # CSV 第6列
+            enc_left  = int(parts[4])
+            enc_right = int(parts[5])
         except ValueError:
             removed += 1
             continue
 
-        # 两个编码器都在停车阈值内 → 过滤掉
         if abs(enc_left) <= PARKING_ENC_THRESHOLD and abs(enc_right) <= PARKING_ENC_THRESHOLD:
             removed += 1
         else:
@@ -175,11 +212,8 @@ def start_new_run():
     ts = datetime.now().strftime("%H:%M:%S")
     fname = datetime.now().strftime("run_%m%d_%H%M%S.csv")
     csv_path = os.path.join(LOG_DIR, fname)
-    print(f"\n  ╔══════════════════════════════════════════════════════════╗")
-    print(f"  ║  第 {run_count} 次跑车  |  开始: {ts}  ║")
-    print(f"  ║  保存: {csv_path}  ║")
-    print(f"  ╚══════════════════════════════════════════════════════════╝")
-    print_header()
+    print(f"\n  ===== Run #{run_count} | Start: {ts} =====")
+    print(f"  File: {csv_path}")
     return csv_path
 
 
@@ -188,11 +222,10 @@ def main():
 
     ensure_log_dir()
     clear_screen()
-    print(f"  串口监控工具 — {PORT} @ {BAUD} (无线串口)")
-    print(f"  自动检测跑次 + 导出 CSV 到 {LOG_DIR}/")
-    print(f"  {IDLE_TIMEOUT}s 无数据 = 结束, 再来数据 = 新跑次 + 清屏")
-    print(f"  模式: 直道 / 弯道 / 环岛 / 大弯 (由 MCU side 判断)")
-    print(f"  Ctrl+C 退出\n")
+    print(f"  Serial Monitor -- {PORT} @ {BAUD}")
+    print(f"  Auto-detect runs + Export CSV to {LOG_DIR}/")
+    print(f"  {IDLE_TIMEOUT}s idle = end run, new data = new run + clear")
+    print(f"  Ctrl+C to exit\n")
 
     ser = serial.Serial(PORT, BAUD, timeout=0.5)
     buf = bytearray()
@@ -229,7 +262,7 @@ def main():
                         csv_fh.close()
                         csv_fh = None
                     removed = filter_parking_rows(csv_path)
-                    print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包, 过滤 {removed} 行停车数据) <<<")
+                    print(f"\n  >>> Run #{run_count} end (pkt={count}, removed={removed}) <<<")
                     in_run = False
 
                 if not in_run:
@@ -245,7 +278,8 @@ def main():
                 if csv_fh:
                     csv_fh.write(format_csv(pkt))
 
-                if count % 15 == 1 and count > 1:
+                if count % 15 == 1:
+                    print_info_boxes(pkt)
                     print_header()
 
                 print(format_line(pkt))
@@ -257,14 +291,14 @@ def main():
                 csv_fh.close()
                 csv_fh = None
             removed = filter_parking_rows(csv_path)
-            print(f"\n  >>> 第 {run_count} 次跑车结束 (共 {count} 包, 过滤 {removed} 行停车数据) <<<")
+            print(f"\n  >>> Run #{run_count} end (pkt={count}, removed={removed}) <<<")
             in_run = False
 
         time.sleep(0.001)
 
     if csv_fh:
         csv_fh.close()
-    print(f"\n  退出。")
+    print(f"\n  Exit.")
     ser.close()
 
 
