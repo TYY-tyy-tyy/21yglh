@@ -10,7 +10,7 @@ int16 Turn_Out = 0;                 //ת�����
 int16 Turn_Out_MAX = 0;             //���ת�����
 
 /* �ٶȻ� */
-int16 TargetSpeed = 200;           //Ŀ���ٶ�  190
+int16 TargetSpeed_L ,TargetSpeed_R;           //Ŀ���ٶ�  190
 
 int16 nowtargetSpeed;
 int16 targetSpeed_min ;    //����ٶ�
@@ -102,8 +102,19 @@ void Interrupt_CCU60_CH0(void)
 	/* �����ֱջ����  */
 	if(COM_QY == 2)
 	{
-		Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
-        Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
+		TargetSpeed_L = nowtargetSpeed * (1.0f - diff);
+		TargetSpeed_R = nowtargetSpeed * (1.0f + diff);
+		if(TargetSpeed_L < -(my_Speed/2))
+		{
+			TargetSpeed_L = -(my_Speed/2);
+		}
+		else if(TargetSpeed_L > my_Speed*2)
+		{
+			TargetSpeed_L = my_Speed*2;
+		}
+		
+		Speed_Left_Out  = PID_Speed_Inc_L(TargetSpeed_L, Encoder_Left);
+        Speed_Right_Out = PID_Speed_Inc_R(TargetSpeed_R, Encoder_Right);
     }
     else
     {
