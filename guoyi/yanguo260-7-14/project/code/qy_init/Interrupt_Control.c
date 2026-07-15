@@ -18,9 +18,6 @@ int16 targetSpeed_min ;    //弯道速度
 int16 Speed_Left_Out;                    //速度环输出
 int16 Speed_Right_Out;
 
-uint8 speed_mode = 0;        // 0=弯道 1=直道 2=环岛 3=大弯
-
-uint16 time = 0;
 // 菜单参数
 uint8 menu_cursor = 0;         // 0=方案1  1=方案2
 uint8 select_plan = 0;         // 当前使用方案
@@ -38,6 +35,10 @@ float t;
 int16 L = 20;
 int16 K = 15;
 float diff;
+uint8 speed_mode = 0; 
+int16 variance_max = 169;//169
+int16 variance_max2 = 225;
+uint16 time = 0;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     CCU60_CH0中断----控制中断
 // 参数说明
@@ -144,30 +145,99 @@ void Interrupt_CCU60_CH0(void)
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
-	// 替代原来的三个条件
-	int16 mid_near = (Left_Line[110] + Right_Line[110]) / 2;
-	int16 mid_far  = (Left_Line[reference_col_farthest + 5] + Right_Line[reference_col_farthest + 5]) / 2;
+	static uint8 mode_confirm_cnt = 0;
+	static uint8 candidate_mode = 0;
+	int16 i;
+    int16 sum = 0, sum_sq = 0;
+    int16 mean, variance;
+    uint8 n = 0;
+	// 暂存候选 PID 参数
+    int16 tmp_KP, tmp_KP1, tmp_GKD, tmp_KD, tmp_Speed;
+    uint8 tmp_mode;
+
+    // 每隔5行采样 Road_Wide，用方差判断中间线变化
+    for(i = MT9V03X_H - 10; i >= reference_col_farthest + 5; i -= 5)
+    {
+        if(Left_Line[i] > 8 && Right_Line[i] < (MT9V03X_W - 8))
+        {
+            sum += Road_Wide[i];
+            sum_sq += Road_Wide[i] * Road_Wide[i];
+            n++;
+        }
+    }
 
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = Ring_T_KP;//44 47
-		pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed /10*9;
-		pid.Turn_GKD = 0;
+        tmp_KP    = Ring_T_KP;//44 47
+		tmp_KP1   = T_KP1;
+        tmp_Speed = my_Speed /10*9;
+		tmp_GKD   = 0;
+		tmp_KD    = 0;
+		tmp_mode  = 2;   // 环岛
     }
-    else if(White_Column_MID > 110 && abs(mid_near - mid_far) < 12)
+	else if(n >= 4 && White_Column_MID > 110)
     {
-        pid.Turn_KP = W_T_KP;//20
-		pid.Turn_KP1 = 0;
-        nowtargetSpeed = my_Speed*11/10;
-		pid.Turn_GKD = T_GKD;
+		mean = sum / (int16)n;
+        variance = sum_sq / (int16)n - mean * mean;
+		
+		if(variance < variance_max || variance > 400)
+		{
+			tmp_KP    = W_T_KP;//20
+			tmp_KP1   = 0;
+			tmp_Speed = my_Speed*11/10;
+			tmp_GKD   = T_GKD;
+			tmp_KD    = 0;
+			tmp_mode  = 1;   // 直道
+		}
+		else if(variance_max< variance < variance_max2)
+		{
+			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
+			tmp_KP1   = 1;
+			tmp_Speed = my_Speed;
+			tmp_GKD   = T_GKD;
+			tmp_KD    = 0;
+			tmp_mode  = 0;   //普通弯道
+		}
+		else
+		{
+			tmp_KP    = T_KP;      // 11.5 12.75 14
+			tmp_KP1   = T_KP1;
+			tmp_Speed = my_Speed/10*9;
+			tmp_GKD   = T_GKD*2;
+			tmp_KD    = 0;
+			tmp_mode  = 3;   // 大弯道
+		}
+	}
+	else
+	{
+		tmp_KP    = T_KP;      // 11.5 12.75 14
+		tmp_KP1   = T_KP1;
+		tmp_Speed = my_Speed/10*9;
+		tmp_GKD   = T_GKD*2;
+		tmp_KD    = 0;
+		tmp_mode  = 3;   // 大弯道
+	}
+	
+	/* ---- 确认逻辑：连续3帧同模式才真正切换 ---- */
+    if(tmp_mode != candidate_mode)
+    {
+        candidate_mode = tmp_mode;
+        mode_confirm_cnt = 1;   // 第一次出现，计数器从1开始
     }
     else
     {
-        pid.Turn_KP = T_KP;      // 11.5 12.75 14
-        pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed/10*9;
-		pid.Turn_GKD = T_GKD/2;
+        mode_confirm_cnt++;
+    }
+
+    if(mode_confirm_cnt >= 3)
+    {
+        /* 确认切换，更新实际参数 */
+        speed_mode = candidate_mode;
+        pid.Turn_KP   = tmp_KP;
+        pid.Turn_KP1  = tmp_KP1;
+        nowtargetSpeed = tmp_Speed;
+        pid.Turn_GKD  = tmp_GKD;
+        pid.Turn_KD   = tmp_KD;
     }
 }
 
