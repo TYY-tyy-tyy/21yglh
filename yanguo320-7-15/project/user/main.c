@@ -60,12 +60,13 @@ void main(void)
 	/* ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½Ü³ï¿½Ê¼ï¿½ï¿½ */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 280;//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½125ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½ï¿½Öµï¿½ï¿½170  220
+	pid.Speed_KP_L = pid.Speed_KP_R = 170;//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½125ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½ï¿½Öµï¿½ï¿½170  220
 	pid.Speed_KI_L = pid.Speed_KI_R = 35;//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½25ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½ï¿½Öµï¿½ï¿½35  90
 	Ring_T_KP = 60;
 	W_T_KP = 35;
 	T_KP = 80;//40 44
 	T_KP1 = 3;
+	
 	T_KD = 87;//µç»ú²»¹»ÈÈ´óÓÚ80£¬µç»ú¹»ÈÈÁË75µ½80Çø¼ä
 	Ring_T_KD = 50;
 	W_T_KD = 30;
