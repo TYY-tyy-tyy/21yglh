@@ -34,8 +34,8 @@ void Motors_Init(void)
 void Left_Motor_Speed(int16 Speed)
 {
     /* оч╥Ы */
-    if(Speed > 5000) Speed = 5000;
-    else if(Speed < -5000) Speed = -5000;
+    if(Speed > 8000) Speed = 8000;
+    else if(Speed < -8000) Speed = -8000;
 
     if(Speed > 0)
     {
@@ -67,8 +67,8 @@ void Left_Motor_Speed(int16 Speed)
 void Right_Motor_Speed(int16 Speed)
 {
     /* оч╥Ы */
-    if(Speed > 5000) Speed = 5000;
-    else if(Speed < -5000) Speed = -5000;
+    if(Speed > 8000) Speed = 8000;
+    else if(Speed < -8000) Speed = -8000;
 
     if(Speed > 0)
     {
