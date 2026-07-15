@@ -51,8 +51,8 @@ void Mid_Error_Processing(void)
     {
 		if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
 		{
-			Image_error += Image_Weight3[j] * Road_Wide[i];
-			count += Image_Weight3[j];
+			Image_error += Image_Weight2[j] * Road_Wide[i];
+			count += Image_Weight2[j];
 		}
 		else if(White_Column_MID > 110)
 		{
@@ -66,8 +66,8 @@ void Mid_Error_Processing(void)
 		}
 		else
 		{
-			Image_error += Image_Weight3[j] * Road_Wide[i];
-			count += Image_Weight3[j];
+			Image_error += Image_Weight2[j] * Road_Wide[i];
+			count += Image_Weight2[j];
 		}
     }
 	if(count == 0){count = 1;}
