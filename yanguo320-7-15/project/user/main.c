@@ -64,9 +64,9 @@ void main(void)
 	pid.Speed_KI_L = pid.Speed_KI_R = 45;//锟斤拷锟斤拷值锟斤拷25锟斤拷一锟轿筹拷锟斤拷值锟斤拷35  90
 	Ring_T_KP = 70;
 	W_T_KP = 45;
-	T_KP = 130;//40 44
+	T_KP = 82;//40 44
 	T_KP1 = 2;
-	T_KD = 65;//电机不够热大于80，电机够热了75到80区间
+	T_KD = 80;//电机不够热大于80，电机够热了75到80区间
 	Ring_T_KD = 50;
 	W_T_KD = 30;
 //	pid.Turn_KD = 70;

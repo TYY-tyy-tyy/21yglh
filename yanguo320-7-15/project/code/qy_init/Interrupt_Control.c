@@ -195,11 +195,11 @@ void Speed_DecisionMaking(void)
 		}
 		else if(variance < variance_max2)
 		{
-			tmp_KP    = T_KP*95/100 ;//20
+			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
 			tmp_KP1   = 1;
 			tmp_Speed = my_Speed;
 			tmp_GKD   = T_GKD;
-			tmp_KD    = T_KD * 85 / 100;
+			tmp_KD    = (T_KD+W_T_KD)/2;
 			tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
 		}
 		else
