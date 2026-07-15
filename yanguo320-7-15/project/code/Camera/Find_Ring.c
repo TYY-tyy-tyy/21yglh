@@ -14,9 +14,9 @@ int16 Right_Ring_num = 5;
 
 /* 出入环积分 */
 uint16 Left_Enc_In = 6000;
-uint16 Left_Enc_Out = 2000;
+uint16 Left_Enc_Out = 7000;
 uint16 Right_Enc_In = 6000;
-uint16 Right_Enc_Out = 2000;
+uint16 Right_Enc_Out = 7000;
 uint16 Left_time_In = 3;
 uint16 Left_time_Out = 3;
 uint16 Right_time_In = 3;
@@ -268,7 +268,7 @@ void Find_Left_Ring(void)
      else if(Find_Left_FLAG == Left_5)
      {
          //转向够角度后停止拉线
-         if (angle_ringR > 350 && Right_Lost_Line_count < 5)
+         if (angle_ringR > 330 && Right_Lost_Line_count < 5)
          {
             Find_Left_FLAG = Left_6;
 

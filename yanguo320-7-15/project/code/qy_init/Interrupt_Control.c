@@ -173,7 +173,7 @@ void Speed_DecisionMaking(void)
     {
         tmp_KP    = Ring_T_KP;//44 47
 		tmp_KP1   = T_KP1-1;
-        tmp_Speed = my_Speed /10*9;
+        tmp_Speed = my_Speed /10*85/10;
 		tmp_GKD   = 0;
 		tmp_KD    = Ring_T_KD;
 		tmp_mode  = 2;   // »·µº
