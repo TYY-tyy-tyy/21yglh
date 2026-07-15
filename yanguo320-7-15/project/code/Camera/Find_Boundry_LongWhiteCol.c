@@ -414,11 +414,21 @@ void Find_Boundry_LongWhiteCol(void)
 			{
 				int16 left_line_eer = Left_Line [i+4] - Left_Line [i+2];
 				Left_Line [i] = Left_Line [i+2] - left_line_eer;
+				Left_Line [i-1] = Left_Line [i+2] - left_line_eer;
+				image_copy_out[i  ][Left_Line [i]] = 0;
+				image_copy_out[i-1][Left_Line [i]] = 0;
+				image_copy_out[i  ][Left_Line [i]-1] = 0;
+				image_copy_out[i-1][Left_Line [i]-1] = 0;
 			}
 			else if(Right_Line[i] <= reference_col - 2)
 			{
 				int16 right_line_eer = Right_Line [i+4] - Right_Line [i+2];
 				Right_Line [i] = Right_Line [i+2] - right_line_eer;
+				Right_Line [i-1] = Right_Line [i+2] - right_line_eer;
+				image_copy_out[i  ][Right_Line [i]] = 255;
+				image_copy_out[i-1][Right_Line [i]] = 255;
+				image_copy_out[i  ][Right_Line [i]+1] = 255;
+				image_copy_out[i-1][Right_Line [i]+1] = 255;
 			}
 			else if(Left_Line [i] > Right_Line[i] - 10)
 			{
