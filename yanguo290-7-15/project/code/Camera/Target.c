@@ -8,7 +8,7 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 Target_time = -1;
+int16 Target_time = -2;
 
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
@@ -258,8 +258,7 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 4) Find_Target_time ++;
-		else Find_Target_time = -10;
+		Find_Target_time ++;
 		for(p = p1,k = 0;p <= p2 && k < 4;p += eer_p,k ++)
 		{
 			if(Black_p[k] != 0)
@@ -287,7 +286,7 @@ void Find_Target2(int p1,int p2)
 				}
 			}
 		}
-		if(Find_Target_time >= 0 && Find_Target_time < 4)
+		if(Find_Target_time >= 0 && Find_Target_time < 3)
         {
             /* ===== ¢Ü Í¶Æ± ===== */
             uint8 pos_votes[6] = {0};
@@ -410,6 +409,10 @@ void Find_Target2(int p1,int p2)
 //				confirmed_pos = 0; 
 			}
         }
+		else if(Find_Target_time >= 3)
+		{
+			Find_Target_time = -10;
+		}
     }
     else
     {
