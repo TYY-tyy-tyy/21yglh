@@ -4,11 +4,12 @@
 串口数据监控工具 - 用于 PID 调参
 无线串口，自动检测跑次 + 导出 CSV 供分析
 
-数据协议 (23字节/包):
+数据协议 (27字节/包):
   0xAA | ImgErr_H | ImgErr_L | TurnOut_H | TurnOut_L |
   EncL_H | EncL_L | EncR_H | EncR_L | gyro_z |
   R_Patch | L_Patch | R_Lost | L_Lost | White_MID | White_Nums |
-  R_Local | L_Local | R_RingFlag | L_RingFlag | angle_ringR | speed_mode | 0xFF
+  R_Local | L_Local | R_RingFlag | L_RingFlag | angle_ringR | speed_mode |
+  SpeedL_H | SpeedL_L | SpeedR_H | SpeedR_L | 0xFF
 """
 
 import serial
@@ -23,7 +24,7 @@ IDLE_TIMEOUT = 2.0       # 连续无数据超过此秒 → 判定本次跑车结
 LOG_DIR = "log"          # CSV 保存目录
 # ==============================================
 
-PACKET_LEN = 23
+PACKET_LEN = 27
 run_count = 0
 
 SPEED_MODE_NAMES = {0: "弯道", 1: "直道", 2: "环岛", 3: "大弯"}
@@ -34,7 +35,8 @@ PARKING_ENC_THRESHOLD = 3
 CSV_HEADER = (
     "timestamp,speed_mode,image_error,turn_out,enc_left,enc_right,enc_diff,"
     "gyro_z,r_patch,l_patch,r_lost,l_lost,white_mid,white_nums,"
-    "r_local,l_local,r_ring_flag,l_ring_flag,angle_ring\n"
+    "r_local,l_local,r_ring_flag,l_ring_flag,angle_ring,"
+    "speed_out_l,speed_out_r\n"
 )
 
 
@@ -47,7 +49,7 @@ def clear_screen():
 
 
 def parse_packet(data):
-    if data[0] != 0xAA or data[22] != 0xFF:
+    if data[0] != 0xAA or data[26] != 0xFF:
         return None
 
     def to_int16(h, l):
@@ -73,6 +75,8 @@ def parse_packet(data):
     l_ring_flag  = data[19]
     angle_ring   = data[20]
     speed_mode   = data[21]   # 0=弯道 1=直道 2=环岛 3=大弯
+    speed_out_l  = to_int16(data[22], data[23])
+    speed_out_r  = to_int16(data[24], data[25])
     enc_diff     = enc_left - enc_right
 
     mode = SPEED_MODE_NAMES.get(speed_mode, "???")
@@ -85,7 +89,7 @@ def parse_packet(data):
         "r_lost": r_lost, "l_lost": l_lost, "white_mid": white_mid,
         "white_nums": white_nums, "r_local": r_local, "l_local": l_local,
         "r_ring_flag": r_ring_flag, "l_ring_flag": l_ring_flag,
-        "angle_ring": angle_ring,
+        "angle_ring": angle_ring, "speed_out_l": speed_out_l, "speed_out_r": speed_out_r,
     }
 
 
@@ -93,7 +97,8 @@ def print_header():
     hdr = (
         f"{'模式':<6} {'ImgErr':>7} {'TurnOut':>7} {'EncL':>6} {'EncR':>6} {'Diff':>6} "
         f"{'GyrZ':>4} {'RPatch':>6} {'LPatch':>6} {'RLost':>5} {'LLost':>5} "
-        f"{'WMid':>4} {'WNums':>5} {'RFlag':>5} {'LFlag':>5} {'AngR':>4}"
+        f"{'WMid':>4} {'WNums':>5} {'RFlag':>5} {'LFlag':>5} {'AngR':>4} "
+        f"{'SpdL':>5} {'SpdR':>5}"
     )
     print(f"\n{hdr}\n{'-' * 112}")
 
@@ -105,7 +110,7 @@ def format_line(p):
         f"{p['gyro_z']:>4} {p['r_patch']:>6} {p['l_patch']:>6} "
         f"{p['r_lost']:>5} {p['l_lost']:>5} {p['white_mid']:>4} "
         f"{p['white_nums']:>5} {p['r_ring_flag']:>5} {p['l_ring_flag']:>5} "
-        f"{p['angle_ring']:>4}"
+        f"{p['angle_ring']:>4} {p['speed_out_l']:>5} {p['speed_out_r']:>5}"
     )
 
 
@@ -121,7 +126,8 @@ def format_csv(p):
         f"{p['white_mid']},{p['white_nums']},"
         f"{p['r_local']},{p['l_local']},"
         f"{p['r_ring_flag']},{p['l_ring_flag']},"
-        f"{p['angle_ring']}\n"
+        f"{p['angle_ring']},"
+        f"{p['speed_out_l']},{p['speed_out_r']}\n"
     )
 
 

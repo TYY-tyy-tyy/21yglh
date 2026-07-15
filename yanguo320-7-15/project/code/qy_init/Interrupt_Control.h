@@ -3,8 +3,8 @@
 
 #include "qy_headfile.h"
 
-#define Left_Out_Max  8000
-#define Right_Out_Max 8000
+#define Left_Out_Max  9000
+#define Right_Out_Max 9000
 
 #define Start_time    200
 #define ACKERMAN_COEFF  0.375f //220 260 0.370

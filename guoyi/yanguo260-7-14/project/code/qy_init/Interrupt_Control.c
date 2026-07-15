@@ -18,8 +18,7 @@ int16 targetSpeed_min ;    //弯道速度
 int16 Speed_Left_Out;                    //速度环输出
 int16 Speed_Right_Out;
 
-/* 速度模式 */
-uint8 Speed_Mode = 2;     //速度模式--1为线性，2为匀速
+uint8 speed_mode = 0;        // 0=弯道 1=直道 2=环岛 3=大弯
 
 uint16 time = 0;
 // 菜单参数

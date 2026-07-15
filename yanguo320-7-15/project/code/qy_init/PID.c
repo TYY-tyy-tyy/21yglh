@@ -1,8 +1,8 @@
 #include "PID.h"
 
 /* 位置式速度环积分限幅 */
-#define    Speed_L_imax     8000
-#define    Speed_R_imax     8000
+#define    Speed_L_imax     9000
+#define    Speed_R_imax     9000
 
 PID pid;
 
