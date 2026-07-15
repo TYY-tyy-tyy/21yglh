@@ -126,11 +126,12 @@ void main(void)
 //			qy_time = 0;
 //			qy_time1 = 0;
 //			printf("%d\n",qy_time);
-			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
-			LowerCameraExposure();
-			get_reference_point();      //��ȡͼ���ȺͲο���
-			search_reference_col();
-			Find_Boundry_LongWhiteCol(); //�ұ߽�����
+			all_on();
+//			memcpy(image_copy_out[0], mt9v03x_image[0], MT9V03X_IMAGE_SIZE);
+//			LowerCameraExposure();
+//			get_reference_point();      //��ȡͼ���ȺͲο���
+//			search_reference_col();
+//			Find_Boundry_LongWhiteCol(); //�ұ߽�����
 //			Extract_Road_Features();
 			if(count1 > 0)
 			{
