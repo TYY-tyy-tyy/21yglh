@@ -20,8 +20,8 @@ int16 Speed_Right_Out;
 
 uint8 speed_mode = 0;        // 0=弯道 1=直道 2=环岛 3=大弯
 
-int16 variance_max = 196;//169
-int16 variance_max2 = 144;
+int16 variance_max = 169;//169
+int16 variance_max2 = 225;
 uint16 time = 0;
 // 锟剿碉拷锟斤拷锟斤拷
 uint8 menu_cursor = 0;         // 0=锟斤拷锟斤拷1  1=锟斤拷锟斤拷2
@@ -149,10 +149,15 @@ void Interrupt_CCU60_CH0(void)
 //------------------------------------------------------------------------------------------------------------------
 void Speed_DecisionMaking(void)
 {
+	static uint8 mode_confirm_cnt = 0;
+	static uint8 candidate_mode = 0;
 	int16 i;
     int16 sum = 0, sum_sq = 0;
     int16 mean, variance;
     uint8 n = 0;
+	// 暂存候选 PID 参数
+    int16 tmp_KP, tmp_KP1, tmp_GKD, tmp_KD, tmp_Speed;
+    uint8 tmp_mode;
 
     // 每隔5行采样 Road_Wide，用方差判断中间线变化
     for(i = MT9V03X_H - 10; i >= reference_col_farthest + 5; i -= 5)
@@ -167,12 +172,12 @@ void Speed_DecisionMaking(void)
 
     if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
     {
-        pid.Turn_KP = Ring_T_KP;//44 47
-		pid.Turn_KP1 = T_KP1;
-        nowtargetSpeed = my_Speed /10*9;
-		pid.Turn_GKD = 0;
-		pid.Turn_KD = Ring_T_KD;
-		speed_mode = 2;   // 环岛
+        tmp_KP    = Ring_T_KP;//44 47
+		tmp_KP1   = T_KP1;
+        tmp_Speed = my_Speed /10*9;
+		tmp_GKD   = 0;
+		tmp_KD    = Ring_T_KD;
+		tmp_mode  = 2;   // 环岛
     }
 	else if(n >= 4 && White_Column_MID > 110)
     {
@@ -181,41 +186,64 @@ void Speed_DecisionMaking(void)
 		
 		if(variance < variance_max || variance > 400)
 		{
-			pid.Turn_KP = W_T_KP;//20
-			pid.Turn_KP1 = 0;
-			nowtargetSpeed = my_Speed*11/10;
-			pid.Turn_GKD = T_GKD;
-			pid.Turn_KD = W_T_KD;
-			speed_mode = 1;   // 直道
+			tmp_KP    = W_T_KP;//20
+			tmp_KP1   = 0;
+			tmp_Speed = my_Speed*11/10;
+			tmp_GKD   = T_GKD;
+			tmp_KD    = W_T_KD;
+			tmp_mode  = 1;   // 直道
 		}
 		else if(variance < variance_max2)
 		{
-			pid.Turn_KP = T_KP*95/100 ;//20
-			pid.Turn_KP1 = 0;
-			nowtargetSpeed = my_Speed;
-			pid.Turn_GKD = T_GKD;
-			pid.Turn_KD = (T_KD + W_T_KD)/2;
-			speed_mode = 0;   
+			tmp_KP    = T_KP*95/100 ;//20
+			tmp_KP1   = 1;
+			tmp_Speed = my_Speed;
+			tmp_GKD   = T_GKD;
+			tmp_KD    = T_KD * 85 / 100;
+			tmp_mode  = 0;   //普通弯道
 		}
 		else
 		{
-			pid.Turn_KP = T_KP;      // 11.5 12.75 14
-			pid.Turn_KP1 = T_KP1;
-			nowtargetSpeed = my_Speed/10*85/10;
-			pid.Turn_GKD = T_GKD/2;
-			pid.Turn_KD = T_KD;
-			speed_mode = 3;   // 大弯道
+			tmp_KP    = T_KP;      // 11.5 12.75 14
+			tmp_KP1   = T_KP1;
+			tmp_Speed = my_Speed/10*85/10;
+			tmp_GKD   = T_GKD*2/3;
+			tmp_KD    = T_KD;
+			tmp_mode  = 3;   // 大弯道
 		}
 	}
 	else
 	{
-		pid.Turn_KP = T_KP;      // 11.5 12.75 14
-		pid.Turn_KP1 = T_KP1;
-		nowtargetSpeed = my_Speed/10*85/10;
-		pid.Turn_GKD = T_GKD/2;
-		pid.Turn_KD = T_KD;
-		speed_mode = 0;   // 弯道
+		tmp_KP    = T_KP;      // 11.5 12.75 14
+		tmp_KP1   = T_KP1;
+		tmp_Speed = my_Speed/10*85/10;
+		tmp_GKD   = T_GKD*2/3;
+		tmp_KD    = T_KD;
+		tmp_mode  = 3;   // 大弯道
 	}
+	
+	/* ---- 确认逻辑：连续3帧同模式才真正切换 ---- */
+    if(tmp_mode != candidate_mode)
+    {
+        candidate_mode = tmp_mode;
+        mode_confirm_cnt = 1;   // 第一次出现，计数器从1开始
+    }
+    else
+    {
+        mode_confirm_cnt++;
+    }
+
+    if(mode_confirm_cnt >= 3)
+    {
+        /* 确认切换，更新实际参数 */
+        speed_mode = candidate_mode;
+        pid.Turn_KP   = tmp_KP;
+        pid.Turn_KP1  = tmp_KP1;
+        nowtargetSpeed = tmp_Speed;
+        pid.Turn_GKD  = tmp_GKD;
+        pid.Turn_KD   = tmp_KD;
+    }
+    // 未满3帧 → 保持上一模式的参数不变
 }
 
 //==================== 图锟斤拷锟铰凤拷锟剿碉拷 ====================
