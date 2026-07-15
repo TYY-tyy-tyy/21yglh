@@ -8,8 +8,6 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 Target_time = -2;
-
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
 
@@ -259,7 +257,7 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 3) Find_Target_time ++;
+		if(Find_Target_time < 4) Find_Target_time ++;
 		else Find_Target_time = -10;
 		/* 首次进入有靶状态，清零击打计数 */
 		if(Find_Target_time == 0) target_hit_count = 0;
@@ -290,7 +288,7 @@ void Find_Target2(int p1,int p2)
 				}
 			}
 		}
-		if(Find_Target_time >= 0 && Find_Target_time < 3)
+		if(Find_Target_time >= 0 && Find_Target_time < 4)
         {
             /* ===== ④ 投票 ===== */
             uint8 pos_votes[6] = {0};
@@ -420,7 +418,7 @@ void Find_Target2(int p1,int p2)
 		if(Find_Target_time > 0)
             Find_Target_time--;        // 丢靶消抖，逐渐降
         else
-            Find_Target_time = Target_time;     // 降到 0 后才重置
+            Find_Target_time = -3;     // 降到 0 后才重置
 			Buzzer_OFF();
 			all_off();
 			confirmed_pos = 0;

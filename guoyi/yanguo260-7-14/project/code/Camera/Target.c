@@ -8,8 +8,6 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 Target_time = -2;
-
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
 
@@ -259,7 +257,7 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 3) Find_Target_time ++;
+		if(Find_Target_time < 4) Find_Target_time ++;
 		else Find_Target_time = -10;
 		/* 首次进入有靶状态，清零击打计数 */
 		if(Find_Target_time == 0) target_hit_count = 0;
@@ -272,25 +270,25 @@ void Find_Target2(int p1,int p2)
 				{
 					Find_Target_oad[k] = 3;
 				}
-				else if(tar_eer[k] <= Left_Line[p]+Target_num[k]*17/10)
+				else if(tar_eer[k] <= Left_Line[p]+Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 1;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*17/10)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 5;
 				}
-				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*17/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*22/10)
+				else if(tar_eer[k] >= Left_Line[p]+Target_num[k]*18/10 && tar_eer[k] <= Left_Line[p]+Target_num[k]*22/10)
 				{
 					Find_Target_oad[k] = 2;
 				}
-				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*22/10 && tar_eer[k] <= Right_Line[p]-Target_num[k]*17/10)
+				else if(tar_eer[k] >= Right_Line[p]-Target_num[k]*22/10 && tar_eer[k] <= Right_Line[p]-Target_num[k]*18/10)
 				{
 					Find_Target_oad[k] = 4;
 				}
 			}
 		}
-		if(Find_Target_time >= 0 && Find_Target_time < 3)
+		if(Find_Target_time >= 0 && Find_Target_time < 4)
         {
             /* ===== ④ 投票 ===== */
             uint8 pos_votes[6] = {0};
@@ -359,15 +357,15 @@ void Find_Target2(int p1,int p2)
                     if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*22/10
                     && new_center <= Right_Line[ref_p] - Target_num[mid_k]*22/10)
                         cur_pos = 3;
-                    else if(new_center <= Left_Line[ref_p] + Target_num[mid_k]*17/10)
+                    else if(new_center <= Left_Line[ref_p] + Target_num[mid_k]*18/10)
                         cur_pos = 1;
-                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*17/10)
+                    else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*18/10)
                         cur_pos = 5;
-                    else if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*17/10
+                    else if(new_center >= Left_Line[ref_p] + Target_num[mid_k]*18/10
                           && new_center <= Left_Line[ref_p] + Target_num[mid_k]*22/10)
                         cur_pos = 2;
                     else if(new_center >= Right_Line[ref_p] - Target_num[mid_k]*22/10
-                          && new_center <= Right_Line[ref_p] - Target_num[mid_k]*17/10)
+                          && new_center <= Right_Line[ref_p] - Target_num[mid_k]*18/10)
                         cur_pos = 4;
 
                     /* ===== ⑧ 三重确认：cur_pos==win_pos + 连续两帧一致 ===== */
@@ -420,7 +418,7 @@ void Find_Target2(int p1,int p2)
 		if(Find_Target_time > 0)
             Find_Target_time--;        // 丢靶消抖，逐渐降
         else
-            Find_Target_time = Target_time;     // 降到 0 后才重置
+            Find_Target_time = -3;     // 降到 0 后才重置
 			Buzzer_OFF();
 			all_off();
 			confirmed_pos = 0;

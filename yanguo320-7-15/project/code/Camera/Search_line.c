@@ -100,7 +100,7 @@ void search_reference_col(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[row][col];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[row - 2][col];
+					gray_point_2 = image_copy_out[row - 1][col];
 //					image_copy_out[row][col] = 255;
 					//若对比点是白点
 					if(gray_point_2 > white_max_point)
@@ -116,8 +116,6 @@ void search_reference_col(void)
 						break;
 					}
 
-					//计算对比度
-					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 					if(compare_value > REFERENCE_CONTRAST)
@@ -144,7 +142,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -159,8 +157,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
@@ -180,7 +176,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -195,8 +191,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
@@ -223,7 +217,7 @@ void search_reference_col(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[row][col];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[row - 2][col];
+					gray_point_2 = image_copy_out[row - 1][col];
 //					image_copy_out[row][col] = 255;
 					//若对比点是白点
 					if(gray_point_2 > white_max_point)
@@ -239,8 +233,6 @@ void search_reference_col(void)
 						break;
 					}
 
-					//计算对比度
-					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 					if(compare_value > REFERENCE_CONTRAST)
@@ -267,7 +259,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -282,8 +274,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
@@ -303,7 +293,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -318,8 +308,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
@@ -347,7 +335,7 @@ void search_reference_col(void)
 					//获取当前灰度值
 					gray_point_1 = image_copy_out[row][col];
 					//获取对比度灰度值
-					gray_point_2 = image_copy_out[row - 2][col];
+					gray_point_2 = image_copy_out[row - 1][col];
 //					image_copy_out[row][col] = 255;
 					//若对比点是白点
 					if(gray_point_2 > white_max_point)
@@ -363,8 +351,6 @@ void search_reference_col(void)
 						break;
 					}
 
-					//计算对比度
-					gray_point_2 = image_copy_out[row - 1][col];
 					compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 					if(compare_value > REFERENCE_CONTRAST)
@@ -391,7 +377,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -406,8 +392,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
@@ -427,7 +411,7 @@ void search_reference_col(void)
 						//获取当前灰度值
 						gray_point_1 = image_copy_out[row][col];
 						//获取对比度灰度值
-						gray_point_2 = image_copy_out[row - 2][col];
+						gray_point_2 = image_copy_out[row - 1][col];
 //						image_copy_out[row][col] = 255;
 						//若对比点是白点
 						if(gray_point_2 > white_max_point)
@@ -442,8 +426,6 @@ void search_reference_col(void)
 							break;
 						}
 
-						//计算对比度
-						gray_point_2 = image_copy_out[row - 1][col];
 						compare_value = (gray_point_1 - gray_point_2) * 200 / (gray_point_1 + gray_point_2 + 1);
 
 						if(compare_value > REFERENCE_CONTRAST)
