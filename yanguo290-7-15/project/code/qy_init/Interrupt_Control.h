@@ -31,6 +31,9 @@ extern int16 Speed_Right_Out;
 extern int16 Turn_Out;
 
 extern int16 variance_max;
+extern int16 variance_max2;
+
+extern int16 mean, variance;
 
 /* Ê±¼ä */
 extern uint16 time;
