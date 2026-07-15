@@ -259,7 +259,7 @@ void Find_Target2(int p1,int p2)
 	
 	if(Black_p[4] >= 2)
 	{
-		if(Find_Target_time < 2) Find_Target_time ++;
+		if(Find_Target_time < 1) Find_Target_time ++;
 		else Find_Target_time = -10;
 		/* 首次进入有靶状态，清零击打计数 */
 		if(Find_Target_time == 0) target_hit_count = 0;
@@ -290,7 +290,7 @@ void Find_Target2(int p1,int p2)
 				}
 			}
 		}
-		if(Find_Target_time >= 0 && Find_Target_time < 2)
+		if(Find_Target_time >= 0 && Find_Target_time < 1)
         {
             /* ===== ④ 投票 ===== */
             uint8 pos_votes[6] = {0};
