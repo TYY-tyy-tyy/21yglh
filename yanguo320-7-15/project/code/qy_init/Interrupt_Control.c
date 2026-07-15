@@ -210,7 +210,7 @@ void Speed_DecisionMaking(void)
 			tmp_KP    = T_KP;      // 11.5 12.75 14
 			tmp_KP1   = T_KP1;
 			tmp_Speed = my_Speed/10*85/10;
-			tmp_GKD   = T_GKD*2/3;
+			tmp_GKD   = T_GKD/2;
 			tmp_KD    = T_KD;
 			tmp_mode  = 3;   // 大弯道
 		}
@@ -220,7 +220,7 @@ void Speed_DecisionMaking(void)
 		tmp_KP    = T_KP;      // 11.5 12.75 14
 		tmp_KP1   = T_KP1;
 		tmp_Speed = my_Speed/10*85/10;
-		tmp_GKD   = T_GKD*2/3;
+		tmp_GKD   = T_GKD/2;
 		tmp_KD    = T_KD;
 		tmp_mode  = 3;   // 大弯道
 	}
