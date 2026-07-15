@@ -20,8 +20,8 @@ int16 Speed_Right_Out;
 
 uint8 speed_mode = 0;        // 0=ÍäµÀ 1=Ö±µÀ 2=»·µº
 
-int16 variance_max = 169;
-
+int16 variance_max = 225;//169
+int16 variance2 = 144;
 uint16 time = 0;
 // ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 uint8 menu_cursor = 0;         // 0=ï¿½ï¿½ï¿½ï¿½1  1=ï¿½ï¿½ï¿½ï¿½2
@@ -187,6 +187,15 @@ void Speed_DecisionMaking(void)
 			pid.Turn_GKD = T_GKD;
 			pid.Turn_KD = W_T_KD;
 			speed_mode = 1;   // Ö±µÀ
+		}
+		else if(variance < variance2)
+		{
+			pid.Turn_KP = T_KP*95/100 ;//20
+			pid.Turn_KP1 = 0;
+			nowtargetSpeed = my_Speed;
+			pid.Turn_GKD = T_GKD;
+			pid.Turn_KD = W_T_KD;
+			speed_mode = 0;   
 		}
 		else
 		{
