@@ -60,8 +60,8 @@ void main(void)
 	/* ���й��ܳ�ʼ�� */
     All_Init();
 	
-	pid.Speed_KP_L = pid.Speed_KP_R = 170;//����ֵ��125��һ�γ���ֵ��170  220
-	pid.Speed_KI_L = pid.Speed_KI_R = 35;//����ֵ��25��һ�γ���ֵ��35  90
+	pid.Speed_KP_L = pid.Speed_KP_R = 280;//����ֵ��125��һ�γ���ֵ��170  220
+	pid.Speed_KI_L = pid.Speed_KI_R = 30;//����ֵ��25��һ�γ���ֵ��35  90
 	Ring_T_KP = 70;
 	W_T_KP = 35;
 	T_KP = 62;//40 44
