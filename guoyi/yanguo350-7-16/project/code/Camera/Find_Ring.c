@@ -168,7 +168,7 @@ void Find_Left_Ring(void)
     {
 		Buzzer_OFF();
         White_Nums = White_counts_weight(80);
-        if (White_Nums > 135)
+        if (White_Nums > 110)
         {
 //			COM_QY = 0;
             Find_Left_FLAG = Left_3;
