@@ -7,7 +7,7 @@
 		// 300Hz的控制频率，从0%到100%占空比为3000到6000
 /* 无刷PWM  1000~2000 */
 
-int16 MY_Blds_PWM_MAX = 4750;    //芯片最大PWM
+int16 MY_Blds_PWM_MAX = 5000;    //芯片最大PWM
 
 int16 Blds_PWM_MAX = 5500;    //芯片最大PWM
 int16 Blds_PWM_MIN = 3000;    //芯片最大PWM
