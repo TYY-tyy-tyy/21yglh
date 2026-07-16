@@ -10,8 +10,8 @@ uint8 Target_EER = 3;
 
 int16 Target_time = -2;
 
-int16 TARGET_BLACK_WIDTH_MAX = 15;
-int16 TARGET_CENTER_DIFF_MAX = 5;
+int16 TARGET_BLACK_WIDTH_MAX = 20;
+int16 TARGET_CENTER_DIFF_MAX = 15;
 
 void Find_Target1(void)
 {

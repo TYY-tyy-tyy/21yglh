@@ -210,7 +210,7 @@ void Speed_DecisionMaking(void)
 		{
 			tmp_KP    = W_T_KP;//20
 			tmp_KP1   = 0;
-			tmp_Speed = my_Speed*11/10;
+			tmp_Speed = my_Speed;
 			tmp_GKD   = T_GKD;
 			tmp_KD    = W_T_KD;
 			tmp_mode  = 1;   // Ö±µÀ
