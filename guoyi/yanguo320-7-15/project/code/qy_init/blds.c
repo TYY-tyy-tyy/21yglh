@@ -100,21 +100,21 @@ void Open_Blds(void)
 	}
 	else if(COM_QY == 2)
 	{
-		if(TargetSpeed_R > TargetSpeed_L + nowtargetSpeed)
-		{
-			Left_Blds_Speed(MY_Blds_PWM_MAX);
-			Right_Blds_Speed(MY_Blds_PWM_MAX + 500);
-		}
-		else if(TargetSpeed_L > TargetSpeed_R + nowtargetSpeed)
-		{
-			Left_Blds_Speed(MY_Blds_PWM_MAX + 500);
-			Right_Blds_Speed(MY_Blds_PWM_MAX);
-		}
-		else
-		{
-			Left_Blds_Speed(MY_Blds_PWM_MAX);
-			Right_Blds_Speed(MY_Blds_PWM_MAX);
-		}
+//		if(TargetSpeed_R > TargetSpeed_L + nowtargetSpeed)
+//		{
+//			Left_Blds_Speed(MY_Blds_PWM_MAX);
+//			Right_Blds_Speed(MY_Blds_PWM_MAX + 500);
+//		}
+//		else if(TargetSpeed_L > TargetSpeed_R + nowtargetSpeed)
+//		{
+//			Left_Blds_Speed(MY_Blds_PWM_MAX + 500);
+//			Right_Blds_Speed(MY_Blds_PWM_MAX);
+//		}
+//		else
+//		{
+		Left_Blds_Speed(MY_Blds_PWM_MAX);
+		Right_Blds_Speed(MY_Blds_PWM_MAX);
+//		}
 	}
 	else if(COM_QY == 0)
 	{
