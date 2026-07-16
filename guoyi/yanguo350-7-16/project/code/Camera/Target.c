@@ -8,7 +8,7 @@ uint8 late_laser = 0;
 
 uint8 Target_EER = 3;
 
-int16 Target_time = -2;
+int16 Target_time = -1;
 
 int16 TARGET_BLACK_WIDTH_MAX = 20;
 int16 TARGET_CENTER_DIFF_MAX = 15;
@@ -343,12 +343,13 @@ void Find_Target2(int p1,int p2)
 
                 /* 宽度合理 + 和投票中心接近 → 采用修正中心；否则丢弃 */
                 new_center = avg_center;
-                if(right_edge - left_edge <= TARGET_BLACK_WIDTH_MAX)
+//                if(right_edge - left_edge <= TARGET_BLACK_WIDTH_MAX)
                 {
 					uint8 diff;
                     new_center = (uint8)((left_edge + right_edge) / 2);
                     diff = (new_center > avg_center) ? (new_center - avg_center) : (avg_center - new_center);
-                    if(diff <= TARGET_CENTER_DIFF_MAX) valid = 1;
+//                    if(diff <= TARGET_CENTER_DIFF_MAX) 
+						valid = 1;
                 }
 
                 if(valid)
