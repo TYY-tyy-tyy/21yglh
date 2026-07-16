@@ -19,7 +19,7 @@ extern int16 Image_error;
 extern uint8 Stop_Car_flag;
 
 /* 目标速度 */
-extern int16 TargetSpeed;           //目标速度  190
+extern int16 TargetSpeed_L,TargetSpeed_R;           //目标速度  190
 extern int16 nowtargetSpeed;
 extern int16 targetSpeed_min;
 

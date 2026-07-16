@@ -10,6 +10,7 @@
 #define Blds_PWM_CH2             (PWMF_CH4_PA7)                                  // PWM输出端口
 
 /* 无刷PWM  1000~2000 */
+extern int16 MY_Blds_PWM_MAX;
 extern int16 Blds_PWM_MAX;    //芯片最大PWM
 extern int16 Blds_PWM_MIN;    //芯片最大PWM
 

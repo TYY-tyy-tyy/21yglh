@@ -7,7 +7,9 @@
 		// 300Hz的控制频率，从0%到100%占空比为3000到6000
 /* 无刷PWM  1000~2000 */
 
-int16 Blds_PWM_MAX = 4500;    //芯片最大PWM
+int16 MY_Blds_PWM_MAX = 4000;    //芯片最大PWM
+
+int16 Blds_PWM_MAX = 5500;    //芯片最大PWM
 int16 Blds_PWM_MIN = 3000;    //芯片最大PWM
 
 /* 检测无刷开启标志位 */
@@ -82,12 +84,12 @@ void Open_Blds(void)
 		if(Blds_time < 1000)
 		{
 			Blds_time++;
-			Blds_Speed_num = (Blds_PWM_MAX - Blds_PWM_MIN)/1000;
-			if(Blds_Speed < Blds_PWM_MAX) Blds_Speed = Blds_Speed + Blds_Speed_num;
+			Blds_Speed_num = (MY_Blds_PWM_MAX - Blds_PWM_MIN)/1000;
+			if(Blds_Speed < MY_Blds_PWM_MAX) Blds_Speed = Blds_Speed + Blds_Speed_num;
 			
 			/* 限幅 */
 			if(Blds_Speed < Blds_PWM_MIN) Blds_Speed = Blds_PWM_MIN;
-			else if(Blds_Speed > Blds_PWM_MAX) Blds_Speed = Blds_PWM_MAX;
+			else if(Blds_Speed > MY_Blds_PWM_MAX) Blds_Speed = MY_Blds_PWM_MAX;
 		}
 		else
 		{
@@ -95,6 +97,24 @@ void Open_Blds(void)
 		}
 		Left_Blds_Speed(Blds_Speed);
         Right_Blds_Speed(Blds_Speed);
+	}
+	else if(COM_QY == 2)
+	{
+		if(TargetSpeed_R > TargetSpeed_L + nowtargetSpeed)
+		{
+			Left_Blds_Speed(MY_Blds_PWM_MAX);
+			Right_Blds_Speed(MY_Blds_PWM_MAX + 500);
+		}
+		else if(TargetSpeed_L > TargetSpeed_R + nowtargetSpeed)
+		{
+			Left_Blds_Speed(MY_Blds_PWM_MAX + 500);
+			Right_Blds_Speed(MY_Blds_PWM_MAX);
+		}
+		else
+		{
+			Left_Blds_Speed(MY_Blds_PWM_MAX);
+			Right_Blds_Speed(MY_Blds_PWM_MAX);
+		}
 	}
 	else if(COM_QY == 0)
 	{
