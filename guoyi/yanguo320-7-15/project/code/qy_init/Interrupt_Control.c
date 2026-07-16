@@ -196,7 +196,7 @@ void Speed_DecisionMaking(void)
 			tmp_KD    = W_T_KD;
 			tmp_mode  = 1;   // Ö±µÀ
 		}
-		else if(variance_max< variance < variance_max2)
+		else if(variance < variance_max2)
 		{
 			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
 			tmp_KP1   = 1;

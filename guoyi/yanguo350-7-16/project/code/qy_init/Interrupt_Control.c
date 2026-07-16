@@ -40,6 +40,10 @@ float t;
 int16 L = 20;
 int16 K = 15;
 float diff;
+
+float steer_norm;
+int16 center_speed;
+
 //-------------------------------------------------------------------------------------------------------------------
 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½     CCU60_CH0ï¿½Ð¶ï¿½----ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
 // ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
@@ -49,6 +53,9 @@ float diff;
 //------------------------------------------------------------------------------------------------------------------
 void Interrupt_CCU60_CH0(void)
 {
+	int16 max_speed;
+	int16 min_speed;
+	int16 speed_scale = 10;   // 0=ÍêÈ«²»½µ£¬10=È«¶î½µ¡£Äãµ÷Õâ¸öÊý¾ÍÐÐ
 //	Test_Speed();
 //	return;
 	/* Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
@@ -87,6 +94,8 @@ void Interrupt_CCU60_CH0(void)
 		/* ï¿½Ù¶È¾ï¿½ï¿½ï¿½ */
 		Speed_DecisionMaking();
 	}
+	max_speed = nowtargetSpeed;
+	min_speed = nowtargetSpeed/10*7;
 	/* ×ªï¿½ï¿½ï¿½ï¿½ï¿½ */
 	Turn_Out = PID_Turn_Loc(Image_error);  //ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½×ªï¿½ï¿½PID
 
@@ -98,12 +107,21 @@ void Interrupt_CCU60_CH0(void)
 	t = tan((Turn_PWM - SERVO_MOTOR_Mid) * 0.001176f);
     diff = ACKERMAN_COEFF * t;
 	
+	// ¼ÆËã steering ¹éÒ»»¯Öµ£¨0=Ö±µÀ£¬1=´òÂú£©
+	if (Turn_PWM >= SERVO_MOTOR_Mid)
+		steer_norm = (float)(Turn_PWM - SERVO_MOTOR_Mid) / (float)(SERVO_MOTOR_L_MAX - SERVO_MOTOR_Mid);
+	else
+		steer_norm = (float)(SERVO_MOTOR_Mid - Turn_PWM) / (float)(SERVO_MOTOR_Mid - SERVO_MOTOR_R_MAX);
+
+	// ÖÐÐÄËÙ¶È = ×î¸ßËÙ¶È - (×î¸ßËÙ¶È - ×îµÍËÙ¶È) ¡Á steer_norm
+	center_speed = nowtargetSpeed - (max_speed - min_speed) * steer_norm * speed_scale/10;
+	
 	/* ï¿½Ù¶È»ï¿½ï¿½ï¿½×ªï¿½ï¿½ -------------------------------------------------- */
 	/* ï¿½ï¿½ï¿½ï¿½ï¿½Ö±Õ»ï¿½ï¿½ï¿½ï¿½  */
 	if(COM_QY == 2)
 	{
-		TargetSpeed_L = nowtargetSpeed * (1.0f - diff);
-		TargetSpeed_R = nowtargetSpeed * (1.0f + diff);
+		TargetSpeed_L = center_speed * (1.0f - diff);
+		TargetSpeed_R = center_speed * (1.0f + diff);
 		
 		Speed_Left_Out  = PID_Speed_Inc_L(TargetSpeed_L, Encoder_Left);
         Speed_Right_Out = PID_Speed_Inc_R(TargetSpeed_R, Encoder_Right);
@@ -177,7 +195,8 @@ void Speed_DecisionMaking(void)
     {
         tmp_KP    = Ring_T_KP;//44 47
 		tmp_KP1   = T_KP1-1;
-        tmp_Speed = my_Speed /10*85/10;
+//        tmp_Speed = my_Speed /10*85/10;
+		tmp_Speed = my_Speed;
 		tmp_GKD   = 0;
 		tmp_KD    = Ring_T_KD;
 		tmp_mode  = 2;   // »·µº
@@ -196,7 +215,7 @@ void Speed_DecisionMaking(void)
 			tmp_KD    = W_T_KD;
 			tmp_mode  = 1;   // Ö±µÀ
 		}
-		else if(variance_max< variance < variance_max2)
+		else if(variance < variance_max2)
 		{
 			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
 			tmp_KP1   = 1;
@@ -209,7 +228,8 @@ void Speed_DecisionMaking(void)
 		{
 			tmp_KP    = T_KP;      // 11.5 12.75 14
 			tmp_KP1   = T_KP1;
-			tmp_Speed = my_Speed/10*85/10;
+//			tmp_Speed = my_Speed/10*85/10;
+			tmp_Speed = my_Speed;
 			tmp_GKD   = T_GKD/2;
 			tmp_KD    = T_KD;
 			tmp_mode  = 3;   // ´óÍäµÀ
@@ -219,7 +239,8 @@ void Speed_DecisionMaking(void)
 	{
 		tmp_KP    = T_KP;      // 11.5 12.75 14
 		tmp_KP1   = T_KP1;
-		tmp_Speed = my_Speed/10*85/10;
+//		tmp_Speed = my_Speed/10*85/10;
+		tmp_Speed = my_Speed;
 		tmp_GKD   = T_GKD/2;
 		tmp_KD    = T_KD;
 		tmp_mode  = 3;   // ´óÍäµÀ
