@@ -186,6 +186,10 @@ void Interrupt(void)
 	{
 		count1=0;
 	}
+	if(count1 > 2000)
+	{
+		count1 = 2000;
+	}
 }
 
 void QQYY(void)

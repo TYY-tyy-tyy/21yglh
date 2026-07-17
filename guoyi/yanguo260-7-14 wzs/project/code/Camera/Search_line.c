@@ -40,10 +40,10 @@ void get_reference_point(void)
         //20~74
         for(W = 40; W < 148; W+=2)
         {
-			if(image_copy_out[H][W] < BLACKPOINT)
-			{
-				BLACKPOINT_num ++;
-			}
+//			if(image_copy_out[H][W] < BLACKPOINT)
+//			{
+//				BLACKPOINT_num ++;
+//			}
             reference_point_Sum[0] +=  image_copy_out[H][W];
 			if(reference_point_Sum[0] > 10000)
 			{
@@ -52,10 +52,10 @@ void get_reference_point(void)
 			}
         }
     }
-	if(BLACKPOINT_num > REFRENCE_ROW * 54 && (Find_Right_FLAG == Right_0 && Find_Left_FLAG == Left_0))
-	{
-		COM_QY = 0;
-	}
+//	if(BLACKPOINT_num > REFRENCE_ROW * 54 && (Find_Right_FLAG == Right_0 && Find_Left_FLAG == Left_0))
+//	{
+//		COM_QY = 0;
+//	}
     //求平均值
     reference_point[0] = (uint8) (reference_point_Sum[0] / reference_point_Num);
 	reference_point[1] = (uint8) (reference_point_Sum[1]*1000 / reference_point_Num *10);

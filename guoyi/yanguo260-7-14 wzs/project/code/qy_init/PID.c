@@ -86,12 +86,15 @@ int16 PID_Speed_Loc_L(int16 Speed_target, int16 Speed_current)
     pid.Speed_All_Error_L += pid.Speed_current_error_L;
 
     /* 误差运算 */
-    pid.Speed_Out_L = (pid.Speed_KP_L * pid.Speed_current_error_L / 10) + (pid.Speed_KI_L * pid.Speed_All_Error_L / 10) 
-		+ (pid.Speed_KD_L * (pid.Speed_current_error_L -  pid.Speed_Last_error_L) / 10);
+    pid.Speed_Out_L = (pid.Speed_KP_L * pid.Speed_current_error_L / 10) + (pid.Speed_KI_L * pid.Speed_All_Error_L / 10);
 
 	/* 更新上次误差 */
     pid.Speed_Last_error_L = pid.Speed_current_error_L;
 	
+    /* 积分限幅 */
+    if(pid.Speed_All_Error_L > Speed_L_imax)   pid.Speed_All_Error_L = Speed_L_imax;
+    else if(pid.Speed_All_Error_L < -Speed_L_imax) pid.Speed_All_Error_L = -Speed_L_imax;
+
     /* 返回结果 */
     return pid.Speed_Out_L;
 
@@ -106,11 +109,14 @@ int16 PID_Speed_Loc_R(int16 Speed_target, int16 Speed_current)
     pid.Speed_All_Error_R += pid.Speed_current_error_R;
 
     /* 误差运算 */
-    pid.Speed_Out_R = (pid.Speed_KP_R * pid.Speed_current_error_R / 10) + (pid.Speed_KI_R * pid.Speed_All_Error_R / 10)
-		+ (pid.Speed_KD_R * (pid.Speed_current_error_R -  pid.Speed_Last_error_R) / 10);
+    pid.Speed_Out_R = (pid.Speed_KP_R * pid.Speed_current_error_R / 10) + (pid.Speed_KI_R * pid.Speed_All_Error_R / 10);
 
 	/* 更新上次误差 */
     pid.Speed_Last_error_R = pid.Speed_current_error_R;
+
+    /* 积分限幅 */
+    if(pid.Speed_All_Error_R > Speed_R_imax)   pid.Speed_All_Error_R = Speed_R_imax;
+    else if(pid.Speed_All_Error_R < -Speed_R_imax) pid.Speed_All_Error_R = -Speed_R_imax;
 
     /* 返回结果 */
     return pid.Speed_Out_R;
