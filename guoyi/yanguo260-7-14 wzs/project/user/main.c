@@ -51,6 +51,8 @@ uint8 data_buffer[21];
 
 int16 SP_KP,SP_KI,T_KP,Ring_T_KP,W_T_KP,T_KP1,T_GKD,T_KD,Ring_T_KD,W_T_KD;
 
+uint16 OUT_time = 0;
+
 void main(void)
 {
     clock_init(SYSTEM_CLOCK_96M); 				// ʱ�����ü�ϵͳ��ʼ��<��ر���>
@@ -138,7 +140,7 @@ void main(void)
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //�ұ߽�����
 //			Extract_Road_Features();
-			if(count1 > 0)
+			if(Left_time > 0 || Right_time > 0)
 			{
 				Black_counts_weight(100);      //���߱���
 			}
@@ -190,6 +192,18 @@ void Interrupt(void)
 	{
 		count1 = 2000;
 	}
+	if(OUT_Target_Time > 0)
+	{
+		OUT_Target_Time --;
+	}
+//	if(COM_QY == 3)
+//	{
+//		OUT_time ++;
+//	}
+//	if(OUT_time > 1000)
+//	{
+//		COM_QY = 4;
+//	}
 }
 
 void QQYY(void)

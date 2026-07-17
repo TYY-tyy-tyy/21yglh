@@ -1,0 +1,4 @@
+timestamp,speed_mode,image_error,turn_out,enc_left,enc_right,enc_diff,gyro_z,r_patch,l_patch,r_lost,l_lost,white_mid,white_nums,r_local,l_local,r_ring_flag,l_ring_flag,angle_ring,speed_out_l,speed_out_r
+01:13:33.723,0,12,0,-4,-3,-1,0,110,110,0,0,16,188,0,0,0,0,39,0,0
+01:13:33.723,0,44,0,-5,-4,-1,0,110,110,0,0,12,188,0,0,0,0,39,0,0
+01:13:34.254,0,43,0,4,4,0,0,110,110,0,0,10,188,0,0,0,0,39,0,0

@@ -440,7 +440,6 @@ void Black_counts_weight(int16 p)
 
 	if(Black_counts > bmxian && ((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0)) && angle_pitch < 15 && angle_pitch > -15)
 	{
-		
 		COM_QY = 3;
 	}
 }
