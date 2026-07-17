@@ -9,6 +9,8 @@ uint8 late_laser = 0;
 uint8 Target_EER = 3;
 
 int16 Target_time = -2;
+int16 OUT_Target_Time = 0;
+int16 OUT_Target_NUM = 0;
 
 int16 TARGET_BLACK_WIDTH_MAX = 15;
 int16 TARGET_CENTER_DIFF_MAX = 5;
@@ -393,6 +395,18 @@ void Find_Target2(int p1,int p2)
 						}
 						Buzzer_ON();
                         all_off();
+						if(COM_QY == 3 && OUT_Target_Time == 0)
+						{
+							OUT_Target_NUM++;
+							if(OUT_Target_NUM == 1)
+							{
+								OUT_Target_Time = 100;
+							}
+							if(OUT_Target_NUM == 2)
+							{
+								COM_QY = 4;
+							}
+						}
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
                         else if(cur_pos == 5) { laser_on(LASER_PIN_5); late_laser = 5; }

@@ -2,6 +2,8 @@
 
 uint8 menu_num = 0;
 
+
+
 void menu_all(void)
 {
 	uint8 menu_all_num = 0;
@@ -201,6 +203,10 @@ void menu_2(void)//img
 		{
 			Target_time ++;
 		}
+		else if(menu_all_num == 6)
+		{
+			bmxian ++;
+		}
 	}
 	else if(Key_4)
 	{
@@ -229,6 +235,10 @@ void menu_2(void)//img
 		{
 			Target_time --;
 		}
+		else if(menu_all_num == 6)
+		{
+			bmxian --;
+		}
 	}
 	else if(Key_5)
 	{
@@ -236,9 +246,9 @@ void menu_2(void)//img
 	}
 	if(menu_all_num < 0)
 	{
-		menu_all_num = 5;
+		menu_all_num = 6;
 	}
-	else if(menu_all_num > 5)
+	else if(menu_all_num > 6)
 	{
 		menu_all_num = 0;
 	}
@@ -261,6 +271,8 @@ void menu_2(void)//img
 		tft180_show_int16(40,MT9V03X_H / 2,variance_max2);
 		tft180_show_string(8,MT9V03X_H / 2 + 16,"T_t");
 		tft180_show_int16(40,MT9V03X_H / 2 + 16,Target_time);
+		tft180_show_string(8,MT9V03X_H / 2 + 32,"bmx");
+		tft180_show_int16(40,MT9V03X_H / 2 + 32,bmxian);
 	}
 	tft180_show_int16(MT9V03X_W / 2,0,Image_error);
 	tft180_show_int16(MT9V03X_W / 2,16,Right_dowm_Patch);

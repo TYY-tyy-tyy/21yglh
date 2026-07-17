@@ -433,7 +433,7 @@ void Black_counts_weight(int16 p)
 		}
 	}
 	
-	if(Diswitch_Key_2 == 1)
+	if(Diswitch_Key_3 == 1)
 	{
 		bmxian = Black_counts;
 	}

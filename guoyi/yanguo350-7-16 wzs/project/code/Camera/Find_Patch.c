@@ -12,7 +12,7 @@ int16 Right_dowm_Patch = 0;
 int16 Right_dowm_Patch_x = 0;
 
 /* 某行黑点的数量，用于丢线保护 */
-int16 Black_counts;
+uint16 Black_counts;
 
 /* 丢线保护标志位 */
 int16 lost_line_protect = 0;
@@ -20,6 +20,8 @@ int16 lost_line_protect = 0;
 /*丢线数量*/
 int16 Lost_Left_lost_nums = 0;
 int16 Lost_Right_lost_nums = 0;
+
+uint16 bmxian = 60;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     找丢线数量
@@ -437,6 +439,6 @@ void Black_counts_weight(int16 p)
 
 	if(Black_counts > 60 && ((Find_Right_FLAG == Right_0) && (Find_Left_FLAG == Left_0)) && angle_pitch < 15 && angle_pitch > -15)
 	{
-		COM_QY = 0;
+		COM_QY = 3;
 	}
 }

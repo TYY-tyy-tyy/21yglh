@@ -127,6 +127,20 @@ void Interrupt_CCU60_CH0(void)
         Speed_Right_Out = PID_Speed_Inc_R(TargetSpeed_R, Encoder_Right);
 		
     }
+	else if(COM_QY == 3)
+	{
+        pid.Turn_KP   = 45;
+        pid.Turn_KP1  = 0;
+        pid.Turn_GKD  = 0;
+        pid.Turn_KD   = 0;
+		Speed_Left_Out  = PID_Speed_Inc_L(150 * (1.0f - diff), Encoder_Left);
+        Speed_Right_Out = PID_Speed_Inc_R(150 * (1.0f + diff), Encoder_Right);
+	}
+	else if(COM_QY == 4)
+	{
+		PID_Speed_Loc_L(0,Encoder_Left);
+		PID_Speed_Loc_R(0,Encoder_Right);
+	}
     else
     {
         Speed_Left_Out = 0;
