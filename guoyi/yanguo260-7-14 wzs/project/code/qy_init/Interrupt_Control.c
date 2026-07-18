@@ -52,14 +52,14 @@ void Interrupt_CCU60_CH0(void)
 //	Test_Speed();
 //	return;
 	/* ʱ���������?*/
-	if(time <= 15000) 
-	{
-		time++;
-	}
-	else
-	{
-		COM_QY = 0;
-	}
+//	if(time <= 15000) 
+//	{
+//		time++;
+//	}
+//	else
+//	{
+//		COM_QY = 0;
+//	}
 	/* ת�� ---------------------------------------------------------*/
 	/* ���������ǻ��ֱ�־λ */
 	use_gyro_flag();
@@ -82,7 +82,7 @@ void Interrupt_CCU60_CH0(void)
 	Stop_Car();
 
 	/* ��ͣ��״̬ʱ�������ƣ���ͣ�� */
-	if(COM_QY == 2)
+	if(COM_QY == 2 || COM_QY == 3)
 	{
 		/* �ٶȾ��� */
 		Speed_DecisionMaking();
@@ -107,17 +107,13 @@ void Interrupt_CCU60_CH0(void)
     }
 	else if(COM_QY == 3)
 	{
-        pid.Turn_KP   = 45;
-        pid.Turn_KP1  = 0;
-        pid.Turn_GKD  = 0;
-        pid.Turn_KD   = 0;
-		Speed_Left_Out  = PID_Speed_Loc_L(150 * (1.0f - diff), Encoder_Left);
-        Speed_Right_Out = PID_Speed_Loc_R(150 * (1.0f + diff), Encoder_Right);
+       Speed_Left_Out  = PID_Speed_Inc_L(nowtargetSpeed * (1.0f - diff), Encoder_Left);
+       Speed_Right_Out = PID_Speed_Inc_R(nowtargetSpeed * (1.0f + diff), Encoder_Right);
 	}
 	else if(COM_QY == 4)
 	{
-		PID_Speed_Loc_L(0,Encoder_Left);
-		PID_Speed_Loc_R(0,Encoder_Right);
+		Speed_Left_Out  = PID_Speed_Loc_L(0,Encoder_Left);
+		Speed_Right_Out = PID_Speed_Loc_R(0,Encoder_Right);
 	}
     else
     {
@@ -142,11 +138,8 @@ void Interrupt_CCU60_CH0(void)
 //	Lost_Line_Protect();
 	
 	/* ���� ------------------------------------------------------------*/
-	/* ���?*/
-	if(COM_QY == 2)
-	{
-		pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
-	}
+	/* ���*/
+	pwm_set_duty(SERVO_MOTOR_FREQ,Turn_PWM);
 	
 	/* �������?*/
 	Left_Motor_Speed(Left_Out);

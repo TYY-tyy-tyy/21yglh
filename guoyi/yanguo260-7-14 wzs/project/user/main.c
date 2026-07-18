@@ -201,14 +201,14 @@ void Interrupt(void)
 	{
 		OUT_Target_Time --;
 	}
-//	if(COM_QY == 3)
-//	{
-//		OUT_time ++;
-//	}
-//	if(OUT_time > 1000)
-//	{
-//		COM_QY = 4;
-//	}
+	if(COM_QY == 3)
+	{
+		OUT_time ++;
+	}
+	if(OUT_time > 120)
+	{
+		COM_QY = 4;
+	}
 }
 
 void QQYY(void)
