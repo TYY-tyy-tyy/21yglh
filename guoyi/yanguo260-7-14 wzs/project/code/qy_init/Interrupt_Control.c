@@ -112,8 +112,7 @@ void Interrupt_CCU60_CH0(void)
 	}
 	else if(COM_QY == 4)
 	{
-		Speed_Left_Out  = PID_Speed_Loc_L(0,Encoder_Left);
-		Speed_Right_Out = PID_Speed_Loc_R(0,Encoder_Right);
+		COM_QY = 0;
 	}
     else
     {
