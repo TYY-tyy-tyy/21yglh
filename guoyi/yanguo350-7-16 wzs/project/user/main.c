@@ -137,10 +137,14 @@ void main(void)
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //�ұ߽�����
 //			Extract_Road_Features();
-			if(Left_time > 0 || Right_time > 0)
+			if(Left_time > 1 || Right_time > 1)
 			{
-				Black_counts_weight(100);      //���߱���
+				COM_QY = 3;
 			}
+//			if(Left_time > 0 || Right_time > 0)
+//			{
+//				Black_counts_weight(100);      //���߱���
+//			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 //			printf("%d\n",qy_time1);

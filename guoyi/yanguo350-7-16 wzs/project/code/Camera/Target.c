@@ -396,23 +396,26 @@ void Find_Target2(int p1,int p2)
 						}
 						Buzzer_ON();
                         all_off();
-						if(COM_QY == 3 && OUT_Target_Time == 0)
+						if(COM_QY == 3 
+//							&& OUT_Target_Time == 0
+						)
 						{
 							OUT_Target_NUM++;
 							if(OUT_Target_NUM == 1)
 							{
-								OUT_Target_Time = 100;
-							}
-							if(OUT_Target_NUM == 2)
-							{
 								COM_QY = 4;
+//								OUT_Target_Time = 100;
 							}
+//							if(OUT_Target_NUM == 2)
+//							{
+//								COM_QY = 4;
+//							}
 						}
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
                         else if(cur_pos == 5) { laser_on(LASER_PIN_5); late_laser = 5; }
-                        else if(cur_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
-                        else if(cur_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
+//                        else if(cur_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
+//                        else if(cur_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
                     }
                     else { Buzzer_OFF(); all_off(); late_laser = 0; }
                     confirmed_pos = cur_pos;

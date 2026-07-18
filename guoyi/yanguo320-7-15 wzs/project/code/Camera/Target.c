@@ -413,8 +413,8 @@ void Find_Target2(int p1,int p2)
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
                         else if(cur_pos == 5) { laser_on(LASER_PIN_5); late_laser = 5; }
-                        else if(cur_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
-                        else if(cur_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
+//                        else if(cur_pos == 2) { laser_on(LASER_PIN_2); late_laser = 2; }
+//                        else if(cur_pos == 4) { laser_on(LASER_PIN_4); late_laser = 4; }
                     }
                     else { Buzzer_OFF(); all_off(); late_laser = 0; }
                     confirmed_pos = cur_pos;
