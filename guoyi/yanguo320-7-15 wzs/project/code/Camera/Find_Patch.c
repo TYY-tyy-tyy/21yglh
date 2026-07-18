@@ -416,7 +416,7 @@ void Black_counts_weight(int16 p)
 		gray_point_1 = image_copy_out[p][i];
 		//获取对比度灰度值
 		gray_point_2 = image_copy_out[p][i+1];
-		image_copy_out[p][i] = 255;
+		image_copy_out[p][i] = 0;
 		//若当前点是黑点
 		if(gray_point_1 < white_min_point)
 		{

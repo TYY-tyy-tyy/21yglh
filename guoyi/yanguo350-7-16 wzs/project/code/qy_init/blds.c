@@ -116,6 +116,13 @@ void Open_Blds(void)
 //		Right_Blds_Speed(MY_Blds_PWM_MAX);
 //		}
 //	}
+	else if(COM_QY == 3)
+	{
+		Blds_time = 0;
+		Blds_Speed_num = 0;
+		Left_Blds_Speed(0);
+        Right_Blds_Speed(0);
+	}
 	else if(COM_QY == 0)
 	{
 		Blds_time = 0;

@@ -189,7 +189,7 @@ void Interrupt(void)
 	{
 		count1 = 2000;
 	}
-		if(OUT_Target_Time > 0)
+	if(OUT_Target_Time > 0)
 	{
 		OUT_Target_Time --;
 	}

@@ -82,6 +82,7 @@ void main(void)
 //		Right_dowm_Patch,Left_dowm_Patch,Right_Lost_Line_count,Left_Lost_Line_count,Right_local_LostNums,Left_local_LostNums);
 		//python serial_monitor.py
 //		wireless_uart_send_byte(0xAA);
+//		wireless_uart_send_byte((uint8)OUT_Target_Time);
 //		wireless_uart_send_byte((uint8)((uint16)Image_error >> 8));       // Image_error ¸ß×Ö½Ú
 //		wireless_uart_send_byte((uint8)((uint16)Image_error & 0xFF));     // Image_error µÍ×Ö½Ú
 //		wireless_uart_send_byte((uint8)((uint16)Turn_Out >> 8));          // Turn_Out ¸ß×Ö½Ú
@@ -140,10 +141,14 @@ void main(void)
 			search_reference_col();
 			Find_Boundry_LongWhiteCol(); //ï¿½Ò±ß½ï¿½ï¿½ï¿½ï¿½ï¿½
 //			Extract_Road_Features();
-			if(Left_time > 0 || Right_time > 0)
+			if(Left_time > 1 || Right_time > 1)
 			{
-				Black_counts_weight(100);      //ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½
+				COM_QY = 3;
 			}
+//			if(Left_time > 0 || Right_time > 0)
+//			{
+//				Black_counts_weight(100);      //ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½
+//			}
 //			seekfree_assistant_camera_send();
 //			printf("%d\n",qy_time);
 //			printf("%d\n",qy_time1);

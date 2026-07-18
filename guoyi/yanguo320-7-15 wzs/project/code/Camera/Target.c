@@ -395,17 +395,20 @@ void Find_Target2(int p1,int p2)
 						}
 						Buzzer_ON();
                         all_off();
-						if(COM_QY == 3 && OUT_Target_Time == 0)
+						if(COM_QY == 3 
+//							&& OUT_Target_Time == 0
+						)
 						{
 							OUT_Target_NUM++;
 							if(OUT_Target_NUM == 1)
 							{
-								OUT_Target_Time = 100;
-							}
-							if(OUT_Target_NUM == 2)
-							{
 								COM_QY = 4;
+//								OUT_Target_Time = 100;
 							}
+//							if(OUT_Target_NUM == 2)
+//							{
+//								COM_QY = 4;
+//							}
 						}
                         if(cur_pos == 3)      { laser_on(LASER_PIN_3); late_laser = 3; }
                         else if(cur_pos == 1) { laser_on(LASER_PIN_1); late_laser = 1; }
