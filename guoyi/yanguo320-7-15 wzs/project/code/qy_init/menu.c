@@ -2,7 +2,7 @@
 
 uint8 menu_num = 0;
 
-
+uint16 STOP_time = 120;
 
 void menu_all(void)
 {
@@ -299,7 +299,7 @@ void menu_3(void)//PID
 	{
 		if(menu_all_num == 0)	
 		{
-			W_T_KP += 1;
+			STOP_time += 5;
 		}
 		else if(menu_all_num == 1)
 		{
@@ -334,7 +334,7 @@ void menu_3(void)//PID
 	{
 		if(menu_all_num == 0)	
 		{
-			W_T_KP -= 1;
+			STOP_time -= 5;
 		}
 		else if(menu_all_num == 1)
 		{
@@ -380,11 +380,11 @@ void menu_3(void)//PID
 	if(menu_all_num <= 3)
 	{
 		tft180_show_string(0,MT9V03X_H / 2 + menu_all_num*16,">");
-		tft180_show_string(8,MT9V03X_H / 2,"W_T_KP");
+		tft180_show_string(8,MT9V03X_H / 2,"time");
 		tft180_show_string(8,MT9V03X_H / 2 + 16,"T_KP");
 		tft180_show_string(8,MT9V03X_H / 2 + 32,"T_KP1");
 		tft180_show_string(8,MT9V03X_H / 2 + 48,"T_GKD");
-		tft180_show_int16(56,MT9V03X_H / 2,W_T_KP);
+		tft180_show_int16(56,MT9V03X_H / 2,STOP_time);
 		tft180_show_int16(56,MT9V03X_H / 2 + 16,T_KP);
 		tft180_show_int16(56,MT9V03X_H / 2 + 32,T_KP1);
 		tft180_show_int16(56,MT9V03X_H / 2 + 48,T_GKD);

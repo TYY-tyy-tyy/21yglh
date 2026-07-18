@@ -201,7 +201,7 @@ void Interrupt(void)
 //	{
 //		OUT_time ++;
 //	}
-//	if(OUT_time > 1000)
+//	if(OUT_time > STOP_time)
 //	{
 //		COM_QY = 4;
 //	}

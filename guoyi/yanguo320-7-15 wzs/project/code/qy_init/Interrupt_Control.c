@@ -52,14 +52,14 @@ void Interrupt_CCU60_CH0(void)
 //	Test_Speed();
 //	return;
 	/* Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
-	if(time <= 15000) 
-	{
-		time++;
-	}
-	else
-	{
-		COM_QY = 0;
-	}
+//	if(time <= 15000) 
+//	{
+//		time++;
+//	}
+//	else
+//	{
+//		COM_QY = 0;
+//	}
 	/* ×ªï¿½ï¿½ ---------------------------------------------------------*/
 	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½Ö±ï¿½Ö¾Î» */
 	use_gyro_flag();
@@ -182,38 +182,50 @@ void Speed_DecisionMaking(void)
             n++;
         }
     }
-
-    if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
-    {
-        tmp_KP    = Ring_T_KP;//44 47
-		tmp_KP1   = T_KP1-1;
-        tmp_Speed = my_Speed /10*85/10;
-		tmp_GKD   = 0;
-		tmp_KD    = Ring_T_KD;
-		tmp_mode  = 2;   // »·µº
-    }
-	else if(n >= 4 && White_Column_MID > 110)
-    {
-		mean = sum / (int16)n;
-        variance = sum_sq / (int16)n - mean * mean;
-		
-		if(variance < variance_max || variance > 400)
+	
+	if(COM_QY == 2)
+	{
+		if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
 		{
-			tmp_KP    = W_T_KP;//20
-			tmp_KP1   = 0;
-			tmp_Speed = my_Speed*11/10;
-			tmp_GKD   = T_GKD;
-			tmp_KD    = W_T_KD;
-			tmp_mode  = 1;   // Ö±µÀ
+			tmp_KP    = Ring_T_KP;//44 47
+			tmp_KP1   = T_KP1-1;
+			tmp_Speed = my_Speed /10*85/10;
+			tmp_GKD   = 0;
+			tmp_KD    = Ring_T_KD;
+			tmp_mode  = 2;   // »·µº
 		}
-		else if(variance < variance_max2)
+		else if(n >= 4 && White_Column_MID > 110)
 		{
-			tmp_KP    = (T_KP+W_T_KP)/2 ;//20
-			tmp_KP1   = 1;
-			tmp_Speed = my_Speed;
-			tmp_GKD   = T_GKD;
-			tmp_KD    = (T_KD+W_T_KD)/2;
-			tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
+			mean = sum / (int16)n;
+			variance = sum_sq / (int16)n - mean * mean;
+			
+			if(variance < variance_max || variance > 400)
+			{
+				tmp_KP    = W_T_KP;//20
+				tmp_KP1   = 0;
+				tmp_Speed = my_Speed*11/10;
+				tmp_GKD   = T_GKD;
+				tmp_KD    = W_T_KD;
+				tmp_mode  = 1;   // Ö±µÀ
+			}
+			else if(variance < variance_max2)
+			{
+				tmp_KP    = (T_KP+W_T_KP)/2 ;//20
+				tmp_KP1   = 1;
+				tmp_Speed = my_Speed;
+				tmp_GKD   = T_GKD;
+				tmp_KD    = (T_KD+W_T_KD)/2;
+				tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
+			}
+			else
+			{
+				tmp_KP    = T_KP;      // 11.5 12.75 14
+				tmp_KP1   = T_KP1;
+				tmp_Speed = my_Speed/10*85/10;
+				tmp_GKD   = T_GKD/2;
+				tmp_KD    = T_KD;
+				tmp_mode  = 3;   // ´óÍäµÀ
+			}
 		}
 		else
 		{
@@ -224,39 +236,108 @@ void Speed_DecisionMaking(void)
 			tmp_KD    = T_KD;
 			tmp_mode  = 3;   // ´óÍäµÀ
 		}
-	}
-	else
-	{
-		tmp_KP    = T_KP;      // 11.5 12.75 14
-		tmp_KP1   = T_KP1;
-		tmp_Speed = my_Speed/10*85/10;
-		tmp_GKD   = T_GKD/2;
-		tmp_KD    = T_KD;
-		tmp_mode  = 3;   // ´óÍäµÀ
-	}
-	
-	/* ---- È·ÈÏÂß¼­£ºÁ¬Ðø3Ö¡Í¬Ä£Ê½²ÅÕæÕýÇÐ»» ---- */
-    if(tmp_mode != candidate_mode)
-    {
-        candidate_mode = tmp_mode;
-        mode_confirm_cnt = 1;   // µÚÒ»´Î³öÏÖ£¬¼ÆÊýÆ÷´Ó1¿ªÊ¼
-    }
-    else
-    {
-        mode_confirm_cnt++;
-    }
+		
+		/* ---- È·ÈÏÂß¼­£ºÁ¬Ðø3Ö¡Í¬Ä£Ê½²ÅÕæÕýÇÐ»» ---- */
+		if(tmp_mode != candidate_mode)
+		{
+			candidate_mode = tmp_mode;
+			mode_confirm_cnt = 1;   // µÚÒ»´Î³öÏÖ£¬¼ÆÊýÆ÷´Ó1¿ªÊ¼
+		}
+		else
+		{
+			mode_confirm_cnt++;
+		}
 
-    if(mode_confirm_cnt >= 3)
-    {
-        /* È·ÈÏÇÐ»»£¬¸üÐÂÊµ¼Ê²ÎÊý */
-        speed_mode = candidate_mode;
-        pid.Turn_KP   = tmp_KP;
-        pid.Turn_KP1  = tmp_KP1;
-        nowtargetSpeed = tmp_Speed;
-        pid.Turn_GKD  = tmp_GKD;
-        pid.Turn_KD   = tmp_KD;
-    }
-    // Î´Âú3Ö¡ ¡ú ±£³ÖÉÏÒ»Ä£Ê½µÄ²ÎÊý²»±ä
+		if(mode_confirm_cnt >= 3)
+		{
+			/* È·ÈÏÇÐ»»£¬¸üÐÂÊµ¼Ê²ÎÊý */
+			speed_mode = candidate_mode;
+			pid.Turn_KP   = tmp_KP;
+			pid.Turn_KP1  = tmp_KP1;
+			nowtargetSpeed = tmp_Speed;
+			pid.Turn_GKD  = tmp_GKD;
+			pid.Turn_KD   = tmp_KD;
+		}
+		// Î´Âú3Ö¡ ¡ú ±£³ÖÉÏÒ»Ä£Ê½µÄ²ÎÊý²»±ä
+	}
+	else if(COM_QY == 3)
+	{
+		my_Speed = 260;
+		if((Find_Left_FLAG >= Left_1) || (Find_Right_FLAG >= Right_1))
+		{
+			tmp_KP    = Ring_T_KP;//44 47
+			tmp_KP1   = T_KP1-1;
+			tmp_Speed = my_Speed /10*85/10;
+			tmp_GKD   = 0;
+			tmp_KD    = Ring_T_KD;
+			tmp_mode  = 2;   // »·µº
+		}
+		else if(n >= 4 && White_Column_MID > 110)
+		{
+			mean = sum / (int16)n;
+			variance = sum_sq / (int16)n - mean * mean;
+			
+			if(variance < variance_max || variance > 400)
+			{
+				tmp_KP    = W_T_KP;//20
+				tmp_KP1   = 0;
+				tmp_Speed = my_Speed*11/10;
+				tmp_GKD   = T_GKD;
+				tmp_KD    = W_T_KD;
+				tmp_mode  = 1;   // Ö±µÀ
+			}
+			else if(variance_max< variance < variance_max2)
+			{
+				tmp_KP    = (T_KP+W_T_KP)/2 ;//20
+				tmp_KP1   = 1;
+				tmp_Speed = my_Speed;
+				tmp_GKD   = T_GKD;
+				tmp_KD    = (T_KD+W_T_KD)/2;
+				tmp_mode  = 0;   //ÆÕÍ¨ÍäµÀ
+			}
+			else
+			{
+				tmp_KP    = T_KP;      // 11.5 12.75 14
+				tmp_KP1   = T_KP1;
+				tmp_Speed = my_Speed/10*85/10;
+				tmp_GKD   = T_GKD*2/3;
+				tmp_KD    = T_KD;
+				tmp_mode  = 3;   // ´óÍäµÀ
+			}
+		}
+		else
+		{
+			tmp_KP    = T_KP;      // 11.5 12.75 14
+			tmp_KP1   = T_KP1;
+			tmp_Speed = my_Speed/10*88/10;
+			tmp_GKD   = T_GKD*2/3;
+			tmp_KD    = T_KD;
+			tmp_mode  = 3;   // ´óÍäµÀ
+		}
+		
+		/* ---- È·ÈÏÂß¼­£ºÁ¬Ðø3Ö¡Í¬Ä£Ê½²ÅÕæÕýÇÐ»» ---- */
+		if(tmp_mode != candidate_mode)
+		{
+			candidate_mode = tmp_mode;
+			mode_confirm_cnt = 1;   // µÚÒ»´Î³öÏÖ£¬¼ÆÊýÆ÷´Ó1¿ªÊ¼
+		}
+		else
+		{
+			mode_confirm_cnt++;
+		}
+
+		if(mode_confirm_cnt >= 3)
+		{
+			/* È·ÈÏÇÐ»»£¬¸üÐÂÊµ¼Ê²ÎÊý */
+			speed_mode = candidate_mode;
+			pid.Turn_KP   = tmp_KP;
+			pid.Turn_KP1  = tmp_KP1;
+			nowtargetSpeed = tmp_Speed;
+			pid.Turn_GKD  = tmp_GKD;
+			pid.Turn_KD   = tmp_KD;
+		}
+		// Î´Âú3Ö¡ ¡ú ±£³ÖÉÏÒ»Ä£Ê½µÄ²ÎÊý²»±ä
+	}
 }
 
 //==================== Í¼ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ëµï¿½ ====================

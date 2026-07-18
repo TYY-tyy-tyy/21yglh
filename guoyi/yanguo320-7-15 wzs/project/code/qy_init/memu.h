@@ -4,6 +4,7 @@
 #include "qy_headfile.h"
 
 extern uint8 menu_num;
+extern uint16 STOP_time;
 
 void menu_all(void);
 void menu_0(void);
